@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Lecture: Arrays in Pseudo Code</title>
+    
+    <style>
+        /* CSS Variables for color theme */
+        :root {
+            --primary-blue: #007bff;
+            --secondary-blue: #0056b3;
+            --light-blue-bg: #f0f7ff;
+            --white: #ffffff;
+            --text-dark: #333;
+            --text-light: #555;
+            --border-color: #ddd;
+            --code-bg: #f8f9fa;
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--light-blue-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main Lecture Container */
+        .lecture-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 30px 40px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--secondary-blue);
+            padding: 10px 40px;
+            text-align: center;
+        }
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 30px 40px;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+        }
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            border-bottom: 2px solid var(--light-blue-bg);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-blue);
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        /* Text & List Styling */
+        p {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Code Block Styling */
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        /* Box Styling for Examples/Exercises */
+        .example-box, .exercise-box {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+        .example-box h3, .exercise-box h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Button Styling (for exercises) */
+        .toggle-solution-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-solution-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Solution Content (hidden by default) */
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="lecture-container">
+
+        <header>
+            <h1>Computer Science Fundamentals</h1>
+            <p>Topic: Arrays in Pseudo Code</p>
+        </header>
+
+        <nav>
+            <a href="#section-intro">Introduction</a>
+            <a href="#section-operations">Operations</a>
+            <a href="#section-examples">Examples</a>
+            <a href="#section-exercises">Exercises</a>
+        </nav>
+
+        <main>
+
+            <section id="section-intro">
+                <h2>1. Introduction to Arrays</h2>
+                <p>
+                    An <strong>array</strong> is a fundamental data structure. Think of it as a row of numbered mailboxes, where each mailbox can hold one item. All items stored in an array must be of the <strong>same data type</strong> (e.g., all numbers, or all strings).
+                </p>
+                <p>
+                    To access a specific item, you use its "mailbox number," which we call an <strong>index</strong>. In computer science, we almost always start counting from <strong>zero</strong>.
+                </p>
+                <ul>
+                    <li>The first item is at <strong>index 0</strong>.</li>
+                    <li>The second item is at <strong>index 1</strong>.</li>
+                    <li>...and so on.</li>
+                </ul>
+                <p>
+                    <strong>Pseudo code</strong> is just a human-readable "blueprint" for our program logic. When we work with arrays in pseudo code, we focus on the logic of *how* to use them, not the strict syntax of a specific programming language.
+                </p>
+            </section>
+
+            <section id="section-operations">
+                <h2>2. Array Operations in Pseudo Code</h2>
+                <p>
+                    We use simple keywords to describe array operations. The exact words can vary (e.g., <code>DECLARE</code> vs. <code>INITIALIZE</code>), but the meaning is the same.
+                </p>
+
+                <h3>2.1 Declaration & Initialization</h3>
+                <p>This is how we create an array. We can create an empty array of a specific size, or create one with values already in it.</p>
+                <pre><code>// 1. Declare an empty array named 'scores' that can hold 5 Integers
+DECLARE scores AS Array[5] OF Integer
+
+// 2. Declare and initialize an array with values
+INITIALIZE studentNames = ["Alice", "Bob", "Charlie", "David"]
+
+// 3. In many pseudo code styles, this is also acceptable
+SET grades = [95, 88, 76]</code></pre>
+
+                <h3>2.2 Accessing Elements (by Index)</h3>
+                <p>We use the array's name and the element's index in square brackets <code>[]</code> to read its value.</p>
+                <pre><code>INITIALIZE studentNames = ["Alice", "Bob", "Charlie"]
+
+// Access the element at index 1
+SET secondStudent = studentNames[1]  // secondStudent is now "Bob"
+
+// Print the element at index 0
+PRINT studentNames[0]  // This will display "Alice"</code></pre>
+
+                <h3>2.3 Modifying Elements (by Index)</h3>
+                <p>We can also use the index to change the value at a specific position.</p>
+                <pre><code>INITIALIZE scores = [80, 85, 90]
+
+// Print the original value at index 2
+PRINT scores[2]  // This will display "90"
+
+// Change the value at index 2
+SET scores[2] = 95
+
+// Print the new value
+PRINT scores[2]  // This will display "95"</code></pre>
+            </section>
+            
+            <section id="section-examples">
+                <h2>3. Common Examples</h2>
+                <p>The most common array operation is "traversing" (looping through) it to process every element.</p>
+
+                <div class="example-box">
+                    <h3>Example 1: Traversing and Printing All Elements</h3>
+                    <p>This pseudo code prints every name in the <code>studentNames</code> array.</p>
+                    <pre><code>START
+    INITIALIZE studentNames = ["Alice", "Bob", "Charlie", "David"]
+    
+    // We loop from the first index (0) to the last index (3)
+    FOR i = 0 TO 3
+        // Access and print the element at the current index 'i'
+        PRINT studentNames[i]
+    ENDFOR
+END</code></pre>
+                    <p><strong>Output:</strong><br>
+                    Alice<br>
+                    Bob<br>
+                    Charlie<br>
+                    David</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>Example 2: Calculating the Sum of an Array</h3>
+                    <p>This pseudo code finds the total sum of all numbers in the <code>myNumbers</code> array.</p>
+                    <pre><code>START
+    INITIALIZE myNumbers = [10, 20, 30, 40]
+    
+    // Create a variable to hold the running total
+    SET totalSum = 0
+    
+    // Loop from index 0 to 3
+    FOR i = 0 TO 3
+        // Add the number at the current index to our total
+        SET totalSum = totalSum + myNumbers[i]
+    ENDFOR
+    
+    // Print the final result
+    PRINT "The total sum is: " + totalSum
+END</code></pre>
+                    <p><strong>Output:</strong><br>
+                    The total sum is: 100</p>
+                </div>
+            </section>
+
+            <section id="section-exercises">
+                <h2>4. Sample Exercises</h2>
+                
+                <div class="exercise-box">
+                    <h3>Exercise 1: Find the Largest Number</h3>
+                    <p>You are given an array of numbers: <code>scores = [85, 92, 78, 95, 88]</code>. Write pseudo code to find the <strong>largest</strong> number in this array and print it.</p>
+                    
+                    <button class="toggle-solution-btn">Show Solution</button>
+                    <div class="solution-content">
+                        <pre><code>START
+    // Initialize the array
+    INITIALIZE scores = [85, 92, 78, 95, 88]
+    
+    // Assume the first element is the largest (for now)
+    SET maxScore = scores[0]
+    
+    // Loop through the *rest* of the array (starting from index 1)
+    FOR i = 1 TO 4
+        // Check if the current element is bigger than our current max
+        IF scores[i] > maxScore THEN
+            // If it is, update maxScore to this new value
+            SET maxScore = scores[i]
+        ENDIF
+    ENDFOR
+    
+    // After the loop, maxScore holds the largest value
+    PRINT "The largest score is: " + maxScore
+END</code></pre>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h3>Exercise 2: Count Occurrences</h3>
+                    <p>You are given an array: <code>grades = ['A', 'B', 'C', 'A', 'B', 'A']</code>. Write pseudo code that counts how many times the grade 'A' appears in the array and prints the count.</p>
+                    
+                    <button class="toggle-solution-btn">Show Solution</button>
+                    <div class="solution-content">
+                        <pre><code>START
+    INITIALIZE grades = ['A', 'B', 'C', 'A', 'B', 'A']
+    
+    // Initialize a counter variable to 0
+    SET countA = 0
+    
+    // Loop through the entire array (index 0 to 5)
+    FOR i = 0 TO 5
+        // Check if the element at the current index is 'A'
+        IF grades[i] == 'A' THEN
+            // If it is, increment the counter
+            SET countA = countA + 1
+        ENDIF
+    ENDFOR
+    
+    // Print the final count
+    PRINT "The grade 'A' appears " + countA + " times."
+END</code></pre>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer>
+            <p>Computer Science Department - Lecture Notes</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all toggle buttons
+            const buttons = document.querySelectorAll('.toggle-solution-btn');
+            
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Find the solution content related to this button
+                    const solution = this.nextElementSibling;
+                    
+                    // Toggle the display
+                    if (solution.style.display === 'block') {
+                        solution.style.display = 'none';
+                        this.textContent = 'Show Solution';
+                    } else {
+                        solution.style.display = 'block';
+                        this.textContent = 'Hide Solution';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
