@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Databases - Exercises</title>
+    <!-- Ghi chú: Đây là tệp HTML đầy đủ cho trang Bài tập (Exercises) -->
+    <style>
+        /* CSS Variables cho chủ đề màu */
+        :root {
+            --primary-blue: #005a9e; /* Màu xanh đậm chuyên nghiệp */
+            --light-blue: #007bff;
+            --sidebar-bg: #f8f9fa;   /* Màu nền thanh công cụ bên trái */
+            --content-bg: #ffffff;   /* Màu nền nội dung */
+            --header-bg: var(--primary-blue);
+            --header-text: #ffffff;
+            --text-dark: #212529;
+            --text-light: #495057;
+            --border-color: #dee2e6;
+            --hover-bg: #e9ecef;
+        }
+
+        /* Thiết lập lại (Reset) và Kiểu dáng chung */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--content-bg);
+        }
+
+        /* Bố cục ứng dụng */
+        .app-layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Header cố định */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Thanh công cụ bên trái (Sidebar) */
+        .sidebar {
+            position: fixed;
+            top: 60px; /* Bên dưới header */
+            left: 0;
+            width: 280px;
+            height: calc(100vh - 60px); /* Chiều cao còn lại */
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem;
+            overflow-y: auto; /* Cho phép cuộn nếu nhiều chương */
+            z-index: 900;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+
+        /* Kiểu dáng các mục trong Chapter */
+        .nav-chapter-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-chapter-toggle:hover {
+            background-color: var(--hover-bg);
+        }
+
+        /* Biểu tượng mũi tên (chevron) */
+        .nav-chapter-toggle::after {
+            content: '▼';
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+
+        .nav-chapter-toggle.active::after {
+            transform: rotate(180deg);
+        }
+        
+        /* Mục bị vô hiệu hóa (placeholder) */
+        .nav-chapter-toggle.disabled {
+            color: #aaa;
+            background-color: #fdfdfd;
+            cursor: not-allowed;
+        }
+        .nav-chapter-toggle.disabled:hover {
+            background-color: #fdfdfd;
+        }
+        .nav-chapter-toggle.disabled::after {
+            content: '';
+        }
+
+        /* Menu con (Lecture, Exercises) */
+        .nav-submenu {
+            list-style: none;
+            padding: 5px 0 5px 15px; /* Thụt lề */
+            margin: 0;
+            display: none; /* Ẩn theo mặc định */
+        }
+
+        .nav-submenu li a {
+            display: block;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: var(--text-light);
+            border-radius: 5px;
+            transition: background-color 0.2s, color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-submenu li a:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-dark);
+        }
+        
+        .nav-submenu li a.active {
+            background-color: var(--light-blue);
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Khu vực nội dung chính */
+        .main-content {
+            margin-top: 60px;  /* Khoảng cách với header */
+            margin-left: 280px; /* Khoảng cách với sidebar */
+            padding: 2rem;
+            width: calc(100% - 280px); /* Chiều rộng còn lại */
+            overflow-y: auto; /* Cho phép cuộn nội dung */
+            height: calc(100vh - 60px);
+        }
+
+        /* * Lớp .content-page 
+         * Tất cả các trang nội dung sẽ có lớp này và bị ẩn.
+         * JS sẽ hiển thị trang được chọn.
+        */
+        .content-page {
+            display: none;
+        }
+        
+        /* Hiển thị trang đang hoạt động */
+        .content-page.active {
+            display: block;
+        }
+
+        /* Kiểu dáng nội dung bài giảng */
+        .lecture-content h1 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .lecture-content h2 {
+            color: var(--text-dark);
+            margin-top: 2rem;
+        }
+        
+        .lecture-content h3 {
+            color: var(--text-light);
+            margin-top: 1.5rem;
+        }
+        
+        .lecture-content p, 
+        .lecture-content ul, 
+        .lecture-content ol {
+            margin-bottom: 1rem;
+        }
+
+        .lecture-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .lecture-content code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .lecture-content pre {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--light-blue);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap; /* Cho phép xuống dòng */
+        }
+
+        /* Bảng (Table) */
+        .lecture-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .lecture-content th, 
+        .lecture-content td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .lecture-content th {
+            background-color: var(--sidebar-bg);
+            font-weight: 600;
+        }
+        
+        /* Hộp bài tập */
+        .exercise-box {
+            background-color: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .exercise-box h3 {
+            margin-top: 0;
+            color: var(--primary-blue);
+        }
+        
+        /* Footer */
+        .app-footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER -->
+    <header class="app-header">
+        Computer Science Course Portal
+    </header>
+
+    <!-- Bố cục chính -->
+    <div class="app-layout">
+        
+        <!-- 2. SIDEBAR (Thanh công cụ bên trái) -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    
+                    <!-- Mục 1: Placeholder -->
+                    <li>
+                        <div class="nav-chapter-toggle disabled">Chapter 1: Introduction</div>
+                    </li>
+                    
+                    <!-- Mục 2: Placeholder -->
+                    <li>
+                        <div class="nav-chapter-toggle disabled">Chapter 2: Algorithms</div>
+                    </li>
+
+                    <!-- ... Thêm các chapter khác ở đây ... -->
+                    
+                    <!-- Mục 9: Nội dung từ PDF -->
+                    <li>
+                        <div class="nav-chapter-toggle" id="toggle-ch9">Chapter 9: Databases</div>
+                        <ul class="nav-submenu" id="submenu-ch9">
+                            <li><a href="chapter9.html" class="nav-link">Lecture</a></li>
+                            <!-- ĐÁNH DẤU 'active' cho trang này -->
+                            <li><a href="exrchapter9.html" class="nav-link active">Exercises</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 3. MAIN CONTENT (Nội dung chính) -->
+        <main class="main-content">
+        
+            <!-- Trang Chào mừng (ĐÃ BỊ XÓA) -->
+            
+            <!-- Trang Bài giảng (ĐÃ BỊ XÓA) -->
+            
+            <!-- 
+            =================================================
+            NỘI DUNG CHAPTER 9 (TỪ PDF)
+            =================================================
+            -->
+            
+            <!-- Trang Bài tập Chapter 9 (HIỂN THỊ) -->
+            <div class="content-page lecture-content active" id="ch9-exercises">
+                <h1>Chapter 9: Exercises</h1>
+                
+                <h2>Activities</h2>
+                
+                <div class="exercise-box">
+                    <h3>Activity 9.1</h3>
+                    <p>State what fields you would expect to find in each record for a doctor's appointments table (APPOINTMENT) and give each field a suitable name.</p>
+                </div>
+                
+                <div class="exercise-box">
+                    <h3>Activity 9.2</h3>
+                    <p>Using database software, set up the <code>PATIENT</code> table with fields: <code>FirstName</code>, <code>FamilyName</code>, <code>DateOfAdmission</code>, <code>Consultant</code>, <code>WardNumber</code>, <code>BedNumber</code>.</p>
+                    <ul>
+                        <li>Choose a suitable data type for each field.</li>
+                        <li>Add validation: WardNumber must be 1-10, BedNumber must be 1-8.</li>
+                        <li>Enter the 8 sample records provided in the textbook.</li>
+                    </ul>
+                </div>
+                
+                <div class="exercise-box">
+                    <h3>Activity 9.3</h3>
+                    <p>Add a <code>HospitalNumber</code> field to the <code>PATIENT</code> table to act as the primary key. Choose 'text' as the data type. Include validation checks to ensure 8 characters starting with HN followed by 6 digits (e.g., HN123456).</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h3>Activity 9.5</h3>
+                    <p>Using the <code>PATIENT</code> database you created:</p>
+                    <ol>
+                        <li>Write an SQL query to list all Mr Jones' patients.</li>
+                        <li>Write an SQL query to list all the patients not in ward 6.</li>
+                        <li>Write an SQL query to list all the patients who arrived on 12/11/2022.</li>
+                        <li>Write an SQL query to list all the patients who arrived between 12/10/2022 AND 30/10/2022.</li>
+                    </ol>
+                </div>
+                
+                <div class="exercise-box">
+                    <h3>Activity 9.6</h3>
+                    <p>Using the <code>PATIENT</code> database you created:</p>
+                    <ol>
+                        <li>Write an SQL query to count the number of patients in ward 7.</li>
+                        <li>Write an SQL query to count the number of patients not in ward 7.</li>
+                        <li>Write down the output from this SQL query:
+<pre><code>
+SELECT HospitalNumber, FirstName, FamilyName, Consultant
+FROM PATIENT
+ORDER BY Consultant, FamilyName;
+</code></pre>
+                        </li>
+                    </ol>
+                </div>
+                
+                <!-- ... (Các Activity 9.7, 9.8 có thể thêm vào đây) ... -->
+                
+                <hr>
+                
+                <h2>Exam-Style Questions</h2>
+                
+                <div class="exercise-box">
+                    <h3>Question 1</h3>
+                    <p>A motor car manufacturer uses a table, <code>CAR</code>, to show combinations of seat materials and paint colours.</p>
+                    <p>(Based on the table provided in the PDF...)</p>
+                    <ol type="a">
+                        <li>(i) State the number of records shown. (ii) State the number of fields shown. (iii) State if any fields are suitable for a primary key, with a reason.</li>
+                        <li>Show the output for the SQL command: <code>SELECT Code FROM CAR WHERE SeatColour = 'Red' AND ('White' OR 'Silver');</code></li>
+                        <li>Complete the SQL command to find all combinations for a car with leather seats and either silver or grey paint.</li>
+                    </ol>
+                </div>
+                
+                <div class="exercise-box">
+                    <h3>Question 2</h3>
+                    <p>A company sells bicycles and keeps records in a table, <code>CYCLE</code>. Fields include: <code>model number</code>, <code>description</code>, <code>colour</code>, <code>wheel size</code>, <code>price</code>, <code>still manufactured (Yes/No)</code>, <code>number in stock</code>.</p>
+                    <ol type="a">
+                        <li>(i) State a suitable data type for each field. (ii) Identify validation required for <code>model number</code>, D</code>, and <code>number in stock</code>. (iii) State which field is suitable for a primary key, with a reason.</li>
+                        <li>Explain, using examples from this table, how <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>SUM</code>, and <code>ORDER BY</code> could be used.</li>
+                    </ol>
+                </div>
+                
+                <div class="exercise-box">
+                    <h3>Question 3</h3>
+                    <p>A database table, <code>PERFORMANCE</code>, keeps records of theatre shows. (Table data provided in PDF...)</p>
+                    <ol type="a">
+                        <li>State the number of fields and records in the table.</li>
+                        <li>Give two validation checks that could be performed on the <code>ShowNumber</code> field.</li>
+                    </ol>
+                </div>
+
+            </div>
+
+            <!-- 4. FOOTER -->
+            <footer class="app-footer">
+                Lecturer: Nguyễn Chí Cường
+            </footer>
+            
+        </main>
+    </div>
+
+    <!-- 5. JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const chapterToggles = document.querySelectorAll('.nav-chapter-toggle');
+
+            // --- Xử lý việc Bật/Tắt Menu con ---
+            chapterToggles.forEach(toggle => {
+                if (toggle.classList.contains('disabled')) {
+                    return;
+                }
+                toggle.addEventListener('click', function() {
+                    const submenu = this.nextElementSibling;
+                    this.classList.toggle('active');
+                    if (submenu.style.display === 'block') {
+                        submenu.style.display = 'none';
+                    } else {
+                        submenu.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Tự động mở mục Chapter 9
+            const ch9Toggle = document.getElementById('toggle-ch9');
+            if(ch9Toggle) {
+                ch9Toggle.click(); // Tự động mở menu Chapter 9
+            }
+
+        });
+    </script>
+
+</body>
+</html>

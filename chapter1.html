@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Data representation</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-sN/2sG8C1g1DKeO70sE+FuXnB1TscNlPZfiSTNtL3vtKhtGHRv1S2Bsv9iZpviDq" crossorigin="anonymous">
+
+    <style>
+        /* (Sao chép y hệt CSS từ base.html) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .navbar-custom {
+            background-color: #005a9c !important;
+            border-bottom: 5px solid #007bff;
+            padding: 0.8rem 1rem;
+        }
+        .navbar-custom .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .navbar-custom .navbar-brand:hover { color: #f0f0f0; }
+        .navbar-custom .navbar-text {
+            font-size: 1rem;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+        .navbar-custom .navbar-toggler { border-color: rgba(255,255,255,0.2); }
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        .offcanvas-header { border-bottom: 1px solid #dee2e6; }
+        .offcanvas-title { color: #005a9c; font-weight: 600; }
+        .accordion-body .list-group-item a {
+            text-decoration: none;
+            color: #005a9c;
+            font-weight: 600;
+        }
+         .accordion-body .list-group-item a:hover { background-color: #e9ecef; }
+
+        /* Style cho nội dung chính */
+        main h1 {
+            font-size: 2.2rem;
+            color: #005a9c;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        main .lead {
+             font-size: 1.05rem;
+             margin-bottom: 1rem;
+        }
+
+        /* CSS cho chapter1.html (Accordion bài giảng) */
+        .lecture-accordion .accordion-item {
+             margin-bottom: 1rem;
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+             overflow: hidden; 
+        }
+        .lecture-accordion .accordion-button {
+            font-size: 1.8rem; 
+            font-weight: 600;
+            color: #005a9c;
+        }
+        .lecture-accordion .accordion-button:not(.collapsed) {
+             background-color: #f8f9fa;
+             color: #005a9c;
+             border-bottom: 1px solid #ddd;
+             box-shadow: none;
+        }
+        .lecture-accordion .accordion-body {
+            padding: 2.5rem;
+            font-size: 1.05rem;
+        }
+        .lecture-accordion .accordion-body h3 {
+            font-size: 1.6rem;
+            color: #333;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #007bff;
+            padding-left: 12px;
+        }
+        .lecture-accordion .accordion-body h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111;
+            margin-top: 1.5rem;
+        }
+        .lecture-accordion .accordion-body pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1.2rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .lecture-accordion .accordion-body p > code,
+        .lecture-accordion .accordion-body li > code {
+            background-color: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body class="bg-body-secondary">
+
+    <nav class="navbar navbar-custom shadow-sm">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="base.html">Computer Science Course</a>
+            <span class="navbar-text ms-auto d-none d-sm-block me-3">
+                Lecturer. Nguyen Chi Cuong
+            </span>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">Chapters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div class="accordion accordion-flush" id="chaptersAccordion">
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch1">
+                            Chapter 1. Data representation
+                        </button>
+                    </h2>
+                    <div id="collapse-ch1" class="accordion-collapse collapse show" data-bs-parent="#chaptersAccordion">
+                        <div class="accordion-body p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><a href="chapter1.html">Lecture 1</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch2"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch2">Chapter 2. Data Transmission</button></h2>
+                    <div id="collapse-ch2" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                        <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 2</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch3"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch3">Chapter 3. Hardware</button></h2>
+                    <div id="collapse-ch3" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                        <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 3</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch4"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch4">Chapter 4. Software</button></h2>
+                    <div id="collapse-ch4" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 4</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch5"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch5">Chapter 5. The internet and its uses</button></h2>
+                    <div id="collapse-ch5" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 5</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch6"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch6">Chapter 6. Automated and emerging...</button></h2>
+                    <div id="collapse-ch6" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 6</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch7"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch7">Chapter 7. Algorithm design and...</button></h2>
+                    <div id="collapse-ch7" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 7</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch8"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch8">Chapter 8. Programming</button></h2>
+                    <div id="collapse-ch8" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 8</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch9"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch9">Chapter 9. Databases</button></h2>
+                    <div id="collapse-ch9" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 9</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-ch10"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch10">Chapter 10. Boolean logic</button></h2>
+                    <div id="collapse-ch10" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 10</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-array"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-array">Array</button></h2>
+                    <div id="collapse-array" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
+                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="array_lecture.html">Lecture (2D Array)</a></li></ul></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="py-5">
+            <h1>Chapter 1: Data Representation</h1>
+            <p class="lead">This chapter considers the three key number systems used in computer science... (Nội dung tóm tắt)</p>
+            
+            <div class="accordion shadow-sm lecture-accordion" id="lectureAccordion">
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec1">
+                            1.1 Number Systems
+                        </button>
+                    </h2>
+                    <div id="collapseLec1" class="accordion-collapse collapse show" data-bs-parent="#lectureAccordion">
+                        <div class="accordion-body">
+                            
+                            <h3>1.1.1 Binary Represents Data</h3>
+                            <p>The basic building block in all computers is the binary number system...</p>
+
+                            <h3>1.1.2 Binary, Denary, and Hexadecimal Systems</h3>
+                            <p><strong>Denary (Base 10):</strong> ... $10^4$ (10 000), ... $10^0$ (1).</p>
+                            <p><strong>Binary (Base 2):</strong> ... (từ $2^7$ đến $2^0$).</p>
+                            <p><strong>Hexadecimal (Base 16):</strong> ... $16 = 2^4$, ...</p>
+                            
+                            <h4 class="mt-4">Conversion Between Number Systems</h4>
+                            <ul>
+                                <li><strong>Binary to Denary:</strong> ...</li>
+                                <li><strong>Denary to Binary:</strong> ...</li>
+                                <li>...</li>
+                            </ul>
+                            
+                            <h3>1.1.6 Two’s Complement</h3>
+                            <p>Used to represent negative integers. Range is -128 ($10000000_2$) to +127 ($01111111_2$).</p>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec2">
+                            1.2 Text, Sound, and Images
+                        </button>
+                    </h2>
+                    <div id="collapseLec2" class="accordion-collapse collapse" data-bs-parent="#lectureAccordion">
+                        <div class="accordion-body">
+                            <h3>1.2.1 Character Sets – ASCII Code and Unicode</h3>
+                            <p>...</p>
+                            <h3>1.2.2 Representation of Sound</h3>
+                            <p>...</p>
+                            <h3>1.2.3 Representation of (Bitmap) Images</h3>
+                            <p>...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec3">
+                            1.3 Data Storage and File Compression
+                        </button>
+                    </h2>
+                    <div id="collapseLec3" class="accordion-collapse collapse" data-bs-parent="#lectureAccordion">
+                        <div class="accordion-body">
+                            <h3>1.3.1 Measurement of Data Storage</h3>
+                            <table class="table table-bordered table-striped w-auto">
+                                <tbody>
+                                    <tr><td>1 Kibibyte (KiB)</td><td>$2^{10}$</td><td>1,024 bytes</td></tr>
+                                    <tr><td>1 Mebibyte (MiB)</td><td>$2^{20}$</td><td>1,048,576 bytes</td></tr>
+                                    <tr><td>1 Gibibyte (GiB)</td><td>$2^{30}$</td><td>1,073,741,824 bytes</td></tr>
+                                </tbody>
+                            </table>
+                            <h3>1.3.2 Calculation of File Size</h3>
+                            <pre><code>Image resolution (pixels) × colour depth (bits)</code></pre>
+                            <h3>1.3.4 Lossy and Lossless File Compression</h3>
+                            <p>...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPnbuI6B3N1NlQnF/B/vE/sRprMUPPUZUWx5sW/WfBvFhVokU/nLd0TuG8+T2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-ZAmRELceRBOVvNclMtC1FOKevN1MCDhT/X/fIxoIlrJTNLBlNoRmbjHhDEujQlP/+" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Chỉ cần render KaTeX
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html> 

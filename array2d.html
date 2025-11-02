@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Lecture: 2D Arrays in Pseudo Code</title>
+    
+    <style>
+        /* CSS Variables for color theme */
+        :root {
+            --primary-blue: #007bff;
+            --secondary-blue: #0056b3;
+            --light-blue-bg: #f0f7ff;
+            --white: #ffffff;
+            --text-dark: #333;
+            --text-light: #555;
+            --border-color: #ddd;
+            --code-bg: #f8f9fa;
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--light-blue-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main Lecture Container */
+        .lecture-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 30px 40px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--secondary-blue);
+            padding: 10px 40px;
+            text-align: center;
+        }
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 30px 40px;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+        }
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            border-bottom: 2px solid var(--light-blue-bg);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-blue);
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        /* Text & List Styling */
+        p {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Code Block Styling */
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        /* Box Styling for Examples/Exercises */
+        .example-box, .exercise-box {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+        .example-box h3, .exercise-box h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Button Styling (for exercises) */
+        .toggle-solution-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-solution-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Solution Content (hidden by default) */
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="lecture-container">
+
+        <header>
+            <h1>Computer Science Fundamentals</h1>
+            <p>Topic: 2D Arrays in Pseudo Code</p>
+        </header>
+
+        <nav>
+            <a href="#section-intro-2d">Introduction</a>
+            <a href="#section-operations-2d">Operations</a>
+            <a href="#section-examples-2d">Examples</a>
+            <a href="#section-exercises-2d">Exercises</a>
+        </nav>
+
+        <main>
+
+            <section id="section-intro-2d">
+                <h2>1. Introduction to 2D Arrays</h2>
+                <p>
+                    If a 1D array is like a single row of mailboxes, a <strong>2D array</strong> (or two-dimensional array) is like a <strong>grid</strong>, a spreadsheet, or a game board. It has both <strong>rows</strong> and <strong>columns</strong>.
+                </p>
+                <p>
+                    Think of a movie theater with rows and seats, a chessboard, or a matrix in mathematics. These are all 2D structures.
+                </p>
+                
+                <h3>Indexing</h3>
+                <p>
+                    To access a specific item, you now need <strong>two indices</strong>:
+                </p>
+                <ul>
+                    <li>The first index is the <strong>row index</strong>.</li>
+                    <li>The second index is the <strong>column index</strong>.</li>
+                </ul>
+                <p>
+                    Just like 1D arrays, both indices almost always start from <strong>zero</strong>. We write the notation as <code>arrayName[row][column]</code>.
+                </p>
+                <p>For example, given a 3x3 array named <code>grid</code>:</p>
+                <pre><code>   (col 0) (col 1) (col 2)
+(row 0) [ "A" ] [ "B" ] [ "C" ]
+(row 1) [ "D" ] [ "E" ] [ "F" ]
+(row 2) [ "G" ] [ "H" ] [ "I" ]
+
+grid[0][0] is "A" (row 0, col 0)
+grid[1][2] is "F" (row 1, col 2)
+grid[2][1] is "H" (row 2, col 1)</code></pre>
+            </section>
+
+            <section id="section-operations-2d">
+                <h2>2. 2D Array Operations in Pseudo Code</h2>
+                <p>
+                    The keywords are similar, but we must account for both dimensions.
+                </p>
+
+                <h3>2.1 Declaration & Initialization</h3>
+                <p>You must specify the number of rows and columns. Here's how to create an array with 3 rows and 4 columns.</p>
+                <pre><code>// 1. Declare an empty 2D array (3 rows, 4 columns)
+DECLARE scoreSheet AS Array[3][4] OF Integer
+
+// 2. Declare and initialize with values (a 2x3 array)
+//    Note the nested "inner" arrays for each row
+INITIALIZE ticTacToe = [ ["X", "O", "X"], 
+                        ["O", "X", "O"], 
+                        ["X", "O", "O"] ]</code></pre>
+
+                <h3>2.2 Accessing & Modifying Elements</h3>
+                <p>You use the <code>[row][column]</code> index to read or change a value at a specific position.</p>
+                <pre><code>INITIALIZE gameBoard = [ ["-", "-", "-"], 
+                         ["-", "-", "-"], 
+                         ["-", "-", "-"] ]
+
+// Set an 'X' in the center (row 1, col 1)
+SET gameBoard[1][1] = "X"
+
+// Read the value from the top-right corner (row 0, col 2)
+SET playerMove = gameBoard[0][2]
+
+PRINT playerMove  // This will display "-"</code></pre>
+            </section>
+            
+            <section id="section-examples-2d">
+                <h2>3. Common Examples</h2>
+                <p>The most common operation with a 2D array is "traversing" (looping through) it using <strong>nested loops</strong> (one loop inside another).</p>
+                <ul>
+                    <li>The <strong>outer loop</strong> iterates through the <strong>rows</strong>.</li>
+                    <li>The <strong>inner loop</strong> iterates through all <strong>columns</strong> *for the current row*.</li>
+                </ul>
+
+                <div class="example-box">
+                    <h3>Example 1: Traversing and Printing All Elements</h3>
+                    <p>This pseudo code prints every element in a 2x3 matrix, one row at a time.</p>
+                    <pre><code>START
+    INITIALIZE matrix = [ [1, 2, 3], 
+                          [4, 5, 6] ]
+    
+    // This array has 2 rows (index 0 and 1)
+    // This array has 3 columns (index 0, 1, and 2)
+    
+    // Outer loop: iterates through rows
+    FOR row = 0 TO 1
+        
+        // Inner loop: iterates through columns
+        FOR col = 0 TO 2
+            
+            // Print the element at [row][col]
+            PRINT matrix[row][col]
+            
+        ENDFOR
+        
+        // (Optional) Print a new line after each row is finished
+        PRINT_NEW_LINE()
+        
+    ENDFOR
+END</code></pre>
+                    <p><strong>Output:</strong><br>
+                    1<br>
+                    2<br>
+                    3<br>
+                    (New Line)<br>
+                    4<br>
+                    5<br>
+                    6<br>
+                    (New Line)</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>Example 2: Calculating the Sum of All Elements</h3>
+                    <p>This pseudo code finds the total sum of all numbers in the 2D array.</p>
+                    <pre><code>START
+    INITIALIZE myGrid = [ [10, 20], 
+                         [30, 40], 
+                         [50, 60] ] // A 3x2 array
+    
+    SET totalSum = 0
+    
+    // Outer loop: iterate rows (0 to 2)
+    FOR row = 0 TO 2
+        
+        // Inner loop: iterate columns (0 to 1)
+        FOR col = 0 TO 1
+            
+            // Add the value at [row][col] to the sum
+            SET totalSum = totalSum + myGrid[row][col]
+            
+        ENDFOR
+    ENDFOR
+    
+    PRINT "The total sum is: " + totalSum
+END</code></pre>
+                    <p><strong>Output:</strong><br>
+                    The total sum is: 210</p>
+                </div>
+            </section>
+
+            <section id="section-exercises-2d">
+                <h2>4. Sample Exercises</h2>
+                
+                <div class="exercise-box">
+                    <h3>Exercise 1: Find the Largest Number</h3>
+                    <p>You are given an array: <code>data = [ [5, 12, 3], [1, 9, 8], [15, 7, 2] ]</code>. Write pseudo code to find the <strong>largest</strong> number in this 2D array and print it.</p>
+                    
+                    <button class="toggle-solution-btn">Show Solution</button>
+                    <div class="solution-content">
+                        <pre><code>START
+    INITIALIZE data = [ [5, 12, 3], [1, 9, 8], [15, 7, 2] ]
+    
+    // Assume the first element is the largest (to start)
+    SET maxNumber = data[0][0]
+    
+    // Loop through rows (0 to 2)
+    FOR row = 0 TO 2
+        
+        // Loop through columns (0 to 2)
+        FOR col = 0 TO 2
+            
+            // Compare current element to our current max
+            IF data[row][col] > maxNumber THEN
+                // If it's bigger, update maxNumber
+                SET maxNumber = data[row][col]
+            ENDIF
+            
+        ENDFOR
+    ENDFOR
+    
+    PRINT "The largest number is: " + maxNumber
+END</code></pre>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h3>Exercise 2: Calculate Row Sums</h3>
+                    <p>You are given an array: <code>grades = [ [80, 85, 90], [92, 88, 95] ]</code>. Write pseudo code that calculates the sum for <strong>each row</strong> (i.e., for each student) and prints each sum separately.</p>
+                    
+                    <button class="toggle-solution-btn">Show Solution</button>
+                    <div class="solution-content">
+                        <pre><code>START
+    INITIALIZE grades = [ [80, 85, 90], [92, 88, 95] ]
+    
+    // Loop through rows (0 to 1)
+    FOR row = 0 TO 1
+        
+        // Reset the sum for each new row (each student)
+        SET rowSum = 0
+        
+        // Loop through columns (0 to 2)
+        FOR col = 0 TO 2
+            SET rowSum = rowSum + grades[row][col]
+        ENDFOR
+        
+        // Print the sum for the current row
+        PRINT "Sum for Row " + row + " is: " + rowSum
+        
+    ENDFOR
+END</code></pre>
+                        <p><strong>Output:</strong><br>
+                        Sum for Row 0 is: 255<br>
+                        Sum for Row 1 is: 275</p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer>
+            <p>Computer Science Department - Lecture Notes</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all toggle buttons
+            const buttons = document.querySelectorAll('.toggle-solution-btn');
+            
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Find the solution content related to this button
+                    const solution = this.nextElementSibling;
+                    
+                    // Toggle the display
+                    if (solution.style.display === 'block') {
+                        solution.style.display = 'none';
+                        this.textContent = 'Show Solution';
+                    } else {
+                        solution.style.display = 'block';
+                        this.textContent = 'Hide Solution';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
