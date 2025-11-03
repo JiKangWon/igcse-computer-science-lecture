@@ -3,502 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 9: Databases - Lecture</title>
-    <!-- Ghi chú: Đây là tệp HTML đầy đủ cho trang Bài giảng (Lecture) -->
+    <title>Chapter 9: Databases (Single-Table)</title>
     <style>
-        /* CSS Variables cho chủ đề màu */
-        :root {
-            --primary-blue: #005a9e; /* Màu xanh đậm chuyên nghiệp */
-            --light-blue: #007bff;
-            --sidebar-bg: #f8f9fa;   /* Màu nền thanh công cụ bên trái */
-            --content-bg: #ffffff;   /* Màu nền nội dung */
-            --header-bg: var(--primary-blue);
-            --header-text: #ffffff;
-            --text-dark: #212529;
-            --text-light: #495057;
-            --border-color: #dee2e6;
-            --hover-bg: #e9ecef;
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* Thiết lập lại (Reset) và Kiểu dáng chung */
-        body, html {
-            margin: 0;
-            padding: 0;
+        body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--content-bg);
-        }
-
-        /* Bố cục ứng dụng */
-        .app-layout {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Header cố định */
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* Thanh công cụ bên trái (Sidebar) */
-        .sidebar {
-            position: fixed;
-            top: 60px; /* Bên dưới header */
-            left: 0;
-            width: 280px;
-            height: calc(100vh - 60px); /* Chiều cao còn lại */
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 1rem;
-            overflow-y: auto; /* Cho phép cuộn nếu nhiều chương */
-            z-index: 900;
-        }
-
-        .sidebar-nav {
-            list-style: none;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
             padding: 0;
-            margin: 0;
         }
 
-        .sidebar-nav li {
-            margin-bottom: 5px;
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
         }
 
-        /* Kiểu dáng các mục trong Chapter */
-        .nav-chapter-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            font-weight: 600;
-            color: var(--primary-blue);
-            background-color: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .nav-chapter-toggle:hover {
-            background-color: var(--hover-bg);
-        }
-
-        /* Biểu tượng mũi tên (chevron) */
-        .nav-chapter-toggle::after {
-            content: '▼';
-            font-size: 0.8em;
-            transition: transform 0.2s;
-        }
-
-        .nav-chapter-toggle.active::after {
-            transform: rotate(180deg);
-        }
-        
-        /* Mục bị vô hiệu hóa (placeholder) */
-        .nav-chapter-toggle.disabled {
-            color: #aaa;
-            background-color: #fdfdfd;
-            cursor: not-allowed;
-        }
-        .nav-chapter-toggle.disabled:hover {
-            background-color: #fdfdfd;
-        }
-        .nav-chapter-toggle.disabled::after {
-            content: '';
-        }
-
-        /* Menu con (Lecture, Exercises) */
-        .nav-submenu {
-            list-style: none;
-            padding: 5px 0 5px 15px; /* Thụt lề */
-            margin: 0;
-            display: none; /* Ẩn theo mặc định */
-        }
-
-        .nav-submenu li a {
-            display: block;
-            padding: 8px 15px;
-            text-decoration: none;
-            color: var(--text-light);
-            border-radius: 5px;
-            transition: background-color 0.2s, color 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .nav-submenu li a:hover {
-            background-color: var(--hover-bg);
-            color: var(--text-dark);
-        }
-        
-        .nav-submenu li a.active {
-            background-color: var(--light-blue);
+        /* --- Header của bài giảng --- */
+        header {
+            /* Tông màu Xanh lá (Green) cho chủ đề Data/Databases */
+            background: linear-gradient(135deg, #1d6f42, #28a745, #1e8449);
             color: white;
-            font-weight: 500;
+            padding: 40px;
+            text-align: center;
         }
 
-        /* Khu vực nội dung chính */
-        .main-content {
-            margin-top: 60px;  /* Khoảng cách với header */
-            margin-left: 280px; /* Khoảng cách với sidebar */
-            padding: 2rem;
-            width: calc(100% - 280px); /* Chiều rộng còn lại */
-            overflow-y: auto; /* Cho phép cuộn nội dung */
-            height: calc(100vh - 60px);
-        }
-
-        /* * Lớp .content-page 
-         * Tất cả các trang nội dung sẽ có lớp này và bị ẩn.
-         * JS sẽ hiển thị trang được chọn.
-        */
-        .content-page {
-            display: none;
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
         }
         
-        /* Hiển thị trang đang hoạt động */
-        .content-page.active {
-            display: block;
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
         }
 
-        /* Kiểu dáng nội dung bài giảng */
-        .lecture-content h1 {
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--border-color);
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1d6f42; /* Match theme */
+            margin: 5px 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #28a745;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #1d6f42; /* Match theme */
+            border-bottom: 3px solid #28a745;
             padding-bottom: 10px;
+            margin-top: 0;
         }
 
-        .lecture-content h2 {
-            color: var(--text-dark);
-            margin-top: 2rem;
-        }
-        
-        .lecture-content h3 {
-            color: var(--text-light);
-            margin-top: 1.5rem;
-        }
-        
-        .lecture-content p, 
-        .lecture-content ul, 
-        .lecture-content ol {
-            margin-bottom: 1rem;
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
         }
 
-        .lecture-content li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .lecture-content code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: #f1f1f1;
-            padding: 2px 5px;
-            border-radius: 3px;
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
         }
 
-        .lecture-content pre {
-            background-color: #f8f9fa;
-            border: 1px solid var(--border-color);
-            border-left: 5px solid var(--light-blue);
-            padding: 15px;
-            border-radius: 5px;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.95rem;
-            overflow-x: auto;
-            white-space: pre-wrap; /* Cho phép xuống dòng */
-        }
-
-        /* Bảng (Table) */
-        .lecture-content table {
+        /* --- Bảng biểu --- */
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.5rem 0;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .lecture-content th, 
-        .lecture-content td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             text-align: left;
         }
 
-        .lecture-content th {
-            background-color: var(--sidebar-bg);
+        th {
+            background-color: #1d6f42;
+            color: white;
             font-weight: 600;
         }
-        
-        /* Hộp bài tập */
-        .exercise-box {
-            background-color: var(--content-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
         
-        .exercise-box h3 {
-            margin-top: 0;
-            color: var(--primary-blue);
+        /* Định dạng SQL */
+        code.sql {
+            display: block;
+            background-color: #1e1e1e; /* Dark bg */
+            color: #d4d4d4; /* Light text */
+            padding: 15px;
+            border-radius: 5px;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 1.1em;
+            border: 1px solid #3a3a3a;
+            white-space: pre-wrap; /* Wrap long lines */
         }
         
-        /* Footer */
-        .app-footer {
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.9rem;
-            color: #777;
+        code.sql .keyword {
+            color: #569cd6; /* Blue (keywords) */
+            font-weight: 700;
+        }
+        
+        code.sql .string {
+            color: #ce9178; /* Orange (strings) */
+        }
+        
+        code.sql .operator {
+            color: #d4d4d4; /* White */
+        }
+
+        /* Danh sách */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #28a745; /* Match theme */
+            background: #f0fff4;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER -->
-    <header class="app-header">
-        Computer Science Course Portal
-    </header>
+    <div class="container">
+        <header>
+            <h1>Chapter 9: Single-Table Databases</h1>
+            <p>Course: Computer Science (IGCSE Level)</p>
+        </header>
 
-    <!-- Bố cục chính -->
-    <div class="app-layout">
-        
-        <!-- 2. SIDEBAR (Thanh công cụ bên trái) -->
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    
-                    <!-- Mục 1: Placeholder -->
-                    <li>
-                        <div class="nav-chapter-toggle disabled">Chapter 1: Introduction</div>
-                    </li>
-                    
-                    <!-- Mục 2: Placeholder -->
-                    <li>
-                        <div class="nav-chapter-toggle disabled">Chapter 2: Algorithms</div>
-                    </li>
+        <nav>
+            <a href="#objectives">Objectives</a>
+            <a href="#core-concepts">Core Concepts</a>
+            <a href="#data-types">Data Types</a>
+            <a href="#primary-keys">Primary Keys</a>
+            <a href="#sql">SQL</a>
+            <a href="#activities">Activities</a>
+        </nav>
 
-                    <!-- ... Thêm các chapter khác ở đây ... -->
-                    
-                    <!-- Mục 9: Nội dung từ PDF -->
-                    <li>
-                        <div class="nav-chapter-toggle" id="toggle-ch9">Chapter 9: Databases</div>
-                        <ul class="nav-submenu" id="submenu-ch9">
-                            <!-- ĐÁNH DẤU 'active' cho trang này -->
-                            <li><a href="chapter9.html" class="nav-link active">Lecture</a></li>
-                            <li><a href="exr_chapter9.html" class="nav-link">Exercises</a></li>
-                        </ul>
-                    </li>
-                    
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- 3. MAIN CONTENT (Nội dung chính) -->
-        <main class="main-content">
-        
-            <!-- Trang Chào mừng (ĐÃ BỊ XÓA) -->
-            
-            <!-- 
-            =================================================
-            NỘI DUNG CHAPTER 9 (TỪ PDF)
-            =================================================
-            -->
-            
-            <!-- Trang Bài giảng Chapter 9 (HIỂN THỊ) -->
-            <div class="content-page lecture-content active" id="ch9-lecture">
-                <h1>Chapter 9: Databases</h1>
-                
-                <h2>9.1.1 Single-table databases</h2>
-                <p>A <strong>database</strong> is a structured collection of data that allows people to extract information in a way that meets their needs. The data can include text, numbers, pictures; anything that can be stored in a computer. For IGCSE, only single-table databases (a database with only one table) will be studied.</p>
-
-                <h3>Why are databases useful?</h3>
+        <main>
+            <section id="objectives">
+                <h2>I. Learning Objectives</h2>
+                <p>Upon completing this chapter, students will learn about:</p>
                 <ul>
-                    <li>If any changes or additions are made, it only has to be done once (data is consistent).</li>
-                    <li>The same data is used by everyone.</li>
-                    <li>Data is only stored once, which means no data duplication.</li>
+                    <li>The design and use of single table databases, including: Fields, Records, and Validation.</li>
+                    <li>The use of basic data types: Text/alphanumeric, Character, Boolean, Integer, Real, Date/time.</li>
+                    <li>The identification, purpose, and use of primary keys.</li>
+                    <li>SQL scripts, which are used to query data stored in a single table database.</li>
                 </ul>
+            </section>
 
-                <h3>What are databases used for?</h3>
+            <section id="core-concepts">
+                <h2>II. Core Concepts (9.1 Databases)</h2>
+
+                <h3>1. Definition and Application</h3>
+                <p>A <strong>database</strong> is defined as a structured collection of data that enables people to extract information according to their needs. This data can consist of text, numbers, pictures, or anything storable in a computer.</p>
                 <ul>
-                    <li><strong>People:</strong> patients in a hospital, pupils at a school.</li>
-                    <li><strong>Things:</strong> cars to be sold, books in a library.</li>
-                    <li><strong>Events:</strong> hotel bookings, results of races.</li>
+                    <li><strong>Scope:</strong> At the IGCSE level, students only study <strong>single-table databases</strong>.</li>
+                    <li><strong>Usefulness:</strong> Databases prevent problems because data is consistent (changed once), the same data is used by everyone, and there is no data duplication.</li>
+                    <li><strong>Storage:</strong> Used to store information about people (patients), things (books), or events (bookings).</li>
                 </ul>
-                
-                <hr>
 
-                <h3>Fields and Records</h3>
-                <p>Inside a database, data is stored in <strong>tables</strong>. Each table consists of many <strong>records</strong>. Each record consists of several <strong>fields</strong>.</p>
+                <h3>2. Fields and Records – The Building Blocks (9.1.1)</h3>
+                <p>Data is stored in tables, composed of records, which consist of fields.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key Term</th>
+                            <th>Definition</th>
+                            <th>Role/Structure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Table</strong></td>
+                            <td>A collection of related records.</td>
+                            <td>The overall structure (e.g., PATIENT).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Record</strong></td>
+                            <td>A collection of fields that describe one item.</td>
+                            <td>Represents a <strong>row</strong> in the table.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Field</strong></td>
+                            <td>A specific piece of information about the item.</td>
+                            <td>Represents a <strong>column</strong>. The number of fields is fixed. Field names must be a single word (e.g., FirstName).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>3. Validation</h3>
+                <p><strong>Validation</strong> is the process used to ensure that data entry is correct and appropriate.</p>
                 <ul>
-                    <li><strong>Record:</strong> A single row in the table. It contains all data about a single item, person, or event (e.g., all information about one patient).</li>
-                    <li><strong>Field:</strong> A single column in the table. It contains a specific piece of information (e.g., <code>FirstName</code>, <code>DateOfAdmission</code>).</li>
+                    <li><strong>Automatic Validation:</strong> Provided by the DBMS (e.g., checking if a date is a valid date).</li>
+                    <li><strong>Developer-set Validation:</strong> Set up by the developer (e.g., WardNumber field must be a whole number from 1 to 10).</li>
                 </ul>
-                
-                <h3>Validation</h3>
-                <p>Validation checks are used to ensure that data is sensible and reasonable before it is stored. Some checks are automatic (like checking for a valid date in a Date/Time field), while others must be set up by the developer (e.g., ensuring <code>WardNumber</code> is between 1 and 10).</p>
+            </section>
 
-                <hr>
-                
-                <h2>9.1.2 Basic Data Types</h2>
-                <p>A data type classifies how data is stored and what operations can be performed on it.</p>
+            <section id="data-types">
+                <h2>III. Basic Data Types (9.1.2)</h2>
+                <p>A data type classifies how data is stored, displayed, and which operations can be performed. There are six basic data types:</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Syllabus Data Type</th>
                             <th>Description</th>
-                            <th>Example (Access Data Type)</th>
+                            <th>Access Data Type</th>
+                            <th>SQL/General Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>text/alphanumeric</strong></td>
-                            <td>A number of characters (letters, numbers, symbols).</td>
-                            <td>Short Text / Long Text</td>
+                            <td>A number of characters.</td>
+                            <td>Short text/Long text.</td>
+                            <td>SQL uses VARCHAR(n).</td>
                         </tr>
                         <tr>
                             <td><strong>character</strong></td>
                             <td>A single character.</td>
-                            <td>Short Text (with Field Size of 1)</td>
+                            <td>Short text (size 1).</td>
+                            <td>SQL uses CHAR(1).</td>
                         </tr>
                         <tr>
                             <td><strong>Boolean</strong></td>
-                            <td>One of two values: True/False, Yes/No, 1/0.</td>
-                            <td>Yes/No</td>
+                            <td>True/False, 1/0, or Yes/No.</td>
+                            <td>Yes/No.</td>
+                            <td>SQL often uses 1 (True) and 0 (False).</td>
                         </tr>
                         <tr>
                             <td><strong>integer</strong></td>
-                            <td>A whole number.</td>
-                            <td>Number (Fixed, 0 decimal places)</td>
+                            <td>Whole number.</td>
+                            <td>Number (fixed, 0 decimals).</td>
+                            <td>Whole numbers.</td>
                         </tr>
                         <tr>
                             <td><strong>real</strong></td>
                             <td>A decimal number.</td>
-                            <td>Number (Decimal)</td>
+                            <td>Number (decimal).</td>
+                            <td>Numbers with decimal places.</td>
                         </tr>
                         <tr>
                             <td><strong>date/time</strong></td>
-                            <td>Stores date and/or time values.</td>
-                            <td>Date/Time</td>
+                            <td>Date and/or time.</td>
+                            <td>Date/Time.</td>
+                            <td>SQL uses DATE (YYYY-MM-DD).</td>
                         </tr>
                     </tbody>
                 </table>
-                
-                <hr>
+            </section>
 
-                <h2>9.1.3 Primary Keys</h2>
-                <p>A <strong>primary key</strong> is a field that uniquely identifies every record in a table. The value in this field must be unique for each record (it can never be repeated).</p>
-                <p>For example, in a <code>PATIENT</code> table, <code>FirstName</code> is not a good primary key (you can have two patients named John). A field like <code>HospitalNumber</code> (e.g., HN123456) would be a good primary key because it is unique to each patient.</p>
+            <section id="primary-keys">
+                <h2>IV. Primary Keys (9.1.3)</h2>
+                <p>The <strong>primary key</strong> is a field in a database whose essential purpose is to <strong>uniquely identify a record</strong>.</p>
+                <p><strong>Key Requirement:</strong> A field chosen as the primary key must contain data values that are <strong>never repeated</strong> within the table.</p>
+                <p>This may be an existing field (e.g., ISBN for a book) or an extra field added for this purpose (e.g., HospitalNumber for a patient).</p>
+            </section>
 
-                <hr>
-                
-                <h2>9.1.4 SQL (Structured Query Language)</h2>
-                <p>SQL is the standard language used to query (ask questions) and get information from a database.</p>
-                
-                <h3>Common SQL Query Statements</h3>
+            <section id="sql">
+                <h2>V. Structured Query Language (SQL) (9.1.4)</h2>
+                <p><strong>Structured Query Language (SQL)</strong> is the standard query language used for writing scripts to obtain useful information from a database. An SQL script is a list of SQL commands.</p>
+
+                <h3>1. SQL Query Statements (Data Manipulation Language - DML)</h3>
+                <p>An SQL command must begin with <code>SELECT</code> and end with a semicolon (<code>;</code>).</p>
                 <table>
                     <thead>
-                        <tr><th>Statement</th><th>Description</th></tr>
+                        <tr>
+                            <th>SQL Command</th>
+                            <th>Description</th>
+                            <th>Syntax Notes</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><code>SELECT</code></td><td>Fetches specified fields (columns) from a table.</td></tr>
-                        <tr><td><code>FROM</code></td><td>Identifies the table to use.</td></tr>
-                        <tr><td><code>WHERE</code></td><td>Includes only records (rows) that match a specific condition.</td></tr>
-                        <tr><td><code>ORDER BY</code></td><td>Sorts the results (e.g., alphabetically, numerically).</td></tr>
-                        <tr><td><code>SUM</code></td><td>Returns the total sum of a numeric field.</td></tr>
-                        <tr><td><code>COUNT</code></td><td>Counts the number of records that match a condition.</td></tr>
+                        <tr>
+                            <td><strong>SELECT</strong></td>
+                            <td>Fetches specified fields (columns).</td>
+                            <td><code>SELECT Field1, Field2</code> or <code>SELECT *</code> (all fields).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FROM</strong></td>
+                            <td>Identifies the table to use.</td>
+                            <td><code>FROM TableName</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WHERE</strong></td>
+                            <td>Includes only records (rows) that match a condition.</td>
+                            <td><code>WHERE Condition</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ORDER BY</strong></td>
+                            <td>Sorts the results by a given column.</td>
+                            <td>Default is ascending. Use <code>DESC</code> for descending.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SUM</strong></td>
+                            <td>Returns the sum of all values in a field.</td>
+                            <td>Used with <code>SELECT</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>COUNT</strong></td>
+                            <td>Counts the number of records matching a condition.</td>
+                            <td>Used with <code>SELECT</code>.</td>
+                        </tr>
                     </tbody>
                 </table>
 
-                <h3>Common SQL Operators (used with <code>WHERE</code>)</h3>
-                <table>
-                    <thead>
-                        <tr><th>Operator</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>=</code></td><td>equal to</td></tr>
-                        <tr><td><code><></code></td><td>not equal to</td></tr>
-                        <tr><td><code>></code></td><td>greater than</td></tr>
-                        <tr><td><code><</code></td><td>less than</td></tr>
-                        <tr><td><code>>=</code></td><td>greater than or equal to</td></tr>
-                        <tr><td><code><=</code></td><td>less than or equal to</td></tr>
-                        <tr><td><code>BETWEEN</code></td><td>between a range of two values</td></tr>
-                        <tr><td><code>LIKE</code></td><td>search for a pattern (e.g., <code>LIKE 'Mr*'</code>)</td></tr>
-                        <tr><td><code>AND</code></td><td>specifies multiple conditions that must ALL be true</td></tr>
-                        <tr><td><code>OR</code></td><td>specifies multiple conditions where at least ONE must be true</td></tr>
-                    </tbody>
-                </table>
+                <h3>2. Conditions and Data Formatting in WHERE Clauses</h3>
+                <p>Values in <code>WHERE</code> conditions must match the data type:</p>
+                <ul>
+                    <li><strong>Text/Character:</strong> Must be in single quotation marks (e.g., <code>'Mr Smith'</code>, <code>'M'</code>).</li>
+                    <li><strong>Date/Time (Access):</strong> Must be in hashes (e.g., <code>#22/11/2022#</code>).</li>
+                    <li><strong>Integer/Real/Boolean:</strong> Should not have quotation marks (e.g., <code>12</code>, <code>TRUE</code>).</li>
+                </ul>
+                <p><strong>Operators:</strong> <code>=</code>, <code><></code> (not equal), <code>></code>, <code><=</code>, <code>BETWEEN</code>, <code>AND</code>, <code>OR</code>, <code>NOT</code>.</p>
 
-                <h3>SQL Example 1: Display consultant's patients</h3>
-                <p>This SQL command would provide a list of all Mr Smith's patients.</p>
-                <pre><code>
-SELECT HospitalNumber, FirstName, FamilyName
-FROM PATIENT
-WHERE Consultant = 'Mr Smith';
-                </code></pre>
+                <h4>Example SQL Query:</h4>
+                <p>To display the hospital number, first name, and family name of all patients treated by 'Mr Smith':</p>
+                <code class="sql">
+                    <span class="keyword">SELECT</span> HospitalNumber, FirstName, FamilyName<br>
+                    <span class="keyword">FROM</span> PATIENT<br>
+                    <span class="keyword">WHERE</span> Consultant <span class="operator">=</span> <span class="string">'Mr Smith'</span>;
+                </code>
+            </section>
+
+            <section id="activities">
+                <h2>VI. Practical Application and Activities</h2>
+                <p>Students are encouraged to use a DBMS (like MS Access 365) to gain practical experience.</p>
+                <ol>
+                    <li><strong>Database Setup:</strong> Set up the PATIENT table.</li>
+                    <li><strong>Data Typing and Validation:</strong> Choose data types and add validation (e.g., WardNumber between 1 and 10).</li>
+                    <li><strong>Primary Key Setup:</strong> Add the primary key field (e.g., HospitalNumber) and include validation.</li>
+                    <li><strong>Query Practice:</strong> Practice writing SQL queries using <code>SELECT</code>, <code>WHERE</code>, <code>BETWEEN</code>, <code>COUNT</code>, and <code>ORDER BY</code>.</li>
+                </ol>
+            </section>
+
+            <section id="extension">
+                <h2>VII. Extension: SQL DDL and Relational Concepts (A Level)</h2>
+                <p>For A Level, the scope extends to relational databases (multiple tables).</p>
+                <ul>
+                    <li><strong>Data Definition Language (DDL):</strong> Used to create/modify data structures (e.g., <code>CREATE DATABASE</code>, <code>CREATE TABLE</code>, <code>ALTER TABLE</code>).</li>
+                    <li><strong>Data Manipulation Language (DML):</strong> Used to add, modify, delete, and retrieve data (e.g., <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>).</li>
+                </ul>
                 
-                <h3>SQL Example 2: Same list, but sorted</h3>
-                <p>This SQL command sorts the records in alphabetical order of family name.</p>
-                <pre><code>
-SELECT HospitalNumber, FirstName, FamilyName
-FROM PATIENT
-WHERE Consultant = 'Mr Smith'
-ORDER BY FamilyName;
-                </code></pre>
-
-            </div>
-            
-            <!-- Trang Bài tập (ĐÃ BỊ XÓA) -->
-
-            <!-- 4. FOOTER -->
-            <footer class="app-footer">
-                Lecturer: Nguyễn Chí Cường
-            </footer>
-            
+                <h3>Analogy to solidify understanding</h3>
+                <blockquote>
+                    <p>Think of a single-table database as a highly organized physical ledger.</p>
+                    <ul>
+                        <li>The <strong>Table</strong> is the entire ledger book itself (e.g., Patient Records).</li>
+                        <li>Each <strong>Record</strong> is a completed page in that ledger, detailing one specific patient.</li>
+                        <li>Each <strong>Field</strong> is a pre-labeled blank line on every page (like "First Name" or "Bed Number").</li>
+                        <li>The <strong>Primary Key</strong> is the unique, stamped ID number that ensures no two pages describe the same person.</li>
+                        <li><strong>SQL</strong> is the search engine function: you tell the system, "Fetch (<code>SELECT</code>) the names and ward numbers <code>FROM</code> this ledger (<code>PATIENT</code>) <code>WHERE</code> the consultant is 'Mr Smith'."</li>
+                    </ul>
+                </blockquote>
+            </section>
         </main>
     </div>
-
-    <!-- 5. JAVASCRIPT -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            const chapterToggles = document.querySelectorAll('.nav-chapter-toggle');
-
-            // --- Xử lý việc Bật/Tắt Menu con ---
-            chapterToggles.forEach(toggle => {
-                if (toggle.classList.contains('disabled')) {
-                    return;
-                }
-                toggle.addEventListener('click', function() {
-                    const submenu = this.nextElementSibling;
-                    this.classList.toggle('active');
-                    if (submenu.style.display === 'block') {
-                        submenu.style.display = 'none';
-                    } else {
-                        submenu.style.display = 'block';
-                    }
-                });
-            });
-            
-            // Tự động mở mục Chapter 9
-            const ch9Toggle = document.getElementById('toggle-ch9');
-            if(ch9Toggle) {
-                ch9Toggle.click(); // Tự động mở menu Chapter 9
-            }
-
-        });
-    </script>
 
 </body>
 </html>

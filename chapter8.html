@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Programming</title>
+    <style>
+        /* --- Cài đặt CSS - Giao diện Dark Mode (Code Editor) --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #1e1e1e; /* Nền tối của VS Code */
+            color: #d4d4d4; /* Chữ xám nhạt */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #252526; /* Nền nội dung tối */
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 1px solid #3a3a3a;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            background: linear-gradient(135deg, #0d47a1, #1e1e1e);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 2px solid #00aeff; /* Accent */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #1a1a1a;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #3a3a3a;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #00aeff; /* Accent */
+            margin: 5px 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s, background-color 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            background-color: #00aeff;
+            text-decoration: none;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #3a3a3a;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #00aeff; /* Accent */
+            border-bottom: 3px solid #00aeff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #9cdcfe; /* Light blue */
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #ce9178; /* Orange-ish */
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách & Mã giả --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+        
+        li > ul, li > ol {
+            margin-top: 10px;
+        }
+
+        /* Định dạng Pseudocode (Syntax Highlighting) */
+        code {
+            background-color: #1a1a1a; /* Nền khối mã */
+            color: #9cdcfe; /* Chữ mã màu xanh nhạt */
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-family: "Consolas", "Courier New", monospace;
+            font-weight: 600;
+            font-size: 1em;
+            border: 1px solid #3a3a3a;
+        }
+        
+        code .keyword {
+            color: #569cd6; /* Blue (keywords) */
+            font-weight: 700;
+        }
+        
+        code .comment {
+            color: #6a9955; /* Green (comments) */
+        }
+        
+        code .operator {
+            color: #d4d4d4; /* White (operators) */
+        }
+
+        /* Bảng biểu (Key Terms) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #3a3a3a;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #3a3a3a;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00aeff; /* Accent */
+            color: #1e1e1e;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a2e; /* Nền hàng chẵn */
+        }
+        
+        /* Danh sách định nghĩa */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #9cdcfe; /* Light blue */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #00aeff; /* Accent */
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #00aeff; /* Accent */
+            background: #2a2a2e;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 8: PROGRAMMING</h1>
+            <p>Subject: Computer Science (Core Programming Concepts, Data Structures, and File Handling)</p>
+        </header>
+
+        <nav>
+            <a href="#objectives">Objectives</a>
+            <a href="#concepts">Concepts</a>
+            <a href="#subroutines">Subroutines</a>
+            <a href="#data-structures">Data Structures</a>
+            <a href="#file-handling">File Handling</a>
+            <a href="#key-terms">Key Terms</a>
+            <a href="#activities">Activities</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>I. LEARNING OBJECTIVES</h2>
+                <p>Upon completion of this chapter, the learner will be able to:</p>
+                <ul>
+                    <li>Understand and utilize fundamental programming concepts: sequence, selection (including nesting), iteration, totalling, counting, input, and output.</li>
+                    <li>Define and use data storage: variables, constants, and appropriate data types (integer, real, char, string, Boolean).</li>
+                    <li>Apply operators: arithmetic, logical, and Boolean operators.</li>
+                    <li>Implement modular programming: define and use procedures and functions, including the use of parameters, local and global variables, and library routines.</li>
+                    <li>Work with structured data: declare, use, read, and write arrays (one- and two-dimensional).</li>
+                    <li>Perform file handling: store data in a file and retrieve data from a file.</li>
+                    <li>Write maintainable programs.</li>
+                </ul>
+            </section>
+
+            <section id="concepts">
+                <h2>II. DETAILED CONTENT (1/4): Programming Concepts</h2>
+                <p>Writing computer programs puts your computational thinking to the ultimate test. Recommended languages include Python, Visual Basic, or Java.</p>
+
+                <h4>8.1.1 Basic Constructs</h4>
+                <ul>
+                    <li><strong>Data use:</strong> Variables, constants, and arrays.</li>
+                    <li><strong>Sequence:</strong> The order of steps in a task.</li>
+                    <li><strong>Selection:</strong> Choosing a path through a program.</li>
+                    <li><strong>Iteration:</strong> Repetition of a sequence of steps.</li>
+                    <li><strong>Operator use:</strong> Arithmetic, logical, and Boolean.</li>
+                </ul>
+
+                <h4>8.1.2 Variables and Constants</h4>
+                <dl>
+                    <dt>Variable</dt>
+                    <dd>A named data store containing a value that <strong>may change</strong> during program execution.</dd>
+                    <dt>Constant</dt>
+                    <dd>A named data store containing a value that <strong>does not change</strong> during program execution.</dd>
+                    <dt>Declaration (Define)</dt>
+                    <dd>Defines the value and data type. Some languages are explicit, others implicit. Python does not require separate declarations.</dd>
+                </dl>
+
+                <h4>8.1.3 Basic Data Types</h4>
+                <ul>
+                    <li><strong>INTEGER:</strong> A positive or negative whole number.</li>
+                    <li><strong>REAL:</strong> A positive or negative number with a fractional part (decimal).</li>
+                    <li><strong>CHAR:</strong> A single character.</li>
+                    <li><strong>STRING:</strong> Several characters (letters, digits, symbols).</li>
+                    <li><strong>BOOLEAN:</strong> Can only have two values: <code><span class="keyword">TRUE</span></code> or <code><span class="keyword">FALSE</span></code>.</li>
+                </ul>
+
+                <h4>8.1.4 Input and Output</h4>
+                <dl>
+                    <dt>Input</dt>
+                    <dd>Taken from a keyboard, must have a prompt. All inputs default as strings and may need <strong>casting</strong> (e.g., <code>int()</code>, <code>float()</code>).</dd>
+                    <dt>Output</dt>
+                    <dd>Results displayed on a screen, must have an explanatory message.</dd>
+                </dl>
+
+                <h4>8.1.5 Sequence, Selection, and Iteration</h4>
+                <dl>
+                    <dt>Sequence</dt>
+                    <dd>The order in which steps are executed is critical.</dd>
+                    <dt>Selection</dt>
+                    <dd>Allows choice of different paths (<code><span class="keyword">IF</span>...<span class="keyword">THEN</span>...<span class="keyword">ELSE</span></code> or <code><span class="keyword">CASE</span></code> statements).</dd>
+                    <dt>Iteration (Looping)</dt>
+                    <dd>Code repeated under
+                        certain conditions.
+                        <ul>
+                            <li><strong>Count-controlled (<code><span class="keyword">FOR</span></code>):</strong> For a set number of iterations.</li>
+                            <li><strong>Pre-condition (<code><span class="keyword">WHILE</span></code>):</strong> Condition checked before; may have no iterations.</li>
+                            <li><strong>Post-condition (<code><span class="keyword">REPEAT...UNTIL</span></code>):</strong> Always has at least one iteration; condition checked after.</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <h4>8.1.6 Totalling and Counting</h4>
+                <ul>
+                    <li><strong>Totalling:</strong> <code>TotalWeight <span class="operator">=</span> TotalWeight <span class="operator">+</span> Weight</code></li>
+                    <li><strong>Counting:</strong> <code>NumberOfItems <span class="operator">=</span> NumberOfItems <span class="operator">+</span> 1</code> (or <code>NumberOfItems<span class="operator">++</span>;</code> in Java)</li>
+                </ul>
+
+                <h4>8.1.7 String Handling</h4>
+                <ul>
+                    <li><strong>Length:</strong> Finding the number of characters in the string.</li>
+                    <li><strong>Substring:</strong> Extracting a part of a string.</li>
+                    <li><strong>Upper:</strong> Converting all letters to uppercase.</li>
+                    <li><strong>Lower:</strong> Converting all letters to lowercase.</li>
+                </ul>
+
+                <h4>8.1.8 Operators</h4>
+                <ul>
+                    <li><strong>Arithmetic:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code> (Power).
+                        <ul>
+                            <li><code><span class="keyword">MOD</span></code>: Returns the remainder.</li>
+                            <li><code><span class="keyword">DIV</span></code>: Returns the quotient (whole number part).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Logical:</strong> <code>></code>, <code><</code>, <code>=</code>, <code>>=</code>, <code><=</code>, <code><></code> (Not equal).</li>
+                    <li><strong>Boolean:</strong> <code><span class="keyword">AND</span></code>, <code><span class="keyword">OR</span></code>, <code><span class="keyword">NOT</span></code>.</li>
+                </ul>
+                
+                <h4>8.1.9 Use of Nested Statements</h4>
+                <p>Selection and iteration statements can be nested (included one inside the other) to reduce code and simplify testing.</p>
+            </section>
+
+            <section id="subroutines">
+                <h2>II. DETAILED CONTENT (2/4): Procedures, Functions, and Libraries</h2>
+                <p>Similar tasks are often grouped into subroutines, defined once and called many times.</p>
+                
+                <h4>8.2.1 Procedures and Functions</h4>
+                <dl>
+                    <dt>Procedure</dt>
+                    <dd>A set of statements that performs a task but <strong>does not return a value</strong>. (<code>void</code> functions in Python, <code>subroutines</code> in VB, <code>methods</code> in Java).</dd>
+                    <dt>Function</dt>
+                    <dd>Similar to a procedure, but it <strong>always returns a value</strong> using the <code><span class="keyword">RETURN</span></code> keyword.</dd>
+                </dl>
+
+                <h4>8.2.2 Parameters</h4>
+                <p><strong>Parameters</strong> are variables in a procedure/function that store the values of the <strong>arguments</strong> passed from the main program. The call must match the definition.</p>
+
+                <h4>8.2.3 Local and Global Variables</h4>
+                <dl>
+                    <dt>Global Variable</dt>
+                    <dd>Can be used by any part of the program; its scope is the whole program.</dd>
+                    <dt>Local Variable</dt>
+                    <dd>Can only be used by the part it was declared in; its scope is restricted.</dd>
+                </dl>
+
+                <h4>8.2.4 Library Routines</h4>
+                <p>Fully tested functions and procedures provided by the language. Required routines include:</p>
+                <ul>
+                    <li><code><span class="keyword">MOD</span></code>: Returns the remainder.</li>
+                    <li><code><span class="keyword">DIV</span></code>: Returns the quotient.</li>
+                    <li><code><span class="keyword">ROUND</span></code>: Returns a value rounded to a given number of decimal places.</li>
+                    <li><code><span class="keyword">RANDOM</span></code>: Returns a random number.</li>
+                </ul>
+
+                <h4>8.2.5 Creating a Maintainable Program</h4>
+                <p>A maintainable program is one that can be easily updated or understood. It should have:</p>
+                <ul>
+                    <li>Meaningful identifier names.</li>
+                    <li>Modular design (procedures and functions).</li>
+                    <li>Full commenting (e.g., <code><span class="comment"># in Python</span></code>, <code><span class="comment">' in Visual Basic</span></code>, <code><span class="comment">// or /* */ in Java</span></code>).</li>
+                </ul>
+            </section>
+
+            <section id="data-structures">
+                <h2>II. DETAILED CONTENT (3/4): Arrays</h2>
+                <p>An <strong>array</strong> is a data structure containing several elements of the <strong>same data type</strong>, accessed using the same identifier name. The position is identified by an <strong>index</strong> (usually starting at zero).</p>
+
+                <h4>8.3.1 One-dimensional Arrays</h4>
+                <p>Often referred to as a list. Declaration (Pseudocode example):</p>
+                <code><span class="keyword">DECLARE</span> MyList : <span class="keyword">ARRAY</span>[0:9] <span class="keyword">OF</span> INTEGER</code>
+                <p>Arrays are typically populated using iteration (a <code><span class="keyword">FOR</span></code> loop), using the loop counter as the array index.</p>
+
+                <h4>8.3.2 Two-dimensional Arrays</h4>
+                <p>Often referred to as a table (rows and columns). Declaration (Pseudocode example):</p>
+                <code><span class="keyword">DECLARE</span> MyTable : <span class="keyword">ARRAY</span>[0:9,0:2] <span class="keyword">OF</span> INTEGER</code>
+                <p>To populate a 2D array, two <strong>nested loops</strong> are required (one for rows, one for columns).</p>
+            </section>
+            
+            <section id="file-handling">
+                <h2>II. DETAILED CONTENT (4/4): File Handling</h2>
+                
+                <h4>8.4.1 Purpose of Storing Data in a File</h4>
+                <p>Data is stored in a file when it needs to be kept for future use. Data in RAM is volatile (lost when power is off), but data in a file is stored permanently.</p>
+                
+                <h4>8.4.2 Using Files</h4>
+                <p>Every file is identified by its filename. Basic operations:</p>
+                <ol>
+                    <li><strong>Open:</strong> Open the file (specifying <code><span class="keyword">WRITE</span></code> or <code><span class="keyword">READ</span></code>).</li>
+                    <li><strong>Read/Write:</strong> Use commands (e.g., <code><span class="keyword">WRITEFILE</span></code>, <code><span class="keyword">READFILE</span></code>) to transfer data.</li>
+                    <li><strong>Close:</strong> Close the file (<code><span class="keyword">CLOSEFILE</span></code>).</li>
+                </ol>
+            </section>
+
+            <section id="key-terms">
+                <h2>III. KEY TERMS</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Term</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Variable</strong></td><td>A named data store that contains a value that may change during the execution of a program.</td></tr>
+                        <tr><td><strong>Constant</strong></td><td>A named data store that contains a value that does not change during the execution of a program.</td></tr>
+                        <tr><td><strong>Declare</strong></td><td>To define the value and data type of a variable or constant.</td></tr>
+                        <tr><td><strong>Integer</strong></td><td>A positive or negative whole number used with mathematical operators.</td></tr>
+                        <tr><td><strong>Real Number</strong></td><td>A positive or negative number with a fractional part; used with mathematical operators.</td></tr>
+                        <tr><td><strong>Sequence</strong></td><td>The order in which the steps in a program are executed.</td></tr>
+                        <tr><td><strong>Selection</strong></td><td>Allowing the selection of different paths through the steps of a program.</td></tr>
+                        <tr><td><strong>Iteration</strong></td><td>A section of programming code that can be repeated under certain conditions.</td></tr>
+                        <tr><td><strong>Operator</strong></td><td>A special character or word that identifies an action to be performed.</td></tr>
+                        <tr><td><strong>Procedure</strong></td><td>A set of programming statements grouped to perform a task; does not return a value.</td></tr>
+                        <tr><td><strong>Function</strong></td><td>A set of programming statements grouped to perform a task; returns a value back to the main program.</td></tr>
+                        <tr><td><strong>Parameters</strong></td><td>Variables in a procedure or function declaration that store the arguments passed from the main program.</td></tr>
+                        <tr><td><strong>MOD</strong></td><td>An arithmetic operator that returns the remainder of a division.</td></tr>
+                        <tr><td><strong>DIV</strong></td><td>An arithmetic operator that returns the quotient (whole number part) of a division.</td></tr>
+                        <tr><td><strong>Array</strong></td><td>A data structure containing several elements of the same data type, accessed using the same identifier name.</td></tr>
+                        <tr><td><strong>Index</strong></td><td>Identifies the position of an element in an array.</td></tr>
+                        <tr><td><strong>File</strong></td><td>A collection of data stored by a computer program to be used again.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="activities">
+                <h2>IV. ACTIVITIES AND EXERCISES</h2>
+                <ol>
+                    <li><strong>Activity 8.1:</strong> Write and test the "Hello World" program.</li>
+                    <li><strong>Activity 8.4:</strong> Write a program to test if a number input is >= 100 (using selection).</li>
+                    <li><strong>Activity 8.6:</strong> Write two loop programs (FOR and WHILE/DO) to repeat ten times, incrementing by three.</li>
+                    <li><strong>Activity 8.8:</strong> Write a program for string handling (input name, find length, extract, upper/lower case).</li>
+                    <li><strong>Activity 8.9:</strong> Write a program to perform all mathematical operations.</li>
+                    <li><strong>Activity 8.15:</strong> Define and use a procedure that accepts a parameter to write a given number of lines of stars.</li>
+                    <li><strong>Activity 8.16:</strong> Write a function in pseudocode to convert Celsius to Fahrenheit, and test it.</li>
+                    <li><strong>Activity 8.22:</strong> Write a program to declare and populate a 1D array using a FOR loop.</li>
+                    <li><strong>Activity 8.23:</strong> Write a program to declare and populate a 2D array using a nested FOR loop.</li>
+                    <li><strong>Activity 8.24:</strong> Write a line of text to a file and read it back.</li>
+                </ol>
+                
+                <h3>Analogy to solidify understanding</h3>
+                <blockquote>
+                    <p>Mastering programming concepts is like learning to conduct an orchestra. The basic concepts (variables, constants, operators) are the fundamental instruments and notes. Sequence, selection, and iteration are the rhythm and structure of the composition. Procedures and functions are like pre-defined solos or musical themes that you can call upon repeatedly. Arrays and file handling serve as the storage (like a music library) and the sheet music stand, containing all the complex scores that you access to create a complete, logical, and maintainable performance.</p>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

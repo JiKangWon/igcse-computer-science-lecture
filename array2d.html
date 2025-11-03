@@ -6,24 +6,26 @@
     <title>CS Lecture: 2D Arrays in Pseudo Code</title>
     
     <style>
-        /* CSS Variables for color theme */
+        /* --- CSS Variables and Dark Mode Styling (from Chapter 8) --- */
         :root {
-            --primary-blue: #007bff;
-            --secondary-blue: #0056b3;
-            --light-blue-bg: #f0f7ff;
-            --white: #ffffff;
-            --text-dark: #333;
-            --text-light: #555;
-            --border-color: #ddd;
-            --code-bg: #f8f9fa;
+            --bg-dark-deep: #1e1e1e;
+            --bg-dark-med: #252526;
+            --bg-dark-light: #2a2a2e;
+            --border-color: #3a3a3a;
+            --text-primary: #d4d4d4;
+            --text-secondary: #9cdcfe; /* Light blue */
+            --accent-cyan: #00aeff;
+            --keyword-blue: #569cd6;
+            --string-orange: #ce9178;
+            --comment-green: #6a9955;
         }
 
         /* General Body Styling */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.7;
-            background-color: var(--light-blue-bg);
-            color: var(--text-dark);
+            background-color: var(--bg-dark-deep);
+            color: var(--text-primary);
             margin: 0;
             padding: 0;
         }
@@ -32,22 +34,25 @@
         .lecture-container {
             max-width: 900px;
             margin: 20px auto;
-            background-color: var(--white);
+            background-color: var(--bg-dark-med);
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
             overflow: hidden;
         }
 
         /* Header Styling */
         header {
-            background-color: var(--primary-blue);
+            background: linear-gradient(135deg, #0d47a1, #1e1e1e);
             color: var(--white);
             padding: 30px 40px;
             text-align: center;
+            border-bottom: 2px solid var(--accent-cyan);
         }
         header h1 {
             margin: 0;
             font-size: 2.5rem;
+            color: #fff;
         }
         header p {
             margin: 5px 0 0;
@@ -57,20 +62,22 @@
 
         /* Navigation Bar */
         nav {
-            background-color: var(--secondary-blue);
+            background-color: #1a1a1a;
             padding: 10px 40px;
             text-align: center;
+            border-bottom: 1px solid var(--border-color);
         }
         nav a {
-            color: var(--white);
+            color: var(--accent-cyan);
             text-decoration: none;
             font-weight: 500;
             padding: 10px 15px;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--accent-cyan);
+            color: var(--bg-dark-deep);
         }
 
         /* Main Content Area */
@@ -90,15 +97,15 @@
         }
 
         h2 {
-            color: var(--primary-blue);
+            color: var(--accent-cyan);
             font-size: 2rem;
-            border-bottom: 2px solid var(--light-blue-bg);
+            border-bottom: 2px solid var(--accent-cyan);
             padding-bottom: 10px;
             margin-top: 0;
         }
 
         h3 {
-            color: var(--secondary-blue);
+            color: var(--text-secondary);
             font-size: 1.5rem;
             margin-top: 30px;
         }
@@ -106,7 +113,7 @@
         /* Text & List Styling */
         p {
             font-size: 1rem;
-            color: var(--text-light);
+            color: var(--text-primary);
         }
         ul {
             padding-left: 20px;
@@ -115,45 +122,57 @@
             margin-bottom: 10px;
         }
 
-        /* Code Block Styling */
+        /* Code Block Styling (Syntax Highlighting) */
         pre {
-            background-color: var(--code-bg);
+            background-color: #1a1a1a;
             border: 1px solid var(--border-color);
-            border-left: 5px solid var(--primary-blue);
+            border-left: 5px solid var(--accent-cyan);
             padding: 15px;
             border-radius: 5px;
-            font-family: "Courier New", Courier, monospace;
+            font-family: "Consolas", "Courier New", monospace;
             font-size: 0.95rem;
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            color: #9cdcfe;
         }
+        
+        /* Inline code */
         code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--code-bg);
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #1a1a1a;
             padding: 2px 5px;
             border-radius: 3px;
             font-size: 0.9rem;
+            border: 1px solid var(--border-color);
         }
+
+        /* Syntax Highlighting */
+        .code-keyword { color: var(--keyword-blue); font-weight: bold; }
+        .code-string { color: var(--string-orange); }
+        .code-comment { color: var(--comment-green); font-style: italic; }
+        .code-var { color: var(--text-secondary); }
+        .code-op { color: var(--text-primary); }
 
         /* Box Styling for Examples/Exercises */
         .example-box, .exercise-box {
-            background-color: var(--white);
+            background-color: var(--bg-dark-light);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
             margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .example-box h3, .exercise-box h3 {
             margin-top: 0;
             font-size: 1.3rem;
+            color: var(--text-secondary);
         }
 
         /* Button Styling (for exercises) */
         .toggle-solution-btn {
-            background-color: var(--primary-blue);
-            color: var(--white);
+            background-color: var(--accent-cyan);
+            color: var(--bg-dark-deep);
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
@@ -161,10 +180,10 @@
             font-size: 0.9rem;
             font-weight: 500;
             transition: background-color 0.3s ease;
-            margin-top: 10px;
+            font-weight: bold;
         }
         .toggle-solution-btn:hover {
-            background-color: var(--secondary-blue);
+            background-color: #3ccbff;
         }
 
         /* Solution Content (hidden by default) */
@@ -179,7 +198,7 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #1a1a1a;
             color: #777;
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
@@ -226,14 +245,14 @@
                     Just like 1D arrays, both indices almost always start from <strong>zero</strong>. We write the notation as <code>arrayName[row][column]</code>.
                 </p>
                 <p>For example, given a 3x3 array named <code>grid</code>:</p>
-                <pre><code>   (col 0) (col 1) (col 2)
-(row 0) [ "A" ] [ "B" ] [ "C" ]
-(row 1) [ "D" ] [ "E" ] [ "F" ]
-(row 2) [ "G" ] [ "H" ] [ "I" ]
+                <pre><span class="code-comment">   (col 0) (col 1) (col 2)</span>
+<span class="code-comment">(row 0)</span> [ <span class="code-string">"A"</span> ] [ <span class="code-string">"B"</span> ] [ <span class="code-string">"C"</span> ]
+<span class="code-comment">(row 1)</span> [ <span class="code-string">"D"</span> ] [ <span class="code-string">"E"</span> ] [ <span class="code-string">"F"</span> ]
+<span class="code-comment">(row 2)</span> [ <span class="code-string">"G"</span> ] [ <span class="code-string">"H"</span> ] [ <span class="code-string">"I"</span> ]
 
-grid[0][0] is "A" (row 0, col 0)
-grid[1][2] is "F" (row 1, col 2)
-grid[2][1] is "H" (row 2, col 1)</code></pre>
+<span class="code-var">grid</span>[0][0] <span class="code-op">is</span> <span class="code-string">"A"</span> <span class="code-comment">(row 0, col 0)</span>
+<span class="code-var">grid</span>[1][2] <span class="code-op">is</span> <span class="code-string">"F"</span> <span class="code-comment">(row 1, col 2)</span>
+<span class="code-var">grid</span>[2][1] <span class="code-op">is</span> <span class="code-string">"H"</span> <span class="code-comment">(row 2, col 1)</span></pre>
             </section>
 
             <section id="section-operations-2d">
@@ -244,28 +263,28 @@ grid[2][1] is "H" (row 2, col 1)</code></pre>
 
                 <h3>2.1 Declaration & Initialization</h3>
                 <p>You must specify the number of rows and columns. Here's how to create an array with 3 rows and 4 columns.</p>
-                <pre><code>// 1. Declare an empty 2D array (3 rows, 4 columns)
-DECLARE scoreSheet AS Array[3][4] OF Integer
+                <pre><span class="code-comment">// 1. Declare an empty 2D array (3 rows, 4 columns)</span>
+<span class="code-keyword">DECLARE</span> <span class="code-var">scoreSheet</span> <span class="code-op">AS</span> <span class="code-keyword">Array</span>[3][4] <span class="code-keyword">OF</span> <span class="code-keyword">Integer</span>
 
-// 2. Declare and initialize with values (a 2x3 array)
-//    Note the nested "inner" arrays for each row
-INITIALIZE ticTacToe = [ ["X", "O", "X"], 
-                        ["O", "X", "O"], 
-                        ["X", "O", "O"] ]</code></pre>
+<span class="code-comment">// 2. Declare and initialize with values (a 2x3 array)</span>
+<span class="code-comment">//    Note the nested "inner" arrays for each row</span>
+<span class="code-keyword">INITIALIZE</span> <span class="code-var">ticTacToe</span> <span class="code-op">=</span> [ [<span class="code-string">"X"</span>, <span class="code-string">"O"</span>, <span class="code-string">"X"</span>], 
+                       [<span class="code-string">"O"</span>, <span class="code-string">"X"</span>, <span class="code-string">"O"</span>], 
+                       [<span class="code-string">"X"</span>, <span class="code-string">"O"</span>, <span class="code-string">"O"</span>] ]</pre>
 
                 <h3>2.2 Accessing & Modifying Elements</h3>
                 <p>You use the <code>[row][column]</code> index to read or change a value at a specific position.</p>
-                <pre><code>INITIALIZE gameBoard = [ ["-", "-", "-"], 
-                         ["-", "-", "-"], 
-                         ["-", "-", "-"] ]
+                <pre><span class="code-keyword">INITIALIZE</span> <span class="code-var">gameBoard</span> <span class="code-op">=</span> [ [<span class="code-string">"-"</span>, <span class="code-string">"-"</span>, <span class="code-string">"-"</span>], 
+                       [<span class="code-string">"-"</span>, <span class="code-string">"-"</span>, <span class="code-string">"-"</span>], 
+                       [<span class="code-string">"-"</span>, <span class="code-string">"-"</span>, <span class="code-string">"-"</span>] ]
 
-// Set an 'X' in the center (row 1, col 1)
-SET gameBoard[1][1] = "X"
+<span class="code-comment">// Set an 'X' in the center (row 1, col 1)</span>
+<span class="code-keyword">SET</span> <span class="code-var">gameBoard</span>[1][1] <span class="code-op">=</span> <span class="code-string">"X"</span>
 
-// Read the value from the top-right corner (row 0, col 2)
-SET playerMove = gameBoard[0][2]
+<span class="code-comment">// Read the value from the top-right corner (row 0, col 2)</span>
+<span class="code-keyword">SET</span> <span class="code-var">playerMove</span> <span class="code-op">=</span> <span class="code-var">gameBoard</span>[0][2]
 
-PRINT playerMove  // This will display "-"</code></pre>
+<span class="code-keyword">PRINT</span> <span class="code-var">playerMove</span>  <span class="code-comment">// This will display "-"</span></pre>
             </section>
             
             <section id="section-examples-2d">
@@ -279,29 +298,29 @@ PRINT playerMove  // This will display "-"</code></pre>
                 <div class="example-box">
                     <h3>Example 1: Traversing and Printing All Elements</h3>
                     <p>This pseudo code prints every element in a 2x3 matrix, one row at a time.</p>
-                    <pre><code>START
-    INITIALIZE matrix = [ [1, 2, 3], 
-                          [4, 5, 6] ]
+                    <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">matrix</span> <span class="code-op">=</span> [ [1, 2, 3], 
+                     [4, 5, 6] ]
     
-    // This array has 2 rows (index 0 and 1)
-    // This array has 3 columns (index 0, 1, and 2)
+    <span class="code-comment">// This array has 2 rows (index 0 and 1)</span>
+    <span class="code-comment">// This array has 3 columns (index 0, 1, and 2)</span>
     
-    // Outer loop: iterates through rows
-    FOR row = 0 TO 1
+    <span class="code-comment">// Outer loop: iterates through rows</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">row</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 1
         
-        // Inner loop: iterates through columns
-        FOR col = 0 TO 2
+        <span class="code-comment">// Inner loop: iterates through columns</span>
+        <span class="code-keyword">FOR</span> <span class="code-var">col</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 2
             
-            // Print the element at [row][col]
-            PRINT matrix[row][col]
+            <span class="code-comment">// Print the element at [row][col]</span>
+            <span class="code-keyword">PRINT</span> <span class="code-var">matrix</span>[<span class="code-var">row</span>][<span class="code-var">col</span>]
             
-        ENDFOR
+        <span class="code-keyword">ENDFOR</span>
         
-        // (Optional) Print a new line after each row is finished
-        PRINT_NEW_LINE()
+        <span class="code-comment">// (Optional) Print a new line after each row is finished</span>
+        <span class="code-keyword">PRINT_NEW_LINE</span>()
         
-    ENDFOR
-END</code></pre>
+    <span class="code-keyword">ENDFOR</span>
+<span class="code-keyword">END</span></pre>
                     <p><strong>Output:</strong><br>
                     1<br>
                     2<br>
@@ -316,27 +335,27 @@ END</code></pre>
                 <div class="example-box">
                     <h3>Example 2: Calculating the Sum of All Elements</h3>
                     <p>This pseudo code finds the total sum of all numbers in the 2D array.</p>
-                    <pre><code>START
-    INITIALIZE myGrid = [ [10, 20], 
-                         [30, 40], 
-                         [50, 60] ] // A 3x2 array
+                    <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">myGrid</span> <span class="code-op">=</span> [ [10, 20], 
+                     [30, 40], 
+                     [50, 60] ] <span class="code-comment">// A 3x2 array</span>
     
-    SET totalSum = 0
+    <span class="code-keyword">SET</span> <span class="code-var">totalSum</span> <span class="code-op">=</span> 0
     
-    // Outer loop: iterate rows (0 to 2)
-    FOR row = 0 TO 2
+    <span class="code-comment">// Outer loop: iterate rows (0 to 2)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">row</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 2
         
-        // Inner loop: iterate columns (0 to 1)
-        FOR col = 0 TO 1
+        <span class="code-comment">// Inner loop: iterate columns (0 to 1)</span>
+        <span class="code-keyword">FOR</span> <span class="code-var">col</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 1
             
-            // Add the value at [row][col] to the sum
-            SET totalSum = totalSum + myGrid[row][col]
+            <span class="code-comment">// Add the value at [row][col] to the sum</span>
+            <span class="code-keyword">SET</span> <span class="code-var">totalSum</span> <span class="code-op">=</span> <span class="code-var">totalSum</span> <span class="code-op">+</span> <span class="code-var">myGrid</span>[<span class="code-var">row</span>][<span class="code-var">col</span>]
             
-        ENDFOR
-    ENDFOR
+        <span class="code-keyword">ENDFOR</span>
+    <span class="code-keyword">ENDFOR</span>
     
-    PRINT "The total sum is: " + totalSum
-END</code></pre>
+    <span class="code-keyword">PRINT</span> <span class="code-string">"The total sum is: "</span> <span class="code-op">+</span> <span class="code-var">totalSum</span>
+<span class="code-keyword">END</span></pre>
                     <p><strong>Output:</strong><br>
                     The total sum is: 210</p>
                 </div>
@@ -351,29 +370,29 @@ END</code></pre>
                     
                     <button class="toggle-solution-btn">Show Solution</button>
                     <div class="solution-content">
-                        <pre><code>START
-    INITIALIZE data = [ [5, 12, 3], [1, 9, 8], [15, 7, 2] ]
+                        <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">data</span> <span class="code-op">=</span> [ [5, 12, 3], [1, 9, 8], [15, 7, 2] ]
     
-    // Assume the first element is the largest (to start)
-    SET maxNumber = data[0][0]
+    <span class="code-comment">// Assume the first element is the largest (to start)</span>
+    <span class="code-keyword">SET</span> <span class="code-var">maxNumber</span> <span class="code-op">=</span> <span class="code-var">data</span>[0][0]
     
-    // Loop through rows (0 to 2)
-    FOR row = 0 TO 2
+    <span class="code-comment">// Loop through rows (0 to 2)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">row</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 2
         
-        // Loop through columns (0 to 2)
-        FOR col = 0 TO 2
+        <span class="code-comment">// Loop through columns (0 to 2)</span>
+        <span class="code-keyword">FOR</span> <span class="code-var">col</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 2
             
-            // Compare current element to our current max
-            IF data[row][col] > maxNumber THEN
-                // If it's bigger, update maxNumber
-                SET maxNumber = data[row][col]
-            ENDIF
+            <span class="code-comment">// Compare current element to our current max</span>
+            <span class="code-keyword">IF</span> <span class="code-var">data</span>[<span class="code-var">row</span>][<span class="code-var">col</span>] <span class="code-op">></span> <span class="code-var">maxNumber</span> <span class="code-keyword">THEN</span>
+                <span class="code-comment">// If it's bigger, update maxNumber</span>
+                <span class="code-keyword">SET</span> <span class="code-var">maxNumber</span> <span class="code-op">=</span> <span class="code-var">data</span>[<span class="code-var">row</span>][<span class="code-var">col</span>]
+            <span class="code-keyword">ENDIF</span>
             
-        ENDFOR
-    ENDFOR
+        <span class="code-keyword">ENDFOR</span>
+    <span class="code-keyword">ENDFOR</span>
     
-    PRINT "The largest number is: " + maxNumber
-END</code></pre>
+    <span class="code-keyword">PRINT</span> <span class="code-string">"The largest number is: "</span> <span class="code-op">+</span> <span class="code-var">maxNumber</span>
+<span class="code-keyword">END</span></pre>
                     </div>
                 </div>
 
@@ -383,25 +402,25 @@ END</code></pre>
                     
                     <button class="toggle-solution-btn">Show Solution</button>
                     <div class="solution-content">
-                        <pre><code>START
-    INITIALIZE grades = [ [80, 85, 90], [92, 88, 95] ]
+                        <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">grades</span> <span class="code-op">=</span> [ [80, 85, 90], [92, 88, 95] ]
     
-    // Loop through rows (0 to 1)
-    FOR row = 0 TO 1
+    <span class="code-comment">// Loop through rows (0 to 1)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">row</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 1
         
-        // Reset the sum for each new row (each student)
-        SET rowSum = 0
+        <span class="code-comment">// Reset the sum for each new row (each student)</span>
+        <span class="code-keyword">SET</span> <span class="code-var">rowSum</span> <span class="code-op">=</span> 0
         
-        // Loop through columns (0 to 2)
-        FOR col = 0 TO 2
-            SET rowSum = rowSum + grades[row][col]
-        ENDFOR
+        <span class="code-comment">// Loop through columns (0 to 2)</span>
+        <span class="code-keyword">FOR</span> <span class="code-var">col</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 2
+            <span class="code-keyword">SET</span> <span class="code-var">rowSum</span> <span class="code-op">=</span> <span class="code-var">rowSum</span> <span class="code-op">+</span> <span class="code-var">grades</span>[<span class="code-var">row</span>][<span class="code-var">col</span>]
+        <span class="code-keyword">ENDFOR</span>
         
-        // Print the sum for the current row
-        PRINT "Sum for Row " + row + " is: " + rowSum
+        <span class="code-comment">// Print the sum for the current row</span>
+        <span class="code-keyword">PRINT</span> <span class="code-string">"Sum for Row "</span> <span class="code-op">+</span> <span class="code-var">row</span> <span class="code-op">+</span> <span class="code-string">" is: "</span> <span class="code-op">+</span> <span class="code-var">rowSum</span>
         
-    ENDFOR
-END</code></pre>
+    <span class="code-keyword">ENDFOR</span>
+<span class="code-keyword">END</span></pre>
                         <p><strong>Output:</strong><br>
                         Sum for Row 0 is: 255<br>
                         Sum for Row 1 is: 275</p>

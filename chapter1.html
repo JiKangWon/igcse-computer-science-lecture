@@ -1,317 +1,542 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 1: Data representation</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-sN/2sG8C1g1DKeO70sE+FuXnB1TscNlPZfiSTNtL3vtKhtGHRv1S2Bsv9iZpviDq" crossorigin="anonymous">
-
+    <title>Chương 1: Biểu Diễn Dữ Liệu</title>
     <style>
-        /* (Sao chép y hệt CSS từ base.html) */
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth; /* Cuộn mượt khi nhấn link */
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f7f6;
+            line-height: 1.7;
+            background-color: #f4f7f6; /* Nền xám rất nhạt */
             color: #333;
+            margin: 0;
+            padding: 0;
         }
-        .navbar-custom {
-            background-color: #005a9c !important;
-            border-bottom: 5px solid #007bff;
-            padding: 0.8rem 1rem;
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden; /* Để bo góc header */
         }
-        .navbar-custom .navbar-brand {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #ffffff;
+
+        /* --- Header của bài giảng --- */
+        header {
+            background: linear-gradient(135deg, #0056b3, #007bff);
+            color: white;
+            padding: 40px;
+            text-align: center;
         }
-        .navbar-custom .navbar-brand:hover { color: #f0f0f0; }
-        .navbar-custom .navbar-text {
-            font-size: 1rem;
-            color: #ffffff;
-            opacity: 0.9;
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
         }
-        .navbar-custom .navbar-toggler { border-color: rgba(255,255,255,0.2); }
-        .navbar-custom .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
         }
-        .offcanvas-header { border-bottom: 1px solid #dee2e6; }
-        .offcanvas-title { color: #005a9c; font-weight: 600; }
-        .accordion-body .list-group-item a {
+
+        nav a {
             text-decoration: none;
-            color: #005a9c;
+            color: #0056b3;
+            margin: 0 20px;
             font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
         }
-         .accordion-body .list-group-item a:hover { background-color: #e9ecef; }
 
-        /* Style cho nội dung chính */
-        main h1 {
-            font-size: 2.2rem;
-            color: #005a9c;
+        nav a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px; /* Khoảng đệm cho sticky nav */
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 { /* Tiêu đề mục lớn (I, II, III) */
+            font-size: 2.2em;
+            color: #004a99;
             border-bottom: 3px solid #007bff;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
             margin-top: 0;
-            margin-bottom: 1.5rem;
-        }
-        main .lead {
-             font-size: 1.05rem;
-             margin-bottom: 1rem;
         }
 
-        /* CSS cho chapter1.html (Accordion bài giảng) */
-        .lecture-accordion .accordion-item {
-             margin-bottom: 1rem;
-             border: 1px solid #ddd;
-             border-radius: 8px;
-             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-             overflow: hidden; 
+        h3 { /* Tiêu đề mục 1.1, 1.2 */
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
         }
-        .lecture-accordion .accordion-button {
-            font-size: 1.8rem; 
-            font-weight: 600;
-            color: #005a9c;
-        }
-        .lecture-accordion .accordion-button:not(.collapsed) {
-             background-color: #f8f9fa;
-             color: #005a9c;
-             border-bottom: 1px solid #ddd;
-             box-shadow: none;
-        }
-        .lecture-accordion .accordion-body {
-            padding: 2.5rem;
-            font-size: 1.05rem;
-        }
-        .lecture-accordion .accordion-body h3 {
-            font-size: 1.6rem;
+
+        h4 { /* Tiêu đề mục 1.1.1, 1.1.2 */
+            font-size: 1.4em;
             color: #333;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            border-left: 5px solid #007bff;
-            padding-left: 12px;
+            margin-top: 25px;
+            margin-bottom: 10px;
         }
-        .lecture-accordion .accordion-body h4 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #111;
-            margin-top: 1.5rem;
+
+        /* --- Định dạng danh sách --- */
+        ul, ol {
+            padding-left: 25px;
         }
-        .lecture-accordion .accordion-body pre {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 1.2rem;
-            font-family: 'Courier New', Courier, monospace;
+
+        li {
+            margin-bottom: 12px;
         }
-        .lecture-accordion .accordion-body p > code,
-        .lecture-accordion .accordion-body li > code {
-            background-color: #e9ecef;
+
+        li > strong {
+            color: #0056b3; /* Nhấn mạnh tiêu đề con trong danh sách */
+        }
+
+        /* --- Định dạng đặc biệt --- */
+        code {
+            background-color: #eef2f7;
+            color: #d9006c;
             padding: 3px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
             font-size: 0.95em;
+        }
+        
+        /* Cải thiện hiển thị ký tự toán học */
+        sup {
+            font-size: 0.75em;
+            line-height: 0;
+            vertical-align: super;
+        }
+        
+        i { /* Dùng cho biến số như 'x' */
+            font-family: "Times New Roman", Times, serif;
+            font-style: italic;
+        }
+
+
+        /* Hộp công thức */
+        .formula-box {
+            background: #f0f8ff;
+            border: 1px dashed #007bff;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.1em;
+            text-align: center;
+            border-radius: 8px;
+            color: #333;
+        }
+
+        /* Danh sách định nghĩa (Từ khóa) */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #0056b3;
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #007bff;
+            background: #f0f8ff;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
         }
     </style>
 </head>
-<body class="bg-body-secondary">
+<body>
 
-    <nav class="navbar navbar-custom shadow-sm">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="base.html">Computer Science Course</a>
-            <span class="navbar-text ms-auto d-none d-sm-block me-3">
-                Lecturer. Nguyen Chi Cuong
-            </span>
-        </div>
-    </nav>
+    <div class="container">
+        <header>
+            <h1>CHAPTER 1: DATA REPRESENTATION</h1>
+        </header>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarMenuLabel">Chapters</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body p-0">
-            <div class="accordion accordion-flush" id="chaptersAccordion">
+        <nav>
+            <a href="#objectives">Objectives</a>
+            <a href="#main-content">Main Content</a>
+            <a href="#key-terms">Key Terms</a>
+            <a href="#activities">Activities</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>I. CHAPTER OBJECTIVES (LEARNING OUTCOMES)</h2>
+                <p>Upon completion of this chapter, the learner will be able to:</p>
                 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch1">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch1">
-                            Chapter 1. Data representation
-                        </button>
-                    </h2>
-                    <div id="collapse-ch1" class="accordion-collapse collapse show" data-bs-parent="#chaptersAccordion">
-                        <div class="accordion-body p-0">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="chapter1.html">Lecture 1</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ol>
+                    <li><strong>Number Systems</strong>
+                        <ul>
+                            <li>Understand how and why computers use binary to represent data.</li>
+                            <li>Understand the denary, binary and hexadecimal number systems.</li>
+                            <li>Perform converting numbers between denary, binary and hexadecimal.</li>
+                            <li>Understand how and why hexadecimal is used for data representation (e.g., error codes, MAC addresses, IPv6 addresses, HTML colour codes).</li>
+                            <li>Learn how to add two positive 8-bit numbers.</li>
+                            <li>Understand the concept of overflow when performing binary addition.</li>
+                            <li>Perform logical binary shifts on positive 8-bit integers.</li>
+                            <li>Use two’s complement notation to represent positive and negative binary numbers.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Text, Sound and Images</strong>
+                        <ul>
+                            <li>Understand how and why a computer represents text.</li>
+                            <li>Understand the use of character sets including ASCII and Unicode.</li>
+                            <li>Understand how and why a computer represents sound.</li>
+                            <li>Define and understand sound sample rate and sample resolution.</li>
+                            <li>Understand how and why a computer represents an image.</li>
+                            <li>Explain the effects of the resolution and colour depth on images.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Data Storage and Compression</strong>
+                        <ul>
+                            <li>Understand how data storage is measured (using the IEC system: KiB, MiB, GiB, etc.).</li>
+                            <li>Calculate the file size of an image and sound file, taking into account relevant factors (resolution, colour depth, sampling rate, sample resolution).</li>
+                            <li>Understand the purpose of and need for data compression.</li>
+                            <li>Distinguish between lossy and lossless compression.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch2"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch2">Chapter 2. Data Transmission</button></h2>
-                    <div id="collapse-ch2" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                        <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 2</a></li></ul></div>
-                    </div>
+            <section id="main-content">
+                <h2>II. MAIN CONTENT</h2>
+
+                <h3>1.1 Number Systems</h3>
+
+                <h4>1.1.1 Binary Represents Data</h4>
+                <p>Computer systems are complex, but the basic building block in all computers is the binary number system. This system is chosen because it consists only of 1s and 0s. Computers contain millions of tiny ‘switches’ (using logic gates), which must be in either the ON (<code>1</code>) or OFF (<code>0</code>) position. Any form of data needs to be converted into a binary format so that it can be processed by the computer.</p>
+
+                <h4>1.1.2 Binary, Denary, and Hexadecimal Systems</h4>
+                <ul>
+                    <li><strong>Denary (Base 10):</strong> Uses ten separate digits (0-9). Headings are powers of 10 (1, 10, 100, 1000, etc.).</li>
+                    <li><strong>Binary (Base 2):</strong> Uses only two values (0 and 1). The typical headings for an 8-bit binary number are 2<sup>7</sup> down to 2<sup>0</sup>, or 128, 64, 32, 16, 8, 4, 2, 1.</li>
+                    <li><strong>Converting Binary to Denary:</strong> Add the column value (heading) each time a 1-value appears in that column.</li>
+                    <li><strong>Converting Denary to Binary:</strong> Can be done by successive subtraction of the largest possible powers of 2 until 0 is reached, or by successive division by 2, where the binary number is the remainders read from bottom to top (in reverse order).</li>
+                    <li><strong>Hexadecimal (Base 16):</strong> Uses 16 different ‘digits’. These are the numbers 0 to 9 and the letters A to F. <code>A=10</code>, <code>B=11</code>, <code>C=12</code>, <code>D=13</code>, <code>E=14</code>, and <code>F=15</code> in denary.</li>
+                    <li>Since 16 = 2<sup>4</sup>, FOUR binary digits are equivalent to each hexadecimal digit.</li>
+                    <li><strong>Converting Binary to Hexadecimal:</strong> Split the binary number into groups of 4 bits starting from the right, padding with 0s on the left if needed, then convert each 4-bit group to its hex equivalent.</li>
+                    <li><strong>Converting Hexadecimal to Binary:</strong> Take each hex digit and write down its corresponding 4-bit code.</li>
+                    <li><strong>Converting Hexadecimal to Denary:</strong> Multiply each hex digit (converting A-F to 10-15 first) by its column heading (1, 16, 256, etc.) and sum the resultant totals.</li>
+                    <li><strong>Converting Denary to Hexadecimal:</strong> Use successive division by 16 until 0 is reached, then write the remainders in reverse order, converting remainders 10-15 to A-F.</li>
+                </ul>
+
+                <h4>1.1.3 Use of the Hexadecimal System</h4>
+                <p>Although computers use binary, computer scientists find hexadecimal more convenient because one hex digit represents four binary digits. Complex binary numbers, such as <code>1101001010101111</code>, are much easier for humans to remember as hex (<code>D2AF</code>).</p>
+                <ul>
+                    <li><strong>Error Codes:</strong> Often shown as hexadecimal values that refer to the memory location of the error.</li>
+                    <li><strong>MAC Addresses (Media Access Control):</strong> A number that uniquely identifies a device on a network. It is usually 48 bits, shown as 6 groups of two hexadecimal digits (e.g., <code>NN-NN-NN-DD-DD-DD</code>). The first half is the manufacturer ID, and the second half is the device serial number.</li>
+                    <li><strong>IPv6 Addresses (Internet Protocol):</strong> A 128-bit number divided into 16-bit chunks, represented by a hexadecimal number using a colon (:).</li>
+                    <li><strong>HTML Colour Codes:</strong> Used in web page development to represent colours. All colours are made up of different combinations of the three primary colours: red, green, and blue (RGB). The intensity of each colour is determined by its hexadecimal value. The codes are always six hexadecimal digits and allow for 16,777,216 possible colours (256 &times; 256 &times; 256).</li>
+                </ul>
+
+                <h4>1.1.4 Addition of Binary Numbers</h4>
+                <p>Binary addition follows the same rules as denary addition, but the carry occurs when the sum is greater than 1.</p>
+                <ul>
+                    <li>Key rules: <code>1 + 1 = 0</code> with a carry of 1.</li>
+                    <li><strong>Overflow Error:</strong> Occurs when the result of a calculation produces a value that is too large for the computer’s allocated word size (e.g., 8-bit). For an 8-bit number, an overflow occurs if a 9th bit is generated. The maximum denary value in an 8-bit system is 255.</li>
+                </ul>
+
+                <h4>1.1.5 Logical Binary Shifts</h4>
+                <p>A computer can carry out a logical shift on a sequence of binary numbers, moving them left or right.</p>
+                <ul>
+                    <li>Each shift left is equivalent to multiplying the binary number by 2.</li>
+                    <li>Each shift right is equivalent to dividing the binary number by 2.</li>
+                    <li>Any empty bit positions created by the shift are replaced with a zero.</li>
+                    <li>Errors can result if the shift exceeds the maximum possible number of shifts, causing the most significant bit (MSB) or least significant bit (LSB) to be lost from the register.</li>
+                </ul>
+
+                <h4>1.1.6 Two’s Complement Notation</h4>
+                <p>Two’s complement is used to allow the possibility of representing negative integers in binary.</p>
+                <ul>
+                    <li>In an 8-bit system, the left-most bit (the Most Significant Bit) is changed to a negative value, specifically <code>-128</code>. All other column headings remain positive.</li>
+                    <li>This changes the range of possible numbers from <code>0</code> to <code>255</code> to <code>-128</code> to <code>+127</code>.</li>
+                    <li>The left-most bit is the sign bit: <code>1</code> indicates a negative number, and <code>0</code> indicates a positive number.</li>
+                    <li><strong>Converting a Negative Denary Number to Two's Complement (Method 2):</strong>
+                        <ol>
+                            <li>Write the positive denary number in binary.</li>
+                            <li>Invert (flip) all the binary values (1s become 0s, 0s become 1s).</li>
+                            <li>Add 1 to the inverted number.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>1.2 Text, Sound and Images</h3>
+                
+                <h4>1.2.1 Character Sets – ASCII Code and Unicode</h4>
+                <ul>
+                    <li><strong>ASCII (American Standard Code for Information Interchange):</strong>
+                        <ul>
+                            <li>Standard ASCII uses 7-bit codes (0 to 127 in denary). It represents the letters, numbers, and characters found on a standard keyboard, plus 32 control codes.</li>
+                            <li>Extended ASCII uses 8-bit codes (0 to 255 in denary). This provides 128 additional codes for characters in non-English alphabets and some graphical characters.</li>
+                            <li>Main Disadvantage: ASCII does not represent characters in non-Western languages (e.g., Chinese).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Unicode:</strong>
+                        <ul>
+                            <li>A coding system that can represent all languages of the world.</li>
+                            <li>Supports many operating systems, search engines, and global internet browsers.</li>
+                            <li>The first 128 (English) characters overlap with standard ASCII.</li>
+                            <li>Unicode can support up to four bytes per character, compared to one byte for ASCII.</li>
+                            <li>Unicode goals include creating a universal standard, adopting uniform encoding (16-bit or 32-bit), and creating unambiguous encoding.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>1.2.2 Representation of Sound</h4>
+                <p>Sound waves are continuous vibrations, meaning sound is analogue. To store sound in a computer, it must be sampled (measuring the amplitude of the sound wave at regular time intervals) and converted to digital data using an Analogue to Digital Converter (ADC).</p>
+                <ul>
+                    <li><strong>Sampling Rate:</strong> The number of sound samples taken per second, measured in Hertz (Hz).</li>
+                    <li><strong>Sampling Resolution (Bit Depth):</strong> The number of bits used to represent the amplitude of each sample.</li>
+                    <li><strong>Effect on Quality and File Size:</strong> Using a higher sampling rate or larger resolution results in a more faithful representation of the original sound, but creates a larger file size. For example, CDs use a 16-bit sampling resolution and a 44.1 kHz sample rate.</li>
+                </ul>
+
+                <h4>1.2.3 Representation of (Bitmap) Images</h4>
+                <p>Bitmap images are made up of pixels (picture elements). An image is stored as a two-dimensional matrix of pixels, with each pixel represented by a binary number.</p>
+                <ul>
+                    <li><strong>Colour Depth:</strong> The number of bits used to represent the colour of each pixel. If <i>x</i> bits are used, 2<sup><i>x</i></sup> different colours can be represented. Modern computers often use 24-bit colour depth (over 16 million colours). Increasing colour depth increases file size.</li>
+                    <li><strong>Image Resolution:</strong> The number of pixels that make up an image (e.g., <code>4096 x 3072</code> pixels).</li>
+                    <li><strong>Effect on Quality and File Size:</strong> Higher resolution images have more detail. The main drawback of using high resolution is the increase in file size. Low resolution images appear "pixelated" or "fuzzy".</li>
+                </ul>
+                
+                <h3>1.3 Data Storage and File Compression</h3>
+
+                <h4>1.3.1 Measurement of Data Storage</h4>
+                <ul>
+                    <li><strong>Bit:</strong> The basic computing element, either 0 or 1 (derived from binary digit).</li>
+                    <li><strong>Byte:</strong> The smallest unit of memory, equal to 8 bits. A 4-bit number is a nibble.</li>
+                    <li><strong>IEC Memory Size System (Base 2):</strong> Since memory size is measured in powers of 2, the IEC system is adopted for accuracy and should be used for measuring internal memories (such as RAM and ROM). This system uses powers of 1024 (2<sup>10</sup>):
+                        <ul>
+                            <li>1 Kibibyte (1 KiB) = 2<sup>10</sup> bytes (1024 bytes).</li>
+                            <li>1 Mebibyte (1 MiB) = 2<sup>20</sup> bytes.</li>
+                            <li>1 Gibibyte (1 GiB) = 2<sup>30</sup> bytes.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>1.3.2 Calculation of File Size</h4>
+                <p><strong>Image File Size (in bits):</strong></p>
+                <div class="formula-box">
+                    Image resolution (in pixels) &times; colour depth (in bits)
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch3"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch3">Chapter 3. Hardware</button></h2>
-                    <div id="collapse-ch3" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                        <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 3</a></li></ul></div>
-                    </div>
+                
+                <p><strong>Mono Sound File Size (in bits):</strong></p>
+                <div class="formula-box">
+                    Sample rate (in Hz) &times; sample resolution (in bits) &times; length of sample (in seconds)
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch4"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch4">Chapter 4. Software</button></h2>
-                    <div id="collapse-ch4" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 4</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch5"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch5">Chapter 5. The internet and its uses</button></h2>
-                    <div id="collapse-ch5" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 5</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch6"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch6">Chapter 6. Automated and emerging...</button></h2>
-                    <div id="collapse-ch6" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 6</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch7"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch7">Chapter 7. Algorithm design and...</button></h2>
-                    <div id="collapse-ch7" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 7</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch8"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch8">Chapter 8. Programming</button></h2>
-                    <div id="collapse-ch8" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 8</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch9"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch9">Chapter 9. Databases</button></h2>
-                    <div id="collapse-ch9" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 9</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-ch10"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ch10">Chapter 10. Boolean logic</button></h2>
-                    <div id="collapse-ch10" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="#">Lecture 10</a></li></ul></div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading-array"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-array">Array</button></h2>
-                    <div id="collapse-array" class="accordion-collapse collapse" data-bs-parent="#chaptersAccordion">
-                         <div class="accordion-body p-0"><ul class="list-group list-group-flush"><li class="list-group-item"><a href="array_lecture.html">Lecture (2D Array)</a></li></ul></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <p>(For stereo, the result is multiplied by two).</p>
+
+                <h4>1.3.3 The Need for Data Compression</h4>
+                <p>Sound and image files can be very large. Compression is necessary for several reasons:</p>
+                <ul>
+                    <li>To save storage space on devices.</li>
+                    <li>To reduce the time taken to stream, upload, download, or transfer a file.</li>
+                    <li>To reduce network bandwidth usage (bandwidth is the maximum rate of data transfer). Compressed files use less bandwidth, resulting in a faster data transfer rate.</li>
+                    <li>To reduce costs (e.g., cloud storage costs or ISP data charges).</li>
+                </ul>
+
+                <h4>1.3.4 Lossy and Lossless File Compression</h4>
+                <ul>
+                    <li><strong>Lossy File Compression:</strong>
+                        <ul>
+                            <li>The algorithm eliminates unnecessary data.</li>
+                            <li>The original file cannot be reconstructed once compressed.</li>
+                            <li>Results in some loss of detail.</li>
+                            <li>Examples: MP3 (for music), MP4 (for multimedia), and JPEG (for bitmap images). MP3 algorithms reduce size by removing sounds the human ear cannot properly hear (known as perceptual music shaping). JPEG relies on the human eye being less sensitive to colour variations than brightness variations.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Lossless File Compression:</strong>
+                        <ul>
+                            <li>All the data from the original uncompressed file can be reconstructed.</li>
+                            <li>This is critical for files where any data loss would be disastrous (e.g., complex spreadsheets or computer applications).</li>
+                            <li>Example: Run-length encoding (RLE).</li>
+                        </ul>
+                    </li>
+                    <li><strong>RLE:</strong> A technique that reduces the size of a string of adjacent, identical data (like repeated colours or characters). A repeating string is encoded into two values: the number of identical data items and the code of the data item (e.g., ASCII code).</li>
+                </ul>
+            </section>
+
+            <section id="summary">
+                <h2>III. CHAPTER SUMMARY</h2>
+                <p>In this chapter, you have learnt how to:</p>
+                <ul>
+                    <li>Use the binary and hexadecimal number systems.</li>
+                    <li>Convert numbers between the binary, denary, and hexadecimal systems.</li>
+                    <li>Add two binary numbers and understand the concept of overflow.</li>
+                    <li>Carry out a logical shift and understand its effect (multiplication or division by powers of 2).</li>
+                    <li>Store negative binary numbers using two’s complement notation.</li>
+                    <li>Interpret ASCII and Unicode character tables.</li>
+                    <li>Understand the way a computer stores image and sound files using concepts like sampling rate, sampling resolution, resolution, and colour depth.</li>
+                    <li>Represent the size of computer memory using KiB, GiB, and so on (IEC system).</li>
+                    <li>Calculate the size of an image and sound file.</li>
+                    <li>Understand the advantages of reducing file size and apply lossless and lossy file reduction techniques (like RLE, MP3, JPEG).</li>
+                </ul>
+            </section>
+
+            <section id="key-terms">
+                <h2>IV. KEY TERMS</h2>
+                <dl>
+                    <dt>bit</dt>
+                    <dd>The basic computing element that is either 0 or 1, derived from the words Binary digit.</dd>
+
+                    <dt>binary number system</dt>
+                    <dd>A number system based on 2 that can only use the values 0 and 1.</dd>
+
+                    <dt>hexadecimal number system</dt>
+                    <dd>A number system based on the value 16 which uses denary digits 0 to 9 and letters A to F.</dd>
+
+                    <dt>MAC address</dt>
+                    <dd>Media Access Control address, given in hexadecimal, which uniquely identifies a device on the internet.</dd>
+
+                    <dt>IP address</dt>
+                    <dd>Internet Protocol, identified as IPv4 or IPv6, which gives a unique address to each device connected to a network.</dd>
+
+                    <dt>overflow error</dt>
+                    <dd>The result of carrying out a calculation that produces a value that is too large for the computer’s allocated word size (8-bit, 16-bit, etc.).</dd>
+
+                    <dt>logical shift</dt>
+                    <dd>An operation that shifts bits to the left or right in a register; any bits shifted out are replaced with zeroes.</dd>
+
+                    <dt>two’s complement</dt>
+                    <dd>A method of representing negative numbers in binary; in an 8-bit system, the left-most bit is given the value –128.</dd>
+
+                    <dt>ASCII code</dt>
+                    <dd>A character set for all the characters on a standard keyboard and control codes.</dd>
+
+                    <dt>Unicode</dt>
+                    <dd>A character set which represents all the languages of the world.</dd>
+
+                    <dt>sampling rate</dt>
+                    <dd>The number of sound samples taken per second in digital sound recording.</dd>
+
+                    <dt>sampling resolution (bit depth)</dt>
+                    <dd>The number of bits used to represent sound amplitude in digital sound recording.</dd>
+
+                    <dt>colour depth</dt>
+                    <dd>The number of bits used to represent the colours of a pixel.</dd>
+
+                    <dt>pixel</dt>
+                    <dd>Derived from 'picture element'; the smallest element used to make up an image on a display.</dd>
+
+                    <dt>bitmap image</dt>
+                    <dd>An image made up of pixels.</dd>
+
+                    <dt>image resolution</dt>
+                    <dd>The number of pixels in the X–Y direction of an image.</dd>
+
+                    <dt>compression</dt>
+                    <dd>Reduction of the size of a file by removing repeated or redundant data; can be lossy or lossless.</dd>
+
+f
+                    <dt>bandwidth</dt>
+                    <dd>The maximum rate of transfer of data across a network, measured in kilobits per second (kbps) or megabits per second (Mbps).</dd>
+
+                    <dt>lossy (compression)</dt>
+                    <dd>A method where parts of the original file cannot be recovered during decompression (e.g., JPEG, MP3).</dd>
+
+                    <dt>lossless (compression)</dt>
+                    <dd>A method that allows the original file to be fully restored during decompression (e.g., RLE).</dd>
+
+                    <dt>RLE (Run Length Encoding)</dt>
+                    <dd>A lossless technique used to reduce the size of files by encoding strings of adjacent, identical data.</dd>
+
+                    <dt>MP3/MP4</dt>
+                    <dd>Lossy file compression methods used for music (MP3) or multimedia (MP4).</dd>
+                </dl>
+            </section>
+
+            <section id="activities">
+                <h2>V. ACTIVITIES AND EXERCISES</h2>
+                <p>Learners should practice the following activities to reinforce their understanding of the chapter content:</p>
+                <ul>
+                    <li><strong>Number System Conversion Practice:</strong>
+                        <ul>
+                            <li>Convert given 8-bit, 12-bit, and 16-bit binary numbers to denary.</li>
+                            <li>Convert given denary numbers into binary (using both successive subtraction and successive division by 2 methods).</li>
+                            <li>Convert binary numbers into hexadecimal.</li>
+                            <li>Convert hexadecimal numbers into binary.</li>
+                            <li>Convert hexadecimal numbers into denary.</li>
+                            <li>Convert denary numbers into hexadecimal.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Binary Arithmetic and Shifts:</strong>
+                        <ul>
+                            <li>Perform binary additions of two 8-bit positive numbers and verify the result.</li>
+                            <li>Perform binary additions resulting in an overflow error and comment on the answer.</li>
+                            <li>Perform logical shifts (left and right) on 8-bit binary numbers, note the resulting denary value, and identify when an error occurs due to loss of bits.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Two’s Complement:</strong>
+                        <ul>
+                            <li>Convert positive denary numbers to 8-bit two’s complement format and vice versa.</li>
+                            <li>Convert negative denary numbers to 8-bit two’s complement format (using both the column value method and the invert-and-add-1 method).</li>
+                            <li>Convert negative binary numbers (in two’s complement) back to denary.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Data Representation Concepts:</strong>
+                        <ul>
+                            <li>Explain the terms: colour depth, ASCII code, Extended ASCII code, Unicode, sampling rate, and bitmap image.</li>
+                            <li>Describe the effect of increasing image resolution and sound sampling rate on the resultant file size.</li>
+                            <li>Calculate the number of possible colours given a specific bit depth (e.g., 24 bits for RGB).</li>
+                        </ul>
+                    </li>
+                    <li><strong>File Size and Compression Calculations:</strong>
+                        <ul>
+                            <li>Calculate the size of an image file in MiB given the resolution and colour depth.</li>
+                            <li>Calculate the size of a mono or stereo sound file in MiB given the sample rate, sample resolution, and duration.</li>
+<li>Analyze scenarios involving the need for compression and identify whether lossy (MP3, JPEG) or lossless (RLE) compression is appropriate, providing justification.</li>
+                            <li>Demonstrate how RLE would compress a sequence of data or an image grid.</li>
+                            <li>Solve problems involving memory capacity using KiB/GiB and calculating how many files can be stored.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="analogy">
+                <h2>Analogy for Data Representation</h2>
+                <blockquote>
+                    <p>Think of data representation as a universal postal service. Every piece of information (a letter, a photo, a sound recording) must be put into a standardized "envelope" (binary code) so the postal workers (the computer CPU) can read the address (data location) and process it. Systems like denary, hexadecimal, ASCII, and sampling are the translators, ensuring that what we write in human language (Base 10, letters, analogue sound) is accurately packaged into the standardized binary envelope (Base 2) that the machine understands. Compression is simply folding the envelope smaller to save space and speed up delivery.</p>
+                </blockquote>
+            </section>
+        </main>
     </div>
 
-    <main class="container">
-        <div class="py-5">
-            <h1>Chapter 1: Data Representation</h1>
-            <p class="lead">This chapter considers the three key number systems used in computer science... (Nội dung tóm tắt)</p>
-            
-            <div class="accordion shadow-sm lecture-accordion" id="lectureAccordion">
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec1">
-                            1.1 Number Systems
-                        </button>
-                    </h2>
-                    <div id="collapseLec1" class="accordion-collapse collapse show" data-bs-parent="#lectureAccordion">
-                        <div class="accordion-body">
-                            
-                            <h3>1.1.1 Binary Represents Data</h3>
-                            <p>The basic building block in all computers is the binary number system...</p>
-
-                            <h3>1.1.2 Binary, Denary, and Hexadecimal Systems</h3>
-                            <p><strong>Denary (Base 10):</strong> ... $10^4$ (10 000), ... $10^0$ (1).</p>
-                            <p><strong>Binary (Base 2):</strong> ... (từ $2^7$ đến $2^0$).</p>
-                            <p><strong>Hexadecimal (Base 16):</strong> ... $16 = 2^4$, ...</p>
-                            
-                            <h4 class="mt-4">Conversion Between Number Systems</h4>
-                            <ul>
-                                <li><strong>Binary to Denary:</strong> ...</li>
-                                <li><strong>Denary to Binary:</strong> ...</li>
-                                <li>...</li>
-                            </ul>
-                            
-                            <h3>1.1.6 Two’s Complement</h3>
-                            <p>Used to represent negative integers. Range is -128 ($10000000_2$) to +127 ($01111111_2$).</p>
-                            
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec2">
-                            1.2 Text, Sound, and Images
-                        </button>
-                    </h2>
-                    <div id="collapseLec2" class="accordion-collapse collapse" data-bs-parent="#lectureAccordion">
-                        <div class="accordion-body">
-                            <h3>1.2.1 Character Sets – ASCII Code and Unicode</h3>
-                            <p>...</p>
-                            <h3>1.2.2 Representation of Sound</h3>
-                            <p>...</p>
-                            <h3>1.2.3 Representation of (Bitmap) Images</h3>
-                            <p>...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec3">
-                            1.3 Data Storage and File Compression
-                        </button>
-                    </h2>
-                    <div id="collapseLec3" class="accordion-collapse collapse" data-bs-parent="#lectureAccordion">
-                        <div class="accordion-body">
-                            <h3>1.3.1 Measurement of Data Storage</h3>
-                            <table class="table table-bordered table-striped w-auto">
-                                <tbody>
-                                    <tr><td>1 Kibibyte (KiB)</td><td>$2^{10}$</td><td>1,024 bytes</td></tr>
-                                    <tr><td>1 Mebibyte (MiB)</td><td>$2^{20}$</td><td>1,048,576 bytes</td></tr>
-                                    <tr><td>1 Gibibyte (GiB)</td><td>$2^{30}$</td><td>1,073,741,824 bytes</td></tr>
-                                </tbody>
-                            </table>
-                            <h3>1.3.2 Calculation of File Size</h3>
-                            <pre><code>Image resolution (pixels) × colour depth (bits)</code></pre>
-                            <h3>1.3.4 Lossy and Lossless File Compression</h3>
-                            <p>...</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPnbuI6B3N1NlQnF/B/vE/sRprMUPPUZUWx5sW/WfBvFhVokU/nLd0TuG8+T2" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-ZAmRELceRBOVvNclMtC1FOKevN1MCDhT/X/fIxoIlrJTNLBlNoRmbjHhDEujQlP/+" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Chỉ cần render KaTeX
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: "$$", right: "$$", display: true},
-                    {left: "$", right: "$", display: false}
-                ]
-            });
-        });
-    </script>
 </body>
-</html> 
+</html>

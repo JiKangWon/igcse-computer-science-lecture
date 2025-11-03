@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Algorithm Design and Problem Solving</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            /* Tông màu Cam/Hổ phách (Amber/Orange) cho chủ đề Logic/Design */
+            background: linear-gradient(135deg, #d35400, #f39c12, #e67e22);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #d35400; /* Match theme */
+            margin: 5px 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #f39c12;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #d35400; /* Match theme */
+            border-bottom: 3px solid #f39c12;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách & Mã giả --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+        
+        li > ul, li > ol {
+            margin-top: 10px;
+        }
+
+        /* Định dạng Pseudocode */
+        code {
+            background-color: #fef5e7; /* Light orange bg */
+            color: #333;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+            font-size: 1em;
+            border: 1px solid #f39c12;
+        }
+        
+        code .keyword {
+            color: #d35400; /* Orange keyword */
+            font-weight: 700;
+        }
+        
+        code .operator {
+            color: #007bff; /* Blue operator */
+            font-weight: 700;
+        }
+        
+        /* Danh sách định nghĩa (Key Terms) */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #d35400; /* Match theme */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #eee;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #f39c12; /* Match theme */
+            background: #fef9e7;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 7: ALGORITHM DESIGN AND PROBLEM SOLVING</h1>
+            <p>Course: Computer Science</p>
+        </header>
+
+        <nav>
+            <a href="#objectives">Objectives</a>
+            <a href="#lifecycle">Life Cycle</a>
+            <a href="#design-tools">Design Tools</a>
+            <a href="#algorithms">Algorithms</a>
+            <a href="#validation-testing">Validation & Testing</a>
+            <a href="#key-terms">Key Terms</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>I. LEARNING OBJECTIVES</h2>
+                <p>Upon completion of this chapter, students should be able to:</p>
+                <ul>
+                    <li>Describe the stages in the program development cycle: analysis, design, coding, and testing.</li>
+                    <li>Explain computer systems and sub-systems.</li>
+                    <li>Demonstrate problem decomposition into component parts (inputs, processes, outputs, storage).</li>
+                    <li>Utilize formal methods to design solutions, including structure diagrams, flowcharts, and pseudocode.</li>
+                    <li>Explain the purpose of an algorithm and the processes involved in it.</li>
+                    <li>Implement standard methods of solution, such as linear search, bubble sort, totalling, counting, and finding average, maximum, and minimum values.</li>
+                    <li>Apply validation checks (range, length, type, presence, format, check digits) and verification checks (double entry, visual check).</li>
+                    <li>Use different types of test data, including normal, abnormal (erroneous), extreme, and boundary data.</li>
+                    <li>Document a manual dry run of an algorithm using a trace table.</li>
+                    <li>Write, amend, identify, and correct errors in flowcharts and pseudocode.</li>
+                </ul>
+            </section>
+
+            <section id="lifecycle">
+                <h2>II. DETAILED CONTENT (1/5): The Program Development Life Cycle</h2>
+                <p>The program development life cycle is divided into five stages: analysis, design, coding, testing, and maintenance. This course focuses on the first four.</p>
+
+                <h3>1.1 Analysis</h3>
+                <p>The goal is to clearly define the problem and establish the ‘requirements specification’. This stage uses two key tools:</p>
+                <dl>
+                    <dt>Abstraction</dt>
+                    <dd>Keeping the key elements required for the solution and discarding unnecessary details or information. (Example: A map only shows details required for traveling).</dd>
+                    <dt>Decomposition</dt>
+                    <dd>Breaking down a complex problem into smaller parts, which can be further subdivided into even smaller, easily solvable parts. (Example: Getting dressed can be decomposed into selecting items, removing current clothes, and putting selected items on in order).</dd>
+                </dl>
+
+                <h3>1.2 Design</h3>
+                <p>The design stage uses the program specification from the analysis stage to show how the program should be developed. Design can be formally documented using structure charts, flowcharts, and pseudocode.</p>
+
+                <h3>1.3 Coding and Iterative Testing</h3>
+                <p>Each module is written using a suitable programming language. Iterative testing involves conducting modular tests, amending the code, and repeating tests until the module performs as required.</p>
+
+                <h3>1.4 Testing</h3>
+                <p>The completed program is run multiple times with different sets of test data to ensure all completed tasks work together as specified.</p>
+            </section>
+
+            <section id="design-tools">
+                <h2>II. DETAILED CONTENT (2/5): Systems and Design Tools</h2>
+
+                <h3>2.1 Top-Down Design and Stepwise Refinement</h3>
+                <p>A computer system (software, data, hardware, communications, people) can be divided into sub-systems until each performs a single action.</p>
+                <ul>
+                    <li><strong>Top-down design</strong> is the process of decomposition where the system is broken down into sub-systems.</li>
+                    <li>This structured approach is also called <strong>stepwise refinement</strong>.</li>
+                    <li>The modular construction is shown using <strong>structure diagrams</strong>.</li>
+                </ul>
+
+                <h3>2.2 Decomposing a Problem</h3>
+                <p>Any problem must be decomposed into the following component parts:</p>
+                <ul>
+                    <li><strong>Inputs:</strong> Data entered while the system is active.</li>
+                    <li><strong>Processes:</strong> Tasks performed using input data and/or stored data.</li>
+                    <li><strong>Outputs:</strong> Information displayed or printed for users.</li>
+                    <li><strong>Storage:</strong> Data saved in files for future use.</li>
+                </ul>
+
+                <h3>2.3 Methods Used to Design and Construct a Solution</h3>
+                <p>Formal methods for design include:</p>
+                <dl>
+                    <dt>Structure Diagrams</dt>
+                    <dd>Hierarchical diagrams showing top-down design and how the solution is divided into sub-systems.</dd>
+                    <dt>Flowcharts</dt>
+                    <dd>Diagrams showing the steps (algorithm) and order of execution using standard symbols (Terminator, Process, Input/Output, Decision).</dd>
+                    <dt>Pseudocode</dt>
+                    <dd>A simple method of showing an algorithm using English keywords without strict syntax rules.
+                        <ul>
+                            <li><strong>Assignment:</strong> Uses the <span class="operator">&larr;</span> operator (e.g., <code>Cost <span class="operator">&larr;</span> 10</code>).</li>
+                            <li><strong>Conditional Statements:</strong>
+                                <ul>
+                                    <li><code><span class="keyword">IF</span> ... <span class="keyword">THEN</span> ... <span class="keyword">ELSE</span> ... <span class="keyword">ENDIF</span></code>: Used for true/false conditions.</li>
+                                    <li><code><span class="keyword">CASE OF</span> ... <span class="keyword">OTHERWISE</span> ... <span class="keyword">ENDCASE</span></code>: Used for choice between several different values.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Iteration (Loops):</strong>
+                                <ul>
+                                    <li><code><span class="keyword">FOR</span> ... <span class="keyword">TO</span> ... <span class="keyword">NEXT</span></code>: Used for a set, known number of repetitions.</li>
+                                    <li><code><span class="keyword">REPEAT</span> ... <span class="keyword">UNTIL</span></code>: Completed at least once; test is at the end (post-condition).</li>
+                                    <li><code><span class="keyword">WHILE</span> ... <span class="keyword">DO</span> ... <span class="keyword">ENDWHILE</span></code>: May never be completed; test is at the beginning (pre-condition).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </section>
+
+            <section id="algorithms">
+                <h2>II. DETAILED CONTENT (3/5): Algorithms & Standard Methods</h2>
+
+                <h3>3.1 Explaining the Purpose of an Algorithm</h3>
+                <p>An <strong>algorithm</strong> is an ordered set of steps to solve a problem. The purpose and processes are typically made clear through flowcharts or pseudocode.</p>
+
+                <h3>3.2 Standard Methods</h3>
+                <p>Algorithms frequently repeat existing methods. Required standard methods include:</p>
+                <ul>
+                    <li><strong>Totalling:</strong> Keeping a running total (e.g., <code>Total <span class="operator">&larr;</span> Total + StudentMark[Counter]</code>).</li>
+                    <li><strong>Counting:</strong> Keeping a count (e.g., <code>PassCount <span class="operator">&larr;</span> PassCount + 1</code>).</li>
+                    <li><strong>Finding Maximum, Minimum, and Average:</strong>
+                        <ul>
+                            <li>Initialize Max/Min to lowest/highest possible value (e.g., <code>MaximumMark <span class="operator">&larr;</span> 0</code>, <code>MinimumMark <span class="operator">&larr;</span> 100</code>) or to the first item.</li>
+                            <li>Average is calculated as <code>Average <span class="operator">&larr;</span> Total / ClassSize</code>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Linear Search:</strong> Inspects each item in a list sequentially to see if it matches the value searched for.</li>
+                    <li><strong>Bubble Sort:</strong> Makes multiple passes, comparing each element with the next and swapping if in the wrong order. Repeats until no swaps are made in a pass.</li>
+                </ul>
+            </section>
+
+            <section id="validation-testing">
+                <h2>II. DETAILED CONTENT (4/5): Validation, Verification & Testing</h2>
+
+                <h3>4.1 Validation</h3>
+                <p><strong>Validation</strong> is the automated check by a program to ensure data is <strong>reasonable</strong> before acceptance. If rejected, an error message should be displayed.</p>
+                <ul>
+                    <li><strong>Range check:</strong> Checks if a value falls between an upper and lower limit (e.g., 0 and 100).</li>
+                    <li><strong>Length check:</strong> Checks if data has an exact number of characters or is within a range.</li>
+                    <li><strong>Type check:</strong> Checks that data is of a specific type (e.g., integer).</li>
+                    <li><strong>Presence check:</strong> Ensures a data item is not blank.</li>
+                    <li><strong>Format check:</strong> Checks that characters conform to a pre-defined pattern (e.g., <code>CUB9999</code>).</li>
+                    <li><strong>Check Digits:</strong> The final digit in a code, calculated from the others, used to identify data entry errors.</li>
+                </ul>
+
+                <h3>4.2 Verification</h3>
+                <p><strong>Verification</strong> is checking that data has been <strong>accurately copied</strong> from one source to another.</p>
+                <ul>
+                    <li><strong>Double entry:</strong> Data is entered twice; the system compares the entries.</li>
+                    <li><strong>Screen/Visual check:</strong> The user manually checks the displayed data against the original source.</li>
+                </ul>
+
+                <h3>5.1 Types of Test Data</h3>
+                <p>To thoroughly test a solution, different data types are required:</p>
+                <ul>
+                    <li><strong>Normal data:</strong> Data that the program is expected to accept.</li>
+                    <li><strong>Abnormal (Erroneous) data:</strong> Data that is expected to be rejected.</li>
+                    <li><strong>Extreme data:</strong> The largest and smallest values that normal data can accept (e.g., 0 and 100).</li>
+                    <li><strong>Boundary data:</strong> Used to establish limits. At each boundary, two values are required: one accepted and one rejected (e.g., -1 and 0).</li>
+                </ul>
+
+                <h3>5.2 Trace Tables and Dry Runs</h3>
+                <ul>
+                    <li>A <strong>dry run</strong> is the manual process of working through an algorithm step by step.</li>
+                    <li>A <strong>trace table</strong> is used to record the results from each step, tracking the value of every variable and any output.</li>
+                    <li>Trace tables and test data are crucial for identifying and correcting errors.</li>
+                </ul>
+            </section>
+            
+            <section id="writing-algorithms">
+                <h2>II. DETAILED CONTENT (5/5): Writing and Amending Algorithms</h2>
+                <p>Stages in producing an effective algorithm:</p>
+                <ol>
+                    <li>Ensure the problem is clearly specified.</li>
+                    <li>Decompose the problem into sub-problems (Set up, Input, Processing, Storage, Output).</li>
+                    <li>Decide how data is obtained, stored, processed, and displayed.</li>
+                    <li>Design the structure using a structure diagram.</li>
+                    <li>Construct the algorithm using a flowchart or pseudocode.</li>
+                    <li>Ensure the algorithm is readable and precise, using meaningful names.</li>
+                    <li>Use test data (Normal, Abnormal, Boundary) to dry run the algorithm with trace tables.</li>
+                    <li>Correct any errors found and repeat the process until the algorithm works perfectly.</li>
+                </ol>
+            </section>
+
+            <section id="key-terms">
+                <h2>III. KEY TERMINOLOGY SUMMARY</h2>
+                <dl>
+                    <dt>Algorithm</dt>
+                    <dd>An ordered set of steps to solve a problem.</dd>
+                    <dt>Analysis</dt>
+                    <dd>The stage where investigation leads to the specification of what a program is required to do.</dd>
+                    <dt>Abstraction</dt>
+                    <dd>Keeping the key elements required for the solution and discarding unnecessary details.</dd>
+                    <dt>Decomposition</dt>
+                    <dd>Breaking a complex problem into smaller, more easily solvable parts.</dd>
+                    <dt>Top-down Design</dt>
+                    <dd>Breaking down a computer system into sub-systems until each performs a single action.</dd>
+                    <dt>Pseudocode</dt>
+                    <dd>A simple method showing an algorithm using English keywords, without strict syntax rules.</dd>
+                    <dt>Flowchart</dt>
+                    <dd>A diagram showing the steps required for a task and the order of performance.</dd>
+                    <dt>Linear Search</dt>
+                    <dd>An algorithm that inspects each item in a list sequentially to find a match.</dd>
+                    <dt>Bubble Sort</dt>
+                    <dd>An algorithm that compares and swaps adjacent elements in multiple passes until no more swaps are made.</dd>
+                    <dt>Validation</dt>
+                    <dd>Automated checks that data is reasonable before being accepted into a system.</dd>
+                    <dt>Verification</dt>
+                    <dd>Checking that data has been accurately copied from one source to another.</dd>
+                    <dt>Boundary Data</dt>
+                    <dd>The accepted maximum/minimum value and the corresponding rejected value.</dd>
+                    <dt>Trace Table</dt>
+                    <dd>A tool used to record the results from a dry run, tracking variable values and output.</dd>
+                </dl>
+
+                <h3>Analogy for Validation vs. Verification</h3>
+                <blockquote>
+                    <p>The difference between validation and verification in data entry is like ensuring a package is ready to ship. <strong>Validation</strong> is checking the format of the label (Does the ZIP code have 5 digits? Is the weight under 50 lbs? — Range/Format Checks). <strong>Verification</strong> is ensuring the address you typed on the label exactly matches the address provided by the customer (Double Entry/Visual Check).</p>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -6,24 +6,26 @@
     <title>CS Lecture: Arrays in Pseudo Code</title>
     
     <style>
-        /* CSS Variables for color theme */
+        /* --- CSS Variables and Dark Mode Styling (from Chapter 8) --- */
         :root {
-            --primary-blue: #007bff;
-            --secondary-blue: #0056b3;
-            --light-blue-bg: #f0f7ff;
-            --white: #ffffff;
-            --text-dark: #333;
-            --text-light: #555;
-            --border-color: #ddd;
-            --code-bg: #f8f9fa;
+            --bg-dark-deep: #1e1e1e;
+            --bg-dark-med: #252526;
+            --bg-dark-light: #2a2a2e;
+            --border-color: #3a3a3a;
+            --text-primary: #d4d4d4;
+            --text-secondary: #9cdcfe; /* Light blue */
+            --accent-cyan: #00aeff;
+            --keyword-blue: #569cd6;
+            --string-orange: #ce9178;
+            --comment-green: #6a9955;
         }
 
         /* General Body Styling */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.7;
-            background-color: var(--light-blue-bg);
-            color: var(--text-dark);
+            background-color: var(--bg-dark-deep);
+            color: var(--text-primary);
             margin: 0;
             padding: 0;
         }
@@ -32,22 +34,25 @@
         .lecture-container {
             max-width: 900px;
             margin: 20px auto;
-            background-color: var(--white);
+            background-color: var(--bg-dark-med);
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
             overflow: hidden;
         }
 
         /* Header Styling */
         header {
-            background-color: var(--primary-blue);
+            background: linear-gradient(135deg, #0d47a1, #1e1e1e);
             color: var(--white);
             padding: 30px 40px;
             text-align: center;
+            border-bottom: 2px solid var(--accent-cyan);
         }
         header h1 {
             margin: 0;
             font-size: 2.5rem;
+            color: #fff;
         }
         header p {
             margin: 5px 0 0;
@@ -57,20 +62,22 @@
 
         /* Navigation Bar */
         nav {
-            background-color: var(--secondary-blue);
+            background-color: #1a1a1a;
             padding: 10px 40px;
             text-align: center;
+            border-bottom: 1px solid var(--border-color);
         }
         nav a {
-            color: var(--white);
+            color: var(--accent-cyan);
             text-decoration: none;
             font-weight: 500;
             padding: 10px 15px;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         nav a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--accent-cyan);
+            color: var(--bg-dark-deep);
         }
 
         /* Main Content Area */
@@ -90,15 +97,15 @@
         }
 
         h2 {
-            color: var(--primary-blue);
+            color: var(--accent-cyan);
             font-size: 2rem;
-            border-bottom: 2px solid var(--light-blue-bg);
+            border-bottom: 2px solid var(--accent-cyan);
             padding-bottom: 10px;
             margin-top: 0;
         }
 
         h3 {
-            color: var(--secondary-blue);
+            color: var(--text-secondary);
             font-size: 1.5rem;
             margin-top: 30px;
         }
@@ -106,7 +113,7 @@
         /* Text & List Styling */
         p {
             font-size: 1rem;
-            color: var(--text-light);
+            color: var(--text-primary);
         }
         ul {
             padding-left: 20px;
@@ -115,45 +122,57 @@
             margin-bottom: 10px;
         }
 
-        /* Code Block Styling */
+        /* Code Block Styling (Syntax Highlighting) */
         pre {
-            background-color: var(--code-bg);
+            background-color: #1a1a1a;
             border: 1px solid var(--border-color);
-            border-left: 5px solid var(--primary-blue);
+            border-left: 5px solid var(--accent-cyan);
             padding: 15px;
             border-radius: 5px;
-            font-family: "Courier New", Courier, monospace;
+            font-family: "Consolas", "Courier New", monospace;
             font-size: 0.95rem;
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            color: #9cdcfe;
         }
+        
+        /* Inline code */
         code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--code-bg);
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #1a1a1a;
             padding: 2px 5px;
             border-radius: 3px;
             font-size: 0.9rem;
+            border: 1px solid var(--border-color);
         }
+
+        /* Syntax Highlighting */
+        .code-keyword { color: var(--keyword-blue); font-weight: bold; }
+        .code-string { color: var(--string-orange); }
+        .code-comment { color: var(--comment-green); font-style: italic; }
+        .code-var { color: var(--text-secondary); }
+        .code-op { color: var(--text-primary); }
 
         /* Box Styling for Examples/Exercises */
         .example-box, .exercise-box {
-            background-color: var(--white);
+            background-color: var(--bg-dark-light);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
             margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .example-box h3, .exercise-box h3 {
             margin-top: 0;
             font-size: 1.3rem;
+            color: var(--text-secondary);
         }
 
         /* Button Styling (for exercises) */
         .toggle-solution-btn {
-            background-color: var(--primary-blue);
-            color: var(--white);
+            background-color: var(--accent-cyan);
+            color: var(--bg-dark-deep);
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
@@ -161,10 +180,10 @@
             font-size: 0.9rem;
             font-weight: 500;
             transition: background-color 0.3s ease;
-            margin-top: 10px;
+            font-weight: bold;
         }
         .toggle-solution-btn:hover {
-            background-color: var(--secondary-blue);
+            background-color: #3ccbff;
         }
 
         /* Solution Content (hidden by default) */
@@ -179,7 +198,7 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #1a1a1a;
             color: #777;
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
@@ -231,37 +250,37 @@
 
                 <h3>2.1 Declaration & Initialization</h3>
                 <p>This is how we create an array. We can create an empty array of a specific size, or create one with values already in it.</p>
-                <pre><code>// 1. Declare an empty array named 'scores' that can hold 5 Integers
-DECLARE scores AS Array[5] OF Integer
+                <pre><span class="code-comment">// 1. Declare an empty array named 'scores' that can hold 5 Integers</span>
+<span class="code-keyword">DECLARE</span> <span class="code-var">scores</span> <span class="code-op">AS</span> <span class="code-keyword">Array</span>[5] <span class="code-keyword">OF</span> <span class="code-keyword">Integer</span>
 
-// 2. Declare and initialize an array with values
-INITIALIZE studentNames = ["Alice", "Bob", "Charlie", "David"]
+<span class="code-comment">// 2. Declare and initialize an array with values</span>
+<span class="code-keyword">INITIALIZE</span> <span class="code-var">studentNames</span> <span class="code-op">=</span> [<span class="code-string">"Alice"</span>, <span class="code-string">"Bob"</span>, <span class="code-string">"Charlie"</span>, <span class="code-string">"David"</span>]
 
-// 3. In many pseudo code styles, this is also acceptable
-SET grades = [95, 88, 76]</code></pre>
+<span class="code-comment">// 3. In many pseudo code styles, this is also acceptable</span>
+<span class="code-keyword">SET</span> <span class="code-var">grades</span> <span class="code-op">=</span> [95, 88, 76]</pre>
 
                 <h3>2.2 Accessing Elements (by Index)</h3>
                 <p>We use the array's name and the element's index in square brackets <code>[]</code> to read its value.</p>
-                <pre><code>INITIALIZE studentNames = ["Alice", "Bob", "Charlie"]
+                <pre><span class="code-keyword">INITIALIZE</span> <span class="code-var">studentNames</span> <span class="code-op">=</span> [<span class="code-string">"Alice"</span>, <span class="code-string">"Bob"</span>, <span class="code-string">"Charlie"</span>]
 
-// Access the element at index 1
-SET secondStudent = studentNames[1]  // secondStudent is now "Bob"
+<span class="code-comment">// Access the element at index 1</span>
+<span class="code-keyword">SET</span> <span class="code-var">secondStudent</span> <span class="code-op">=</span> <span class="code-var">studentNames</span>[1]  <span class="code-comment">// secondStudent is now "Bob"</span>
 
-// Print the element at index 0
-PRINT studentNames[0]  // This will display "Alice"</code></pre>
+<span class="code-comment">// Print the element at index 0</span>
+<span class="code-keyword">PRINT</span> <span class="code-var">studentNames</span>[0]  <span class="code-comment">// This will display "Alice"</span></pre>
 
                 <h3>2.3 Modifying Elements (by Index)</h3>
                 <p>We can also use the index to change the value at a specific position.</p>
-                <pre><code>INITIALIZE scores = [80, 85, 90]
+                <pre><span class="code-keyword">INITIALIZE</span> <span class="code-var">scores</span> <span class="code-op">=</span> [80, 85, 90]
 
-// Print the original value at index 2
-PRINT scores[2]  // This will display "90"
+<span class="code-comment">// Print the original value at index 2</span>
+<span class="code-keyword">PRINT</span> <span class="code-var">scores</span>[2]  <span class="code-comment">// This will display "90"</span>
 
-// Change the value at index 2
-SET scores[2] = 95
+<span class="code-comment">// Change the value at index 2</span>
+<span class="code-keyword">SET</span> <span class="code-var">scores</span>[2] <span class="code-op">=</span> 95
 
-// Print the new value
-PRINT scores[2]  // This will display "95"</code></pre>
+<span class="code-comment">// Print the new value</span>
+<span class="code-keyword">PRINT</span> <span class="code-var">scores</span>[2]  <span class="code-comment">// This will display "95"</span></pre>
             </section>
             
             <section id="section-examples">
@@ -271,15 +290,15 @@ PRINT scores[2]  // This will display "95"</code></pre>
                 <div class="example-box">
                     <h3>Example 1: Traversing and Printing All Elements</h3>
                     <p>This pseudo code prints every name in the <code>studentNames</code> array.</p>
-                    <pre><code>START
-    INITIALIZE studentNames = ["Alice", "Bob", "Charlie", "David"]
+                    <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">studentNames</span> <span class="code-op">=</span> [<span class="code-string">"Alice"</span>, <span class="code-string">"Bob"</span>, <span class="code-string">"Charlie"</span>, <span class="code-string">"David"</span>]
     
-    // We loop from the first index (0) to the last index (3)
-    FOR i = 0 TO 3
-        // Access and print the element at the current index 'i'
-        PRINT studentNames[i]
-    ENDFOR
-END</code></pre>
+    <span class="code-comment">// We loop from the first index (0) to the last index (3)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">i</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 3
+        <span class="code-comment">// Access and print the element at the current index 'i'</span>
+        <span class="code-keyword">PRINT</span> <span class="code-var">studentNames</span>[<span class="code-var">i</span>]
+    <span class="code-keyword">ENDFOR</span>
+<span class="code-keyword">END</span></pre>
                     <p><strong>Output:</strong><br>
                     Alice<br>
                     Bob<br>
@@ -290,21 +309,21 @@ END</code></pre>
                 <div class="example-box">
                     <h3>Example 2: Calculating the Sum of an Array</h3>
                     <p>This pseudo code finds the total sum of all numbers in the <code>myNumbers</code> array.</p>
-                    <pre><code>START
-    INITIALIZE myNumbers = [10, 20, 30, 40]
+                    <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">myNumbers</span> <span class="code-op">=</span> [10, 20, 30, 40]
     
-    // Create a variable to hold the running total
-    SET totalSum = 0
+    <span class="code-comment">// Create a variable to hold the running total</span>
+    <span class="code-keyword">SET</span> <span class="code-var">totalSum</span> <span class="code-op">=</span> 0
     
-    // Loop from index 0 to 3
-    FOR i = 0 TO 3
-        // Add the number at the current index to our total
-        SET totalSum = totalSum + myNumbers[i]
-    ENDFOR
+    <span class="code-comment">// Loop from index 0 to 3</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">i</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 3
+        <span class="code-comment">// Add the number at the current index to our total</span>
+        <span class="code-keyword">SET</span> <span class="code-var">totalSum</span> <span class="code-op">=</span> <span class="code-var">totalSum</span> <span class="code-op">+</span> <span class="code-var">myNumbers</span>[<span class="code-var">i</span>]
+    <span class="code-keyword">ENDFOR</span>
     
-    // Print the final result
-    PRINT "The total sum is: " + totalSum
-END</code></pre>
+    <span class="code-comment">// Print the final result</span>
+    <span class="code-keyword">PRINT</span> <span class="code-string">"The total sum is: "</span> <span class="code-op">+</span> <span class="code-var">totalSum</span>
+<span class="code-keyword">END</span></pre>
                     <p><strong>Output:</strong><br>
                     The total sum is: 100</p>
                 </div>
@@ -319,25 +338,25 @@ END</code></pre>
                     
                     <button class="toggle-solution-btn">Show Solution</button>
                     <div class="solution-content">
-                        <pre><code>START
-    // Initialize the array
-    INITIALIZE scores = [85, 92, 78, 95, 88]
+                        <pre><span class="code-keyword">START</span>
+    <span class="code-comment">// Initialize the array</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">scores</span> <span class="code-op">=</span> [85, 92, 78, 95, 88]
     
-    // Assume the first element is the largest (for now)
-    SET maxScore = scores[0]
+    <span class="code-comment">// Assume the first element is the largest (for now)</span>
+    <span class="code-keyword">SET</span> <span class="code-var">maxScore</span> <span class="code-op">=</span> <span class="code-var">scores</span>[0]
     
-    // Loop through the *rest* of the array (starting from index 1)
-    FOR i = 1 TO 4
-        // Check if the current element is bigger than our current max
-        IF scores[i] > maxScore THEN
-            // If it is, update maxScore to this new value
-            SET maxScore = scores[i]
-        ENDIF
-    ENDFOR
+    <span class="code-comment">// Loop through the *rest* of the array (starting from index 1)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">i</span> <span class="code-op">=</span> 1 <span class="code-keyword">TO</span> 4
+        <span class="code-comment">// Check if the current element is bigger than our current max</span>
+        <span class="code-keyword">IF</span> <span class="code-var">scores</span>[<span class="code-var">i</span>] <span class="code-op">></span> <span class="code-var">maxScore</span> <span class="code-keyword">THEN</span>
+            <span class="code-comment">// If it is, update maxScore to this new value</span>
+            <span class="code-keyword">SET</span> <span class="code-var">maxScore</span> <span class="code-op">=</span> <span class="code-var">scores</span>[<span class="code-var">i</span>]
+        <span class="code-keyword">ENDIF</span>
+    <span class="code-keyword">ENDFOR</span>
     
-    // After the loop, maxScore holds the largest value
-    PRINT "The largest score is: " + maxScore
-END</code></pre>
+    <span class="code-comment">// After the loop, maxScore holds the largest value</span>
+    <span class="code-keyword">PRINT</span> <span class="code-string">"The largest score is: "</span> <span class="code-op">+</span> <span class="code-var">maxScore</span>
+<span class="code-keyword">END</span></pre>
                     </div>
                 </div>
 
@@ -347,24 +366,24 @@ END</code></pre>
                     
                     <button class="toggle-solution-btn">Show Solution</button>
                     <div class="solution-content">
-                        <pre><code>START
-    INITIALIZE grades = ['A', 'B', 'C', 'A', 'B', 'A']
+                        <pre><span class="code-keyword">START</span>
+    <span class="code-keyword">INITIALIZE</span> <span class="code-var">grades</span> <span class="code-op">=</span> [<span class="code-string">'A'</span>, <span class="code-string">'B'</span>, <span class="code-string">'C'</span>, <span class="code-string">'A'</span>, <span class="code-string">'B'</span>, <span class="code-string">'A'</span>]
     
-    // Initialize a counter variable to 0
-    SET countA = 0
+    <span class="code-comment">// Initialize a counter variable to 0</span>
+    <span class="code-keyword">SET</span> <span class="code-var">countA</span> <span class="code-op">=</span> 0
     
-    // Loop through the entire array (index 0 to 5)
-    FOR i = 0 TO 5
-        // Check if the element at the current index is 'A'
-        IF grades[i] == 'A' THEN
-            // If it is, increment the counter
-            SET countA = countA + 1
-        ENDIF
-    ENDFOR
+    <span class="code-comment">// Loop through the entire array (index 0 to 5)</span>
+    <span class="code-keyword">FOR</span> <span class="code-var">i</span> <span class="code-op">=</span> 0 <span class="code-keyword">TO</span> 5
+        <span class="code-comment">// Check if the element at the current index is 'A'</span>
+        <span class="code-keyword">IF</span> <span class="code-var">grades</span>[<span class="code-var">i</span>] <span class="code-op">==</span> <span class="code-string">'A'</span> <span class="code-keyword">THEN</span>
+            <span class="code-comment">// If it is, increment the counter</span>
+            <span class="code-keyword">SET</span> <span class="code-var">countA</span> <span class="code-op">=</span> <span class="code-var">countA</span> <span class="code-op">+</span> 1
+        <span class="code-keyword">ENDIF</span>
+    <span class="code-keyword">ENDFOR</span>
     
-    // Print the final count
-    PRINT "The grade 'A' appears " + countA + " times."
-END</code></pre>
+    <span class="code-comment">// Print the final count</span>
+    <span class="code-keyword">PRINT</span> <span class="code-string">"The grade 'A' appears "</span> <span class="code-op">+</span> <span class="code-var">countA</span> <span class="code-op">+</span> <span class="code-string">" times."</span>
+<span class="code-keyword">END</span></pre>
                     </div>
                 </div>
 
@@ -384,7 +403,8 @@ END</code></pre>
             buttons.forEach(function(button) {
                 button.addEventListener('click', function() {
                     // Find the solution content related to this button
-                    const solution = this.nextElementSibling;
+                    // .nextElementSibling assumes the solution is the very next element
+                    const solution = this.nextElementSibling; 
                     
                     // Toggle the display
                     if (solution.style.display === 'block') {

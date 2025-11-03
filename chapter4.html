@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Software</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            /* Tông màu Tím (Purple) cho chủ đề Phần mềm */
+            background: linear-gradient(135deg, #480048, #8a2be2, #9932CC);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #480048; /* Match theme */
+            margin: 0 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #8a2be2;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #480048; /* Match theme */
+            border-bottom: 3px solid #8a2be2;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+        
+        li > ul, li > ol {
+            margin-top: 10px;
+        }
+
+        li > strong {
+            color: #480048; /* Match theme */
+        }
+
+        code {
+            background-color: #eef2f7;
+            color: #d9006c;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        /* Danh sách định nghĩa (cho ưu/nhược điểm, định nghĩa) */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #480048; /* Match theme */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #eee;
+        }
+        
+        /* Bảng biểu cho Translators */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #480048;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #8a2be2; /* Match theme */
+            background: #f8f0ff;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 4: SOFTWARE</h1>
+        </header>
+
+        <nav>
+            <a href="#info">General Info</a>
+            <a href="#objectives">Objectives</a>
+            <a href="#main-content">Detailed Content</a>
+            <a href="#activities">Activities</a>
+        </nav>
+
+        <main>
+            <section id="info">
+                <h2>I. GENERAL INFORMATION</h2>
+                <dl>
+                    <dt>Subject</dt>
+                    <dd>Computer Science</dd>
+                    <dt>Lecture Title</dt>
+                    <dd>Types of Software, Interrupts, Programming Languages, and IDEs</dd>
+                    <dt>Scope</dt>
+                    <dd>This chapter covers essential software, such as an Operating System (OS), through to application software, such as word processors. The content examines how software is used and how it is translated so that a computer can execute its instructions.</dd>
+                </dl>
+            </section>
+
+            <section id="objectives">
+                <h2>II. LEARNING OBJECTIVES</h2>
+                <p>Upon completion of this chapter, students will learn about:</p>
+                <ol>
+                    <li>Distinguishing between systems software and applications software, including the roles of the operating system, utility programs, and application software.</li>
+                    <li>Explaining the role and basic functions of an operating system (OS).</li>
+                    <li>Describing the need for hardware, firmware, and operating systems when running application software.</li>
+                    <li>Identifying the role and operation of interrupts.</li>
+                    <li>Comparing the advantages and disadvantages of high-level and low-level languages, and the function of assembly language and assemblers.</li>
+                    <li>Analyzing the operation, advantages, and disadvantages of compilers and interpreters for high-level languages.</li>
+                    <li>Outlining the role and functions of an Integrated Development Environment (IDE) when writing code.</li>
+                </ol>
+            </section>
+
+            <section id="main-content">
+                <h2>III. DETAILED CONTENT</h2>
+
+                <h3>Section 4.1: Types of Software and Interrupts</h3>
+
+                <h4>4.1.1 System Software and Application Software</h4>
+                <p>All computers begin as connected hardware items, and without software, these hardware items would be useless.</p>
+                
+                <dl>
+                    <dt>A. Software Hierarchy</dt>
+                    <dd>
+                        There are two main types of software:
+                        <ul>
+                            <li><strong>System Software:</strong> A set of programs to control and manage the operation of computer hardware. It provides a platform on which other software can run.
+                                <br><strong>Examples:</strong> Operating System (OS), Utility Programs, and Device Drivers.</li>
+                            <li><strong>Application Software (Apps):</strong> Software used to perform various applications on a computer. It allows a user to perform specific tasks.
+                                <br><strong>Examples:</strong> Word processor, Spreadsheet, Database, Video Editing software, and Control and Measuring software.</li>
+                        </ul>
+                    </dd>
+
+                    <dt>B. Examples of System Software (Utilities):</dt>
+                    <dd>
+                        Utility programs are software designed to carry out specific tasks that help to manage, maintain, and control computer resources.
+                        <ul>
+                            <li><strong>Anti-virus Software:</strong> Constantly checks for attacks, compares against a database, and may use heuristic checking. Infected files are put into quarantine.</li>
+                            <li><strong>Defragmentation Software:</strong> Rearranges blocks of data on an HDD to store files in contiguous sectors, leading to faster data access. (Not needed for SSDs).</li>
+                            <li><strong>Back-up Software:</strong> Allows scheduled back-ups. Recommended to have three versions: current, local back-up, and remote (cloud) back-up.</li>
+                            <li><strong>Security Software:</strong> Manages access control (user IDs, passwords), protects network interfaces (firewalls), and uses encryption/decryption.</li>
+                            <li><strong>Device Drivers:</strong> Software that enables hardware devices (e.g., a printer) to communicate with the operating system.</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <h4>4.1.2 Operating Systems (OS)</h4>
+                <p>The OS is essential software running in the background, managing basic functions and providing a useable interface between humans and the computer.</p>
+                
+                <dl>
+                    <dt>Key Functions of the OS:</dt>
+                    <dd>
+                        <ul>
+                            <li><strong>Human Computer Interface (HCI):</strong> Allows interaction.
+                                <ul>
+                                    <li><strong>Command Line Interface (CLI):</strong> User types instructions.
+                                        <br><em>Advantage:</em> User is in direct communication, not restricted.
+                                        <br><em>Disadvantage:</em> User must learn many commands; slow and error-prone.
+                                    </li>
+                                    <li><strong>Graphical User Interface (GUI):</strong> Uses icons (WIMP/Post-WIMP).
+                                        <br><em>Advantage:</em> More user-friendly, no need to learn commands.
+                                        <br><em>Disadvantage:</em> Uses up considerably more computer memory than a CLI.
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Memory Management:</strong> Manages RAM, keeps track of memory locations, and performs memory protection.</li>
+                            <li><strong>Security Management:</strong> Ensures integrity, confidentiality, and availability of data (updates, user privileges, access rights).</li>
+                            <li><strong>Hardware Peripheral Management:</strong> Communicates with I/O devices using device drivers; manages queues and buffers.</li>
+                            <li><strong>File Management:</strong> Performs tasks like creating/deleting files, maintains directory structures, and ensures access control.</li>
+                            <li><strong>Multitasking:</strong> Allows carrying out more than one task at a time by sharing hardware resources based on time limits and priority.</li>
+                            <li><strong>Management of User Accounts:</strong> Manages multiple users (user name, password), allowing customization and separate folders.</li>
+                        </ul>
+                    </de>
+                </dl>
+
+                <h4>4.1.3 Running Applications (Firmware and BIOS)</h4>
+                <ul>
+                    <li><strong>Booting Up:</strong> When a computer starts, the <strong>bootstrap loader</strong> loads part of the OS into RAM.</li>
+                    <li><strong>BIOS (Basic Input/Output System):</strong> Handles the start-up of the motherboard.
+                        <ul>
+                            <li>The BIOS is often referred to as <strong>Firmware</strong>.</li>
+                            <li>The BIOS program is stored in <strong>EEPROM</strong> (Electrically Erasable Programmable ROM).</li>
+                            <li>BIOS settings are stored on a <strong>CMOS chip</strong>, powered by a battery.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>4.1.4 Interrupts</h4>
+                <p>An interrupt is a signal sent from a device or software to the microprocessor, causing it to temporarily stop what it is doing to service the interrupt.</p>
+                <dl>
+                    <dt>Causes of Interrupts:</dt>
+                    <dd>
+                        <ul>
+                            <li>Input/Output processes (e.g., printer needs data).</li>
+                            <li>Hardware faults (e.g., paper jam).</li>
+                            <li>User interaction (e.g., pressing a key).</li>
+                            <li>Software errors (e.g., divide by zero).</li>
+                        </ul>
+                    </dd>
+                    <dt>Operation of Interrupts:</dt>
+                    <dd>
+                        <ol>
+                            <li>The computer identifies the interrupt type and priority.</li>
+                            <li>The status of the current task is saved (PC and registers).</li>
+                            <li>The <strong>Interrupt Service Routine (ISR)</strong> is executed.</li>
+                            <li>The status of the interrupted task is reinstated, and the process continues.</li>
+                        </ol>
+                    </dd>
+                    <dt>Buffers and Interrupts:</dt>
+                    <dd>A <strong>buffer</strong> (temporary memory area) and interrupts are often used together. Data is sent to a buffer (e.g., for printing), and an interrupt signals the microprocessor to send more data when the buffer is empty, allowing the CPU to perform other tasks.</dd>
+                </dl>
+
+                <hr>
+
+                <h3>Section 4.2: Programming Languages, Translators, and IDEs</h3>
+                <p>Programs must be translated into machine code (binary instructions) before a computer can use them.</p>
+
+                <h4>4.2.1 High-Level and Low-Level Languages</h4>
+                <dl>
+                    <dt>A. High-Level Languages (HLL)</dt>
+                    <dd>
+                        <strong>Characteristics:</strong> Independent of hardware; statements are closer to English. (e.g., Java, Python, C++).
+                        <br><strong>Advantages:</strong> Easier to read/understand; quicker to write and debug.
+                    </dd>
+                    <dt>B. Low-Level Languages (LLL)</dt>
+                    <dd>
+                        <strong>Characteristics:</strong> Relate to specific hardware. (Machine Code, Assembly Language).
+                        <br><strong>Advantages:</strong> Can use special hardware; uses less memory; performs tasks quickly.
+                        <br><strong>Disadvantages:</strong> Takes longer to write/debug; harder to understand.
+                    </dd>
+                    <dt>C. Assembly Language</dt>
+                    <dd>A Low-Level Language that uses mnemonics (e.g., LDA, ADD, STO). It is translated using an <strong>Assembler</strong>.</dd>
+                </dl>
+
+                <h4>4.2.2 Translators</h4>
+                <p>A translator is a utility program that converts a program into machine code.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Translator Type</th>
+                            <th>Operation</th>
+                            <th>Key Advantages</th>
+                            <th>Key Disadvantages</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Compiler</strong></td>
+                            <td>Translates the entire HLL program (source code) into machine code (object code) all in one go.</td>
+                            <td>Compiled program runs faster. An executable file is produced that can be distributed and run without the compiler.</td>
+                            <td>Takes a longer time to write, test, and debug programs during development.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interpreter</strong></td>
+                            <td>Executes the HLL program one statement at a time, reading, translating, and performing the action.</td>
+                            <td>Easier and quicker to debug and test programs during development.</td>
+                            <td>Programs take longer to execute. Cannot be run without the interpreter.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assembler</strong></td>
+                            <td>Translates Assembly Language (LLL) into machine code.</td>
+                            <td>An executable file of machine code is produced.</td>
+                            <td>Only for use with Assembly Language.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>4.2.3 Integrated Development Environment (IDE)</h4>
+                <p>An IDE is a suite of programs used by programmers to aid the writing and development of programs.</p>
+                <dl>
+                    <dt>Key Features of an IDE:</dt>
+                    <dd>
+                        <ul>
+                            <li><strong>Code Editor:</strong> Allows programs to be written and edited.</li>
+                            <li><strong>Translator:</strong> Provides a compiler and/or interpreter.</li>
+                            <li><strong>Runtime Environment with Debugger:</strong> Allows single stepping, breakpoints, and shows variable contents.</li>
+                            <li><strong>Error Diagnostics and Auto-Correction:</strong> Dynamic error checking and suggested corrections.</li>
+                            <li><strong>Auto-Completion:</strong> Context-sensitive prompts for variables and reserved words.</li>
+                            <li><strong>Auto-Documenter:</strong> Explains the function and purpose of the code.</li>
+                            <li><strong>Prettyprinting:</strong> Code is colour-coded and formatted, making it easier to read.</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </section>
+
+            <section id="activities">
+                <h2>IV. ACTIVITIES AND ASSESSMENT</h2>
+                
+                <ol>
+                    <li><strong>Software Classification:</strong> Indicate whether the following are System or Application software: screensaver, anti-virus software, control and measurement software, printer driver, video editing software, compiler, QR code reader, on-screen calculator, operating system software.</li>
+                    <li><strong>Interrupt and Buffer Scenario:</strong> If a printer runs out of black ink during a printing process, describe what happens in terms of interrupts.</li>
+                    <li><strong>OS Function:</strong> Choose four features of an operating system and describe their function.</li>
+                    <li><strong>Translator Choice:</strong> Pedro wrote a high-level language program for a friend to use immediately on their laptop with a very slow internet connection. Explain which type of translator (Compiler or Interpreter) Pedro should use for distribution and why this is the best choice.</li>
+                    <li><strong>Interface Comparison:</strong> Give one advantage and one disadvantage of using a Graphical User Interface (GUI).</li>
+                </ol>
+
+                <h3>Conceptual Summary: The Factory Metaphor</h3>
+                <blockquote>
+                    <p>Imagine the computer system as a highly efficient factory.</p>
+                    <ul>
+                        <li>The <strong>Operating System (OS)</strong> acts as the Central Factory Manager, managing all resources.</li>
+                        <li><strong>System Software</strong> is the underlying infrastructure (utilities, security, maintenance) that keeps the factory running.</li>
+                        <li><strong>Application Software</strong> is the specific task being performed (e.g., accounting, production planning).</li>
+                        <li>An <strong>Interrupt</strong> is like an urgent alert buzzer (e.g., a machine jam or low raw materials supply). The Manager (CPU) must temporarily pause the current job, save its notes (registers), deal with the emergency (ISR), and then resume the original job.</li>
+                        <li>A <strong>Buffer</strong> is a temporary storage bay on a conveyor belt. If the input (CPU) is fast and the output (Printer) is slow, the buffer holds the excess, preventing the Manager (CPU) from sitting idle.</li>
+                    </ul>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

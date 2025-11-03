@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Computer Hardware</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            background: linear-gradient(135deg, #004d40, #00796b, #4db6ac); /* Tech/Circuit board green */
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #004d40; /* Match theme */
+            margin: 0 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00796b;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #004d40; /* Match theme */
+            border-bottom: 3px solid #00796b;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách & Bảng biểu --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+        
+        li > ul, li > ol {
+            margin-top: 10px;
+        }
+
+        li > strong {
+            color: #004d40; /* Match theme */
+        }
+
+        code {
+            background-color: #eef2f7;
+            color: #d9006c;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        /* Danh sách định nghĩa (Rất quan trọng cho chương này) */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #004d40; /* Match theme */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #eee;
+        }
+        
+        dd ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        dd li {
+            margin-bottom: 8px;
+        }
+
+        /* Hộp lợi ích / bất lợi */
+        .benefits-drawbacks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .benefit-box, .drawback-box {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .benefit-box {
+            background: #e6ffed;
+            border: 1px solid #28a745;
+        }
+        
+        .drawback-box {
+            background: #fff0f1;
+            border: 1px solid #dc3545;
+        }
+        
+        .benefit-box h4, .drawback-box h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .benefit-box h4 { color: #28a745; }
+        .drawback-box h4 { color: #dc3545; }
+
+        .benefit-box ul, .drawback-box ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .benefit-box li, .drawback-box li {
+            margin-bottom: 8px;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #00796b; /* Match theme */
+            background: #e0f2f1;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 3: COMPUTER HARDWARE</h1>
+        </header>
+
+        <nav>
+            <a href="#architecture">Architecture</a>
+            <a href="#io-devices">Input/Output</a>
+            <a href="#storage">Data Storage</a>
+            <a href="#network">Network Hardware</a>
+            <a href="#analogy">Analogy</a>
+        </nav>
+
+        <main>
+            <section id="architecture">
+                <h2>3.1 Computer Architecture</h2>
+                
+                <h3>Central Processing Unit (CPU)</h3>
+                <p>The Central Processing Unit (CPU), also called a microprocessor or processor, is essential to all modern computer systems, including smartphones and tablets. The CPU is responsible for executing or processing all instructions and data within a computer application. The CPU generally consists of the Control Unit (CU), the Arithmetic and Logic Unit (ALU), registers, and buses.</p>
+
+                <h3>Von Neumann Architecture</h3>
+                <p>Developed in the mid-1940s by John von Neumann, this architecture introduced the concept of the 'stored program computer'. Its main features include:</p>
+                <ul>
+                    <li>The CPU concept.</li>
+                    <li>The ability of the CPU to access memory directly.</li>
+                    <li>The storage of programs and data in computer memory.</li>
+                    <li>The sequential execution of stored program instructions.</li>
+                </ul>
+
+                <h4>Key CPU Components and Functions:</h4>
+                <dl>
+                    <dt>Arithmetic & Logic Unit (ALU)</dt>
+                    <dd>Carries out required arithmetic (e.g., +, -, shifting) or logic operations (e.g., AND, OR).</dd>
+
+                    <dt>Control Unit (CU)</dt>
+                    <dd>Reads instructions from memory (whose address is stored in the Program Counter, PC), interprets them using the Fetch–Decode–Execute cycle, and generates signals along the control bus to synchronize data flow and program instructions throughout the computer.</dd>
+
+                    <dt>Registers</dt>
+                    <dd>These are fundamental, temporary components in the von Neumann system. Specific purpose registers include:
+                        <ul>
+                            <li><strong>Program Counter (PC):</strong> Stores the address where the next instruction to be read can be found.</li>
+                            <li><strong>Memory Address Register (MAR):</strong> Stores the address of the memory location currently being read from or written to.</li>
+                            <li><strong>Memory Data Register (MDR):</strong> Stores data that has just been read from memory or data about to be written to memory.</li>
+                            <li><strong>Current Instruction Register (CIR):</strong> Stores the current instruction being decoded and executed.</li>
+                            <li><strong>Accumulator (ACC):</strong> Used during ALU calculations to store data temporarily.</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <h4>System Buses</h4>
+                <p>System buses act as parallel transmission components connecting major computer components.</p>
+                <dl>
+                    <dt>Address Bus</dt>
+                    <dd>Carries addresses throughout the system. It is unidirectional (travels in one direction only) between the CPU and memory. The width of the address bus determines how many memory locations can be directly addressed (e.g., 32 bits allows 4,294,967,296 locations).</dd>
+                    <dt>Data Bus</dt>
+                    <dd>Carries data (which can be an address, instruction, or numerical value). It is bidirectional, allowing data transfer between the CPU and memory/I/O devices.</dd>
+                    <dt>Control Bus</dt>
+                    <dd>Carries control signals from the Control Unit to all other computer components. It is typically 8-bits wide and is bidirectional.</dd>
+                </dl>
+
+                <h4>Fetch–Decode–Execute Cycle</h4>
+                <p>This is the process used by the CPU to carry out a set of instructions:</p>
+                <ol>
+                    <li><strong>Fetch:</strong> The next instruction is fetched from the memory address stored in the MAR and copied into the MDR, and then into the CIR. The PC is then incremented by 1.</li>
+                    <li><strong>Decode:</strong> The instruction is interpreted.</li>
+                    <li><strong>Execute:</strong> The CPU passes the decoded instruction as control signals (via the control bus) to appropriate components to carry out the instruction.</li>
+                </ol>
+
+                <h4>CPU Performance Factors</h4>
+                <p>Performance is influenced by:</p>
+                <dl>
+                    <dt>System Clock</dt>
+                    <dd>Produces timing signals for synchronization. Increasing clock speed (measured in GHz) potentially increases processing speed. Overclocking can lead to synchronization problems and overheating.</dd>
+                    <dt>Bus Width</dt>
+                    <dd>Increasing the width of the address and data buses increases system performance and speed.</dd>
+                    <dt>Cache Memory</dt>
+                    <dd>Located within the CPU, cache (using fast Static RAM/SRAM) stores frequently used data/instructions, resulting in much faster access times than RAM, thus improving performance.</dd>
+                    <dt>Cores</dt>
+                    <dd>A core is a unit made up of an ALU, a control unit, and registers. Using multiple cores (e.g., dual core, quad core) alleviates the continuous need to increase clock speeds.</dd>
+                </dl>
+
+                <h3>Embedded Systems</h3>
+                <p>An embedded system is a combination of hardware and software designed to execute a specific set of functions, often feedback-oriented. Examples include engine management, ABS braking, and GPS in motor vehicles.</p>
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li>Small size, relatively low cost.</li>
+                            <li>Low power consumption.</li>
+                            <li>Dedicated to one task (simple interfaces).</li>
+                            <li>Fast reaction to changing input (real time).</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Drawbacks</h4>
+                        <ul>
+                            <li>Difficult to upgrade some devices.</li>
+                            <li>Troubleshooting requires specialists.</li>
+                            <li>Risk of hacking if connected to the internet.</li>
+                            <li>Potentially contributing to a 'throw away' society.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="io-devices">
+                <h2>3.2 Input and Output Devices</h2>
+
+                <h3>Input Devices</h3>
+                <p>These devices convert external data into a form the computer can understand and process.</p>
+                <dl>
+                    <dt>Barcode and QR Code Scanners</dt>
+                    <dd>Barcodes use parallel lines. QR codes use a matrix of squares, hold more information (up to 7089 digits), and can be read by smartphone cameras.</dd>
+                    
+                    <dt>Digital Cameras</dt>
+                    <dd>Capture images when light hits a light-sensitive cell (CCD) made of pixels. An Analogue to Digital Converter (ADC) forms the digital image.</dd>
+                    
+                    <dt>Keyboards</dt>
+                    <dd>Each keypress completes a circuit, and the CPU interprets the character based on its ASCII value.</dd>
+                    
+                    <dt>Microphones</dt>
+                    <dd>Convert sound waves into an analogue electric current, which is then digitized by a sound card (using an ADC).</dd>
+                    
+                    <dt>2D and 3D Scanners</dt>
+                    <dd>2D scanners input hard copy documents (may use OCR). 3D scanners scan solid objects, capturing x, y, z coordinates, often for CAD.</dd>
+                    
+                    <dt>Touch Screens</dt>
+                    <dd>Allow simple touch selection. Three types exist:
+                        <ul>
+                            <li><strong>Capacitive:</strong> Uses the change in the screen's electrostatic field when touched by a conductor (finger).</li>
+                            <li><strong>Infrared:</strong> Uses an array of infrared beams; touching breaks the beams.</li>
+                            <li><strong>Resistive:</strong> Made of two layers; pressure brings them into contact, completing a circuit.</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <h3>Output Devices</h3>
+                <p>These devices show the results of computer processing in a human-understandable form.</p>
+                <dl>
+                    <dt>Actuators</dt>
+                    <dd>Mechanical or electromechanical devices (like solenoids or motors) used to control devices, converting an electrical signal into mechanical movement.</dd>
+                    
+                    <dt>Light Projectors (DLP/LCD)</dt>
+                    <dd>
+                        <ul>
+                            <li><strong>DLP (Digital Light Projector):</strong> Uses millions of micro mirrors on a DMD chip.</li>
+                            <li><strong>LCD (Liquid Crystal Display) Projector:</strong> Passes a high-intensity light beam through LCD screens (red, green, blue).</li>
+                        </ul>
+                    </dd>
+                    
+                    <dt>Printers (Inkjet/Laser/3D)</dt>
+                    <dd>
+                        <ul>
+                            <li><strong>Inkjet Printers:</strong> Spray droplets of liquid ink.</li>
+                            <li><strong>Laser Printers:</strong> Use dry powder ink (toner) and static electricity. Fast for high volume.</li>
+                            <li><strong>3D Printers:</strong> Produce solid objects layer by layer (additive manufacturing).</li>
+                        </ul>
+                    </d>
+                    
+                    <dt>Screens (LED/LCD/OLED)</dt>
+                    <dd>
+                        <ul>
+                            <li><strong>LCD Screens:</strong> Use tiny liquid crystals and require backlighting (often LED).</li>
+                            <li><strong>LED Screens:</strong> Made of tiny Light Emitting Diodes (red, green, blue).</li>
+                            <li><strong>OLED (Organic LED):</strong> Uses flexible organic materials, generates its own light (no backlighting), making them thinner and lighter.</li>
+                        </ul>
+                    </dd>
+                    
+                    <dt>Loudspeakers</dt>
+                    <dd>Convert a digital signal (which is first passed through a Digital to Analogue Converter, DAC) into sound waves by causing a cone to vibrate.</dd>
+                </dl>
+
+                <h3>Sensors in Control and Monitoring</h3>
+                <p>Sensors are input devices that measure physical properties (analogue data). This data must be converted using an ADC.</p>
+                <dl>
+                    <dt>Monitoring System</dt>
+                    <dd>The microprocessor analyzes data and sends a warning if it's outside the acceptable range, but does not affect the process (e.g., monitoring patient vital signs).</dd>
+                    <dt>Control System</dt>
+                    <dd>If data is outside the range, the computer sends signals (often via a DAC to actuators) which affect the next set of inputs, creating a feedback loop (e.g., controlling central heating).</dd>
+                </dl>
+            </section>
+
+            <section id="storage">
+                <h2>3.3 Data Storage</h2>
+
+                <h3>Primary Memory</h3>
+                <p>Memory accessible directly by the CPU.</p>
+                <dl>
+                    <dt>RAM (Random Access Memory)</dt>
+                    <dd>Volatile (contents lost when power is off). Temporary memory for data and programs currently in use.
+                        <ul>
+                            <li><strong>DRAM (Dynamic RAM):</strong> Consists of transistors and capacitors; must be constantly refreshed.</li>
+                            <li><strong>SRAM (Static RAM):</strong> Uses flip flops, faster than DRAM, and used in CPU cache memory.</li>
+                        </ul>
+                    </dd>
+                    <dt>ROM (Read-Only Memory)</dt>
+                    <dd>Non-volatile (contents are permanent). Data cannot be changed, often stores the BIOS or start-up instructions.</dd>
+                </dl>
+
+                <h3>Secondary Storage</h3>
+                <p>Non-volatile storage devices not directly addressable by the CPU, used for permanent storage.</p>
+                <dl>
+                    <dt>Magnetic Storage (HDD)</dt>
+                    <dd>Hard Disk Drives store data on magnetic platters, organized into tracks and sectors. Suffers from latency and fragmentation.</dd>
+                    <dt>Solid State Storage (SSD)</dt>
+                    <dd>No moving parts, resulting in much faster data access. Use NAND/NOR chips. Consume less power and run cooler. Memory sticks also use this technology.</dd>
+                    <dt>Optical Storage (CD/DVD/Blu-ray)</dt>
+                    <dd>Uses laser light to read and write data.
+                        <ul>
+                            <li><strong>DVDs</strong> have larger capacity than CDs (smaller pits).</li>
+                            <li><strong>Blu-ray Discs</strong> use a blue laser (shorter wavelength) for even smaller pits, enabling greater storage (e.g., 50 GB).</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <h3>Virtual Memory</h3>
+                <p>A memory management system using secondary storage (HDD/SSD) to handle situations when physical RAM runs out. A key drawback is <strong>disk thrashing</strong>—a high rate of data swapping that can severely reduce processing speed.</p>
+
+                <h3>Cloud Storage</h3>
+                <p>Data is stored on remote servers managed by a hosting company. Types include Public, Private, and Hybrid cloud.</p>
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li>Access from anywhere.</li>
+                            <li>No need for external storage.</li>
+                            <li>Remote back-up.</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Drawbacks</h4>
+                        <ul>
+                            <li>Reliance on a stable internet connection.</li>
+                            <li>High costs for large capacity.</li>
+                            <li>Relinquishing control over data security.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="network">
+                <h2>3.4 Network Hardware</h2>
+
+                <dl>
+                    <dt>Network Interface Card (NIC)</dt>
+                    <dd>A necessary hardware component (circuit board or chip) that allows a device to connect to a network. Wireless NICs (WNICs) use wireless connectivity.</dd>
+                    
+                    <dt>MAC Address (Media Access Control)</dt>
+                    <dd>A unique 48-bit identifier (e.g., <code>NN–NN–NN–DD–DD–DD</code>). It identifies the physical address of a device on the network.
+                        <ul>
+                            <li><strong>Universally Administered (UAA):</strong> Set by the manufacturer.</li>
+                            <li><strong>Locally Administered (LAA):</strong> Can be changed by the user.</li>
+                        </ul>
+                    </dd>
+                    
+                    <dt>IP Address (Internet Protocol)</dt>
+                    <dd>Protocols define the rules for data communication. An IP address identifies the global address of a device connected to the internet.
+                        <ul>
+                            <li><strong>IPv4:</strong> Based on 32 bits.</li>
+                            <li><strong>IPv6:</strong> Uses 128-bit addresses for a larger number of hosts.</li>
+                            <li><strong>Dynamic IP Address:</strong> Temporary, assigned by a DHCP server.</li>
+                            <li><strong>Static IP Address:</strong> Permanently assigned, used for servers.</li>
+                        </ul>
+                    </dd>
+                    
+                    <dt>Routers</dt>
+                    <dd>Devices that route data packets between different networks (e.g., LAN to WAN). They inspect the IP address of a data packet to send it to the appropriate switch, which then uses the MAC destination address to deliver it.</dd>
+                </dl>
+            </section>
+
+            <section id="analogy">
+                <h2>Analogy for CPU Components and Data Flow</h2>
+                <blockquote>
+                    <p>Imagine the CPU is a small, high-speed kitchen working on a recipe (the program).</p>
+                    <ul>
+                        <li>The <strong>ALU</strong> is the chef performing all the cuts, mixing, and cooking (arithmetic and logic operations). The <strong>ACC</strong> is the temporary bowl used right next to the chef.</li>
+                        <li>The <strong>Control Unit (CU)</strong> is the supervisor. It looks at the recipe steps, coordinates the workflow, and sends instructions to everyone else.</li>
+                        <li>The <strong>Program Counter (PC)</strong> is the bookmark marking which step of the recipe is next. The <strong>MAR</strong> is the address label of the cupboard/fridge containing the ingredient. The <strong>MDR</strong> is the item retrieved from that location. The <strong>CIR</strong> is the copy of the current step the supervisor is reading out loud.</li>
+                        <li>The <strong>Fetch–Decode–Execute</strong> cycle is the continuous loop of reading the next step, understanding it, and performing the action.</li>
+                        <li>The <strong>System Clock</strong> is the steady drum beat dictating the speed and rhythm.</li>
+                        <li>The <strong>Buses</strong> are the conveyor belts: the <strong>Address Bus</strong> specifies where to go (unidirectional), the <strong>Data Bus</strong> carries the item (bidirectional), and the <strong>Control Bus</strong> carries the supervisor's signals.</li>
+                    </ul>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

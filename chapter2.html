@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương 2: Truyền Tải Dữ Liệu</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px; /* Tăng nhẹ độ rộng cho bảng biểu */
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+        
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0056b3;
+            margin: 0 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #004a99;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách & Bảng biểu --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        li > strong {
+            color: #0056b3;
+        }
+
+        code {
+            background-color: #eef2f7;
+            color: #d9006c;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        /* Cấu trúc bảng biểu */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Danh sách định nghĩa */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #0056b3;
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Hộp lợi ích / bất lợi */
+        .benefits-drawbacks {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .benefit-box, .drawback-box {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .benefit-box {
+            background: #e6ffed;
+            border: 1px solid #28a745;
+        }
+        
+        .drawback-box {
+            background: #fff0f1;
+            border: 1px solid #dc3545;
+        }
+        
+        .benefit-box h4, .drawback-box h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .benefit-box h4 { color: #28a745; }
+        .drawback-box h4 { color: #dc3545; }
+
+        .benefit-box ul, .drawback-box ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .benefit-box li, .drawback-box li {
+            margin-bottom: 8px;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #007bff;
+            background: #f0f8ff;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 2: DATA TRANSMISSION</h1>
+            <p>Course: Computer Science / Information Technology</p>
+        </header>
+
+        <nav>
+            <a href="#objectives">Learning Objectives</a>
+            <a href="#main-content">Detailed Content</a>
+            <a href="#summary">Summary & Review</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>I. LEARNING OBJECTIVES</h2>
+                <p>Upon completion of this chapter, students will be able to:</p>
+                <ol>
+                    <li>Explain the types and methods of data transmission (serial, parallel, simplex, half-duplex, and full-duplex).</li>
+                    <li>Describe how data is broken up into data packets before transmission.</li>
+                    <li>Outline the structure of data packets (header, payload, and trailer).</li>
+                    <li>Explain packet switching, including the role of the router in the process.</li>
+                    <li>Describe methods of error detection following data transmission: parity checks, checksum, and echo check.</li>
+                    <li>Explain the use of check digits to detect data entry errors.</li>
+                    <li>Describe the use of Automatic Repeat Requests (ARQs) to detect errors.</li>
+                    <li>Explain the need for and the purpose of encryption.</li>
+                    <li>Differentiate between symmetric and asymmetric encryption and the use of public/private keys.</li>
+                </ol>
+            </section>
+
+            <section id="main-content">
+                <h2>II. DETAILED CONTENT</h2>
+
+                <h3>2.1 TYPES AND METHODS OF DATA TRANSMISSION</h3>
+
+                <h4>2.1.1 Data Packets</h4>
+                <p>Data sent over long distances is usually broken up into data packets (datagrams), typically around 64 KiB. This makes them easier to control than a long continuous stream.</p>
+                
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Benefits of Splitting Data</h4>
+                        <ul>
+                            <li>Each packet can be sent along a different route to its destination, useful if one route is busy or out of action.</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Drawback</h4>
+                        <ul>
+                            <li>The necessity to reassemble the data when it reaches its destination.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Packet Structure</h4>
+                <p>A typical packet is divided into three parts:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Part</th>
+                            <th>Content</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Header</strong></td>
+                            <td>IP address of the source and destination device, sequence number (for correct reassembly), and packet size.</td>
+                            <td>Essential for routing and ensuring all parts arrive intact.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payload</strong></td>
+                            <td>The actual data being sent in the packet (usually about 64 KiB).</td>
+                            <td>Carries the data component of the message.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trailer</strong></td>
+                            <td>A method of identifying the end of the packet and an error checking method.</td>
+                            <td>Enables separation of packets and verification of data integrity.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Error Checking in the Trailer (CRC):</strong> Cyclic Redundancy Checks (CRCs) are common. The sending computer adds up all the 1-bits in the payload and stores this total (as a hex value) in the trailer. The receiving computer recalculates this sum; if the two values match, no transmission errors have occurred.</p>
+
+                <h4>2.1.2 Packet Switching</h4>
+                <p>Packet switching is a method where a message is broken into multiple packets, and each packet is sent independently from the start point to the end point.</p>
+                <ul>
+                    <li><strong>Role of the Router:</strong> At each node, a router receives the packet and determines the shortest possible route for it to take next based on the destination IP address.</li>
+                    <li><strong>Packet Route and Arrival:</strong> Packets often follow different paths and may arrive out of order. The receiving computer uses the sequence number in the header to reassemble them.</li>
+                    <li><strong>Hopping/Hop Number:</strong> A hop number can be added to the header, reduced by 1 at each router. If it reaches zero, the packet is deleted to prevent network clogging.</li>
+                </ul>
+
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Benefits of Packet Switching</h4>
+                        <ul>
+                            <li>No need to tie up a single communication line.</li>
+                            <li>Possible to overcome failed, busy, or faulty lines by re-routing.</li>
+                            <li>Relatively easy to expand package usage.</li>
+                            <li>High data transmission rate is possible.</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Drawbacks of Packet Switching</h4>
+                        <ul>
+                            <li>Packets can be lost and need to be re-sent.</li>
+                            <li>More prone to errors with real-time streaming (e.g., live events).</li>
+                            <li>A delay occurs at the destination while packets are re-ordered.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>2.1.3 Methods of Data Transmission (Serial, Parallel, Simplex, Duplex)</h4>
+                
+                <p><strong>A. Transmission Modes (Direction):</strong></p>
+                <dl>
+                    <dt>Simplex</dt>
+                    <dd>Data can be sent in ONE DIRECTION ONLY (e.g., computer to a printer).</dd>
+                    <dt>Half-duplex</dt>
+                    <dd>Data can be sent in BOTH DIRECTIONS but NOT AT THE SAME TIME (e.g., a walkie-talkie).</dd>
+                    <dt>Full-duplex (Duplex)</dt>
+                    <dd>Data can be sent in BOTH DIRECTIONS AT THE SAME TIME (simultaneously) (e.g., a broadband internet connection).</dd>
+                </dl>
+
+                <p><strong>B. Data Transmission Types (Bit Flow):</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Serial Data Transmission</th>
+                            <th>Parallel Data Transmission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mechanism</strong></td>
+                            <td>Sends ONE BIT AT A TIME over a SINGLE WIRE/CHANNEL.</td>
+                            <td>Sends SEVERAL BITS (usually one byte) down SEVERAL CHANNELS/WIRES simultaneously.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Speed/Distance</strong></td>
+                            <td>Slower rate than parallel. Works well over long distances.</td>
+                            <td>Faster method. Works well over short distances (e.g., internal computer circuits).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Synchronization</strong></td>
+                            <td>Data arrives fully synchronised.</td>
+                            <td>Data can become skewed (out of synchronisation) over longer distances (>20m).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Example</strong></td>
+                            <td>Connecting a computer to a printer via a USB connection.</td>
+                            <td>Internal circuits in a computer.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>2.1.4 Universal Serial Bus (USB)</h4>
+                <p>USB is a form of serial data transmission that has become the industry standard. It supports both half-duplex and full-duplex transmission.</p>
+                
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Benefits of the USB System</h4>
+                        <ul>
+                            <li>Devices plugged into the computer are automatically detected.</li>
+                            <li>The appropriate device driver software is automatically recognised and loaded.</li>
+                            <li>It has become an industry standard.</li>
+                            <li>Supports different data transmission rates (from 1.5 Mbps to 5 Gbps).</li>
+                            <li>No need for an external power source, as the cable supplies +5 V power.</li>
+                            <li>The USB protocol notifies the transmitter to re-transmit data if errors are detected.</li>
+                            <li>It is backward compatible.</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Drawbacks</h4>
+                        <ul>
+                            <li>Standard USB supports a maximum cable length of 5 meters.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2.2 METHODS OF ERROR DETECTION</h3>
+
+                <h4>2.2.1 The Need to Check for Errors</h4>
+                <p>When data is transmitted, it risks being corrupted, lost, or gained due to interference, packet switching problems, or data skewing. Checking is vital as computers cannot understand corrupted data.</p>
+
+                <h4>2.2.2 Parity Checks, Checksum, and Echo Checks</h4>
+                <dl>
+                    <dt>Parity Checks</dt>
+                    <dd>
+                        Based on the number of 1-bits in a byte (EVEN or ODD). A parity bit is set to ensure the byte conforms to the protocol.
+                        <br><strong>Limitation:</strong> Cannot detect if two bits change, and doesn't know *which* bit is in error.
+                        <br><strong>Parity Blocks:</strong> Overcomes the limitation by checking both horizontally and vertically, allowing the position of the error to be identified.
+                    </dd>
+
+                    <dt>Checksum</dt>
+                    <dd>The sending computer calculates a checksum value from a block of data. This is sent with the data. The receiving computer recalculates the checksum. If they don't match, a re-send is requested.</dd>
+
+                    <dt>Echo Check</dt>
+                    <dd>Data sent to another device is sent back immediately to the sender for comparison.
+                        <br><strong>Unreliability:</strong> If differences exist, it's unknown if the error was in the original or the return transmission.
+                    </dd>
+                </dl>
+
+                <h4>2.2.3 Check Digits</h4>
+                <p>A check digit is the final digit in a code, calculated from all other digits.</p>
+                <ul>
+                    <li><strong>Purpose:</strong> To detect errors in data entry (not data transmission).</li>
+                    <li><strong>Errors Detected:</strong> Incorrect digits, transposition errors, or omitted/extra digits.</li>
+                    <li><strong>Examples:</strong> ISBN 13 and Modulo-11.</li>
+                </ul>
+
+                <h4>2.2.4 Automatic Repeat Requests (ARQs)</h4>
+                <p>ARQ is a method using acknowledgements and timeout to check for errors.</p>
+                <ol>
+                    <li>The receiving device uses an error code (like CRC).</li>
+                    <li>If no error, a <strong>positive acknowledgement</strong> is sent.</li>
+                    <li>If an error is found, a <strong>negative acknowledgement</strong> is sent, requesting re-transmission.</li>
+                    <li>The sender uses a <strong>timeout</strong>. If no acknowledgement is received within this time, it automatically re-sends the data.</li>
+                </ol>
+
+                <h3>2.3 ENCRYPTION</h3>
+
+                <h4>2.3.1 The Purpose of Encryption</h4>
+                <p>When data is transmitted over a public network, it risks interception by hackers (eavesdroppers). Encryption alters data into an unreadable form to minimize this risk.</p>
+                <dl>
+                    <dt>Plaintext</dt>
+                    <dd>The original data before encryption.</dd>
+                    <dt>Ciphertext</dt>
+                    <dd>Encrypted data after passing through an encryption algorithm.</dd>
+                </dl>
+
+                <h4>2.3.2 Symmetric and Asymmetric Encryption</h4>
+                <dl>
+                    <dt>A. Symmetric Encryption</dt>
+                    <dd>
+                        Uses ONE SINGLE KEY to both encrypt and decrypt the message.
+                        <br><strong>Major Drawback:</strong> The key must be sent to the recipient, meaning it can be intercepted.
+                    </dd>
+                    <dt>B. Asymmetric Encryption</dt>
+                    <dd>
+                        Uses two mathematically linked keys: the <strong>Public Key</strong> and the <strong>Private Key</strong>.
+                        <br><strong>Public Key:</strong> Made available to everybody.
+                        <br><strong>Private Key:</strong> Known only to the computer user.
+                        <br><strong>Mechanism:</strong> To send data to Jane, Tom uses Jane’s Public Key to encrypt it. Jane then uses her matching Private Key to decrypt it.
+                        <br><strong>Security:</strong> More secure because the Private Key is never transmitted.
+                    </dd>
+                </dl>
+            </section>
+
+            <section id="summary">
+                <h2>III. SUMMARY AND REVIEW QUESTIONS</h2>
+
+                <h3>Key Concepts Summary</h3>
+                <ul>
+                    <li>Data is broken into packets (Header, Payload, Trailer) and sent using packet switching.</li>
+                    <li>Transmission modes include Simplex, Half-duplex, and Full-duplex (direction).</li>
+                    <li>Transmission methods are Serial (one bit at a time, good for long distance, e.g., USB) and Parallel (multiple bits simultaneously, fast over short distances, prone to skewing).</li>
+                    <li>Error checking methods following transmission include Parity Checks, Checksum, and Echo Checks.</li>
+                    <li>ARQ uses acknowledgements and timeout to ensure data integrity.</li>
+                    <li>Check Digits are used to detect errors during data entry.</li>
+                    <li>Encryption (Plaintext to Ciphertext) protects data from eavesdroppers.</li>
+                    <li>Symmetric encryption uses one key; Asymmetric encryption uses a Public Key (for encrypting) and a Private Key (for decrypting).</li>
+                </ul>
+
+                <h3>Review Questions</h3>
+                <ol>
+                    <li>Describe the three main components of a data packet and the function of each component.</li>
+                    <li>Explain the key difference between a check digit and a checksum.</li>
+                    <li>Describe how the Automatic Repeat Request (ARQ) process works, making reference to acknowledgement and timeout.</li>
+                    <li>Explain why asymmetric encryption is considered more secure than symmetric encryption.</li>
+                    <li>State whether an internal computer circuit (IC) that sends multiple bits simultaneously uses serial or parallel data transmission. Justify your answer based on distance and speed requirements.</li>
+                </ol>
+
+                <h3>Analogy for Asymmetric Encryption</h3>
+                <blockquote>
+                    <p>Asymmetric encryption is like having a public mailbox and a private key to unlock it. Anyone can use your Public Key (which is your mailbox slot, known to everyone) to put a message (encrypted data) inside. However, only you hold the Private Key (the physical key) that can open the box and read the contents. The private key is never shared or transmitted, ensuring security.</p>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

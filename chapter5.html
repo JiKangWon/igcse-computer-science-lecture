@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: The Internet and Its Uses</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            /* Tông màu Xanh lam (Blue) cho chủ đề Internet/Security */
+            background: linear-gradient(135deg, #004e92, #000428, #004e92);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #004e92; /* Match theme */
+            margin: 0 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #004e92; /* Match theme */
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Định dạng danh sách & Bảng biểu --- */
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+        
+        li > ul, li > ol {
+            margin-top: 10px;
+        }
+
+        li > strong {
+            color: #004e92; /* Match theme */
+        }
+
+        code, .code-like {
+            background-color: #eef2f7;
+            color: #d9006c;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        /* Danh sách định nghĩa */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #004e92; /* Match theme */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #eee;
+        }
+        
+        /* Bảng biểu */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #004e92;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Trích dẫn (Analogy) */
+        blockquote {
+            border-left: 5px solid #007bff; /* Match theme */
+            background: #f0f8ff;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 5: THE INTERNET AND ITS USES</h1>
+        </header>
+
+        <nav>
+            <a href="#objectives">Objectives</a>
+            <a href="#www">Part 1: WWW</a>
+            <a href="#digital-currency">Part 2: Digital Currency</a>
+            <a href="#cyber-security">Part 3: Cyber Security</a>
+            <a href="#summary">Summary</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>I. LEARNING OBJECTIVES</h2>
+                <p>In this chapter, learners will acquire knowledge about:</p>
+                <ul>
+                    <li><strong>The Internet and the World Wide Web (WWW):</strong>
+                        <ul>
+                            <li>Understand the differences between the internet and the World Wide Web.</li>
+                            <li>Know what is meant by a Uniform Resource Locator (URL).</li>
+                            <li>Explain the purpose and operation of Hypertext Transfer Protocols (HTTP and HTTPS).</li>
+                            <li>Describe the purpose and function of a web browser.</li>
+                            <li>Understand how web pages are located, retrieved, and displayed.</li>
+                            <li>Define cookies (including session and persistent cookies).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Digital Currency:</strong>
+                        <ul>
+                            <li>Understand what digital currencies are and how they are used.</li>
+                            <li>Explain the process of blockchaining and how it is used to track digital currency transactions.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Cyber Security:</strong>
+                        <ul>
+                            <li>Identify cyber security threats.</li>
+                            <li>Describe solutions to keep data safe from security threats.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="www">
+                <h2>II. CORE CONTENT - PART 1: THE INTERNET AND THE WWW</h2>
+                
+                <h3>1.1. Differences between the Internet and the WWW</h3>
+                <p><strong>The Internet</strong> (from INTERconnected NETwork) is a worldwide collection of interconnected networks and devices. It relies on physical infrastructure.</p>
+                <p><strong>The World Wide Web (WWW)</strong> is only a part of the internet. It is a massive collection of multimedia web pages on websites, accessed using a web browser.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Internet</th>
+                            <th>World Wide Web (WWW)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Users can send and receive emails.</td>
+                            <td>It is a collection of multimedia web pages and other information on websites.</td>
+                        </tr>
+                        <tr>
+                            <td>Allows online chatting (via text, audio, and video).</td>
+                            <td>http(s) protocols are written using Hypertext Mark-up Language (HTML).</td>
+                        </tr>
+                        <tr>
+                            <td>Makes use of Transmission Protocols (TCP) and Internet Protocols (IP).</td>
+                            <td>URLs are used to specify the location of web pages.</td>
+                        </tr>
+                        <tr>
+                            <td>It is a worldwide collection of interconnected networks and devices.</td>
+                            <td>Web resources are accessed by web browsers.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>1.2. Uniform Resource Locators (URLs)</h3>
+                <p>URLs are text addresses used to access websites. A URL is typed into a browser address bar using the format:</p>
+                <p class="code-like">protocol://website address/path/file name</p>
+                <p>The website address includes the domain host (www), domain name, domain type (e.g., .com, .org), and sometimes the country code (e.g., .uk).</p>
+
+                <h3>1.3. HTTP and HTTPS</h3>
+                <dl>
+                    <dt>HTTP (Hypertext Transfer Protocol)</dt>
+                    <dd>A set of rules that must be obeyed when transferring files across the internet.</dd>
+                    <dt>HTTPS (HTTP Secure)</dt>
+                    <dd>Used when security (e.g., SSL or TLS) is applied. The ‘s’ stands for secure. It is often accompanied by the green padlock symbol.</dd>
+                </dl>
+
+                <h3>1.4. Web Browsers</h3>
+                <p>Browsers are software that allow a user to access and display web pages. Browsers interpret (translate) the HTML sent from websites and display the result.</p>
+                <p><strong>Common browser features include:</strong></p>
+                <ul>
+                    <li>Having a home page.</li>
+                    <li>Storing favorite websites (bookmarks / favourites).</li>
+                    <li>Keeping a user history of visited websites.</li>
+                    <li>The ability to navigate forwards and backwards.</li>
+                    <li>Allowing multiple tabs.</li>
+                    <li>Making use of cookies and hyperlinks.</li>
+                    <li>Storing data as a cache.</li>
+                </ul>
+
+                <h3>1.5. Retrieval and Location of Web Pages (DNS)</h3>
+                <p>To retrieve a page, the browser needs the website's IP address. The <strong>Domain Name Server (DNS)</strong> is a system for finding IP addresses for a domain name. DNS eliminates the need for a user to memorize IP addresses.</p>
+                <p><strong>The retrieval process:</strong></p>
+                <ol>
+                    <li>The user enters the URL; the browser asks a DNS server (1) for the IP address.</li>
+                    <li>If DNS (1) cannot find it, it asks another DNS server (2).</li>
+                    <li>DNS (2) finds the URL, maps it to the IP address (e.g., <code>107.162.140.19</code>), and sends it back to DNS (1), which stores it.</li>
+                    <li>The IP address is sent back to the user’s computer.</li>
+                    <li>The computer communicates with the web server, and the HTML files are downloaded and interpreted by the browser.</li>
+                </ol>
+
+                <h3>1.6. Cookies</h3>
+                <p>Cookies are small files or code stored on a user’s computer, sent by a web server. They contain (key, data) pairs (e.g., <code>(surname, Jones)</code>) to track users and maintain preferences.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type of Cookie</th>
+                            <th>Session Cookie</th>
+                            <th>Persistent (Permanent) Cookie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Storage</strong></td>
+                            <td>Stored in temporary memory.</td>
+                            <td>Stored on the hard drive until the expiry date or deleted.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lifespan</strong></td>
+                            <td>Cease to exist once the browser is closed.</td>
+                            <td>Remain in operation even after the browser is closed.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Usage Example</strong></td>
+                            <td>Keeping items in a virtual shopping basket.</td>
+                            <td>Remembering a user’s log-in details.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Uses of Persistent Cookies (tracking cookies):</strong></p>
+                <ul>
+                    <li>Allow the website to remember passwords, email addresses, etc.</li>
+                    <li>Enable the website to recognize users every time they visit.</li>
+                    <li>Track internet habits and users’ website histories/favorites.</li>
+                    <li>Target users with advertising.</li>
+                    <li>Store users’ preferences (e.g., customized web pages).</li>
+                </ul>
+            </section>
+
+            <section id="digital-currency">
+                <h2>PART 2: DIGITAL CURRENCY</h2>
+
+                <h3>2.1. What is Digital Currency?</h3>
+                <p>Digital currency exists purely in a digital format and has no physical form. It is an accepted form of payment. Traditional digital currency (e.g., PayPal, Apple Pay) relies on a central banking system, which poses confidentiality and security issues.</p>
+
+                <h3>2.2. Cryptocurrency and Decentralization</h3>
+                <p><strong>Cryptocurrency</strong> is a form of digital currency that addresses security problems by introducing <strong>decentralization</strong>.</p>
+                <ul>
+                    <li>It uses <strong>cryptography</strong> (coding) to track transactions.</li>
+                    <li>It has no state control; rules are set by the community.</li>
+                    <li>Transactions are publicly available and monitored.</li>
+                    <li>The system operates within a <strong>blockchain</strong> network, making it more secure.</li>
+                </ul>
+
+                <h3>2.3. Blockchaining</h3>
+                <p><strong>Blockchain</strong> is a decentralized database. All transactions are stored on this database. The network consists of interconnected computers, and all data is stored on all computers in the network. Data cannot be changed without the consent of all members, removing the risk of hacking.</p>
+                <p><strong>How Blockchain Works:</strong></p>
+                <ol>
+                    <li>When a new transaction occurs, a new <strong>block</strong> is created.</li>
+                    <li>Each block contains:
+                        <ul>
+                            <li>Data (e.g., sender/recipient names, amount).</li>
+                            <li>A unique <strong>Hash</strong> value (a fingerprint).</li>
+                            <li>The <strong>Previous hash</strong> value (which points back to the preceding block).</li>
+                        </ul>
+                    </li>
+                    <li>Block 1 is the <strong>genesis block</strong> (no previous hash).</li>
+                    <li>If data in a block is changed, its hash value changes. The subsequent block, relying on the old hash, becomes invalid, and the chain is broken, preventing tampering.</li>
+                    <li>The system uses <strong>proof-of-work</strong> to slow down the process (approx. 10 mins per block) to foil fast attacks.</li>
+                </ol>
+            </section>
+
+            <section id="cyber-security">
+                <h2>PART 3: CYBER SECURITY</h2>
+                <p>Keeping data safe (personal or commercial) is extremely important. Data can be corrupted or deleted through accidental damage or malicious acts.</p>
+
+                <h3>3.1. Cyber Security Threats</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Threat</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Brute Force Attack</strong></td>
+                            <td>Systematically trying all combinations of letters, numbers, and symbols to crack a password.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Interception</strong></td>
+                            <td>Stealing data by tapping into a communication link (e.g., packet sniffing or wardriving).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DDoS Attack</strong></td>
+                            <td>Attempting to prevent users from accessing a network by flooding it with useless spam traffic from many computers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hacking</strong></td>
+                            <td>Gaining illegal, unauthorized access to a computer system.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phishing</strong></td>
+                            <td>Sending legitimate-looking emails to trick recipients into giving personal details or clicking fake links. (User must initiate action).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pharming</strong></td>
+                            <td>Malicious code that redirects a user’s browser to a fake website without their knowledge (e.g., DNS cache poisoning).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Social Engineering</strong></td>
+                            <td>Manipulating people (exploiting emotions) into breaking security procedures (e.g., giving away a password).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>3.2. Malware (Malicious Software)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type of Malware</th>
+                            <th>Nature and Key Characteristics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Viruses</strong></td>
+                            <td>Programs that replicate themselves. Need an active host program to run and cause damage (e.g., deleting files).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Worms</strong></td>
+                            <td>Stand-alone malware that can self-replicate. Do not need a host program and can spread throughout a network without user action.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trojan Horse</strong></td>
+                            <td>Malicious program disguised as legitimate software. Needs to be executed by the end-user. Often installs other malware (Spyware, Ransomware).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spyware</strong></td>
+                            <td>Gathers information by monitoring user activities (e.g., web browsing, key logging) and sends data back.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adware</strong></td>
+                            <td>Attempts to flood the user with unwanted advertising (pop-ups).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ransomware</strong></td>
+                            <td>Programs that encrypt data and 'hold it hostage' until a ransom is paid. Best prevention is regular back-ups.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>3.3. Solutions to Keep Data Safe</h3>
+                
+                <dl>
+                    <dt>3.3.1. Access Levels and Authentication</dt>
+                    <dd><strong>Access Levels</strong> control a user’s rights (read, write, delete). <strong>Authentication</strong> is the ability of a user to prove who they are (e.g., password, biometrics, phone).</dd>
+
+                    <dt>3.3.2. Passwords and Two-step Verification</dt>
+                    <dd>Strong passwords should contain capitals, numbers, and special characters. <strong>Two-step verification (2FA)</strong> requires two methods of authentication (e.g., password + phone code).</dd>
+
+                    <dt>3.3.3. Biometrics</dt>
+                    <dd>Relies on unique human characteristics.
+                        <ul>
+                            <li><strong>Fingerprint scans:</strong> Compares patterns of ridges. <em>Benefits:</em> unique, hard to replicate. <em>Drawbacks:</em> expensive, affected by injury.</li>
+                            <li><strong>Retina scans:</strong> Uses infrared to scan blood vessel patterns. <em>Benefits:</em> very high accuracy. <em>Drawbacks:</em> intrusive, slow, very expensive.</li>
+                        </ul>
+                    </dd>
+
+                    <dt>3.3.4. Firewalls and Proxy Servers</dt>
+                    <dd><strong>Firewalls</strong> (hardware or software) filter information in and out, blocking traffic that fails criteria. Primary defense against hacking.
+                    <br><strong>Proxy Servers</strong> act as an intermediate between the user and a web server. They filter traffic, keep the user’s IP secret, and use a cache to speed up access.</dd>
+                    
+                    <dt>3.3.5. Secure Sockets Layer (SSL) and Transport Layer Security (TLS)</dt>
+                    <dd><strong>SSL</strong> is a protocol that allows data to be sent securely (<code>https</code>, padlock symbol). It encrypts data. The web server sends an <strong>SSL certificate</strong> to authenticate the website.
+                    <br><strong>TLS</strong> is a more modern and secure version of SSL.</dd>
+
+                    <dt>3.3.6. Automatic Software Updates</dt>
+                    <dd>Updates are vital as they often contain patches that improve software security (protecting against malware) or remove bugs.</dd>
+                </dl>
+            </section>
+
+            <section id="summary">
+                <h2>III. SUMMARY & REVIEW</h2>
+                <h3>Analogy for Core Concept</h3>
+                <blockquote>
+                    <p>To differentiate the Internet and the World Wide Web (WWW), you can imagine the Internet as the global postal and infrastructure system, consisting of all the physical wires, cables, routers, and the fundamental rules (TCP/IP) that allow information packets to travel anywhere. The World Wide Web is like the specific delivery service (like traditional mail or express shipping) that uses a certain format (HTML/HTTP) to send specialized documents (web pages) using that underlying infrastructure. The Internet is the road system; the WWW is the content delivery method that drives on those roads.</p>
+                </blockquote>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

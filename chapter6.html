@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Automated and Emerging Technologies</title>
+    <style>
+        /* --- Cài đặt CSS cho trang web học tập --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* --- Header của bài giảng --- */
+        header {
+            /* Tông màu Xám/Bạc/Xanh cho chủ đề Robot/AI */
+            background: linear-gradient(135deg, #2c3e50, #4a4a4a, #2c3e50);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+        
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* --- Thanh điều hướng (NavBar) --- */
+        nav {
+            background: #f9f9f9;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex; /* Dùng flexbox để căn đều */
+            justify-content: center;
+            flex-wrap: wrap; /* Cho phép xuống dòng trên di động */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2c3e50; /* Match theme */
+            margin: 5px 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00aeff; /* Electric blue accent */
+            text-decoration: underline;
+        }
+
+        /* --- Nội dung chính --- */
+        main {
+            padding: 30px 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 80px;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tiêu đề các cấp --- */
+        h2 {
+            font-size: 2.2em;
+            color: #2c3e50; /* Match theme */
+            border-bottom: 3px solid #00aeff; /* Electric blue accent */
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #1a1a1a;
+            margin-top: 30px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Bảng biểu --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* --- Hộp lợi ích / bất lợi --- */
+        .benefits-drawbacks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .benefit-box, .drawback-box {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .benefit-box {
+            background: #e6ffed;
+            border: 1px solid #28a745;
+        }
+        
+        .drawback-box {
+            background: #fff0f1;
+            border: 1px solid #dc3545;
+        }
+        
+        .benefit-box h4, .drawback-box h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .benefit-box h4 { color: #28a745; }
+        .drawback-box h4 { color: #dc3545; }
+
+        .benefit-box ul, .drawback-box ul,
+        ol, ul {
+            padding-left: 25px;
+        }
+
+        .benefit-box li, .drawback-box li,
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Danh sách định nghĩa (Key Terms) */
+        dl {
+            padding-left: 10px;
+        }
+
+        dt {
+            font-weight: 700;
+            color: #2c3e50; /* Match theme */
+            font-size: 1.15em;
+            margin-top: 15px;
+        }
+
+        dd {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>CHAPTER 6: AUTOMATED AND EMERGING TECHNOLOGIES</h1>
+            <p>Intended Use: Study and Research</p>
+        </header>
+
+        <nav>
+            <a href="#objectives">Learning Objectives</a>
+            <a href="#automated">Automated Systems</a>
+            <a href="#robotics">Robotics</a>
+            <a href="#ai">Artificial Intelligence</a>
+            <a href="#activities">Activities</a>
+            <a href="#key-terms">Key Terms</a>
+        </nav>
+
+        <main>
+            <section id="objectives">
+                <h2>II. LEARNING OBJECTIVES</h2>
+                <p>Upon completion of this chapter, the learner will be able to:</p>
+                <ul>
+                    <li>Explain automated systems, including the use of sensors, microprocessors, and actuators in these systems.</li>
+                    <li>Evaluate the advantages and disadvantages of using automated systems in given scenarios.</li>
+                    <li>Define robotics, identify the characteristics of a robot, and discuss the roles, advantages, and disadvantages of robots.</li>
+                    <li>Explain Artificial Intelligence (AI), describe its main characteristics, and understand the basic operation and components of AI systems to simulate intelligent behaviour.</li>
+                </ul>
+            </section>
+
+            <section id="automated">
+                <h2>III. MAIN CONTENT (1/3): AUTOMATED SYSTEMS</h2>
+                <p>An automated system is a combination of software and hardware (e.g., sensors, microprocessors, and actuators) that is designed and programmed to work automatically without the need for any human intervention. While these systems are automatic, they often still involve human monitoring.</p>
+
+                <h3>1.1. Key Components</h3>
+                <p>The core components in every automated system include:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Role</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sensors</strong></td>
+                            <td>Input Device</td>
+                            <td>Take readings from their surroundings and send this data to a microprocessor. If data is analogue, it is converted by an ADC.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Microprocessor/Computer</strong></td>
+                            <td>Processing/Controller</td>
+                            <td>Process the data and take the necessary action based on programming.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Actuators</strong></td>
+                            <td>Output Device</td>
+                            <td>Receive signals (usually from the microprocessor) to control motors, wheels, solenoids, or other mechanisms.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>1.2. Advantages and Disadvantages of Automated Systems</h3>
+                <p>Automated systems are utilized in various application areas, such as industrial, transport, agriculture, weather, gaming, lighting, and science.</p>
+                
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Advantages</h4>
+                        <ul>
+                            <li>They are much faster than a human operator to take any necessary action.</li>
+                            <li>They are much safer (e.g., keeps humans away from a dangerous environment).</li>
+                            <li>The process is more likely to run under optimum conditions.</li>
+                            <li>In the long run, they are less expensive as they replace most of the workforce.</li>
+                            <li>Results are more consistent (e.g., error rate fell from ~1.5% to 0.00001%).</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Disadvantages</h4>
+                        <ul>
+                            <li>Expensive to set up initially and requires considerable testing.</li>
+                            <li>Possibility of unconsidered conditions occurring, which could have safety implications.</li>
+                            <li>Any computerised system is subject to cyberattacks.</li>
+                            <li>They always need enhanced maintenance, which can be expensive.</li>
+                            <li>Can lead to over-reliance on automated systems (loss of skills).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>1.3. Application Example: Self-Parking Cars</h3>
+                <p>Self-parking cars use on-board sensors and cameras to gauge parking spaces. The sensors transmit signals that bounce off objects, and the computer uses the return time to calculate the object's position, creating a 3D image. Actuators operate the steering rack, brakes, and throttle under the full control of the computer to complete the maneuver.</p>
+            </section>
+
+            <section id="robotics">
+                <h2>III. MAIN CONTENT (2/3): ROBOTICS</h2>
+
+                <h3>2.1. Definition</h3>
+                <p><strong>Robotics</strong> is a branch of (computer) science that combines the design, construction, and operation of robots. A <strong>robot</strong> is defined as a mechanical device that is capable of carrying out tasks that are normally done by humans.</p>
+
+                <h3>2.2. Characteristics of a Robot</h3>
+                <p>To be defined as a robot, the device must have three characteristics:</p>
+                <ol>
+                    <li><strong>Ability to sense their surroundings:</strong> Achieved using sensors (light, pressure, temperature, etc.) to recognize the environment.</li>
+                    <li><strong>A degree of movement:</strong> They are mechanical structures (wheels, motors, actuators) that can perform functions like turning, gripping, or lifting, often using end-effectors (attachments).</li>
+                    <li><strong>Programmable:</strong> They contain a controller (a "brain," typically a microprocessor) that determines action based on sensor data.</li>
+                </ol>
+                <p><strong>Important Note:</strong> Many robots do not possess AI because they typically perform repetitive tasks.</p>
+
+                <h3>2.3. Classification of Physical Robots</h3>
+                <ul>
+                    <li><strong>Independent (Autonomous) Robots:</strong> Have no direct human control and can totally replace human activity.</li>
+                    <li><strong>Dependent Robots:</strong> Require a human interface and supplement, rather than totally replace, human activity.</li>
+                </ul>
+
+                <h3>2.4. Advantages and Disadvantages of Industrial Robots</h3>
+                <div class="benefits-drawbacks">
+                    <div class="benefit-box">
+                        <h4>Advantages</h4>
+                        <ul>
+                            <li>Capable of working in hazardous conditions.</li>
+                            <li>Can work 24/7 without needing rest.</li>
+                            <li>More productive than humans.</li>
+                            <li>Produce more consistent results.</li>
+                        </ul>
+                    </div>
+                    <div class="drawback-box">
+                        <h4>Disadvantages</h4>
+                        <ul>
+                            <li>Can find it difficult to perform 'non-standard' tasks.</li>
+                            <li>Can lead to higher unemployment among manual labour workers.</li>
+                            <li>There is a risk of deskilling when robots take over specialized tasks.</li>
+                            <li>They are expensive to buy and set up initially.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai">
+                <h2>III. MAIN CONTENT (3/3): ARTIFICIAL INTELLIGENCE (AI)</h2>
+                
+                <h3>3.1. Definition and Characteristics</h3>
+                <p><strong>Artificial Intelligence (AI)</strong> is a branch of computer science dedicated to the simulation of intelligent human behaviour by a computer. This involves replicating cognitive functions—the mental process of acquiring knowledge and understanding through thought, experience, and the five senses.</p>
+                <p>AI is a collection of rules and data, combined with the ability to reason, learn, and adapt to external stimuli.</p>
+                <p>AI can be categorized by performance:</p>
+                <ul>
+                    <li><strong>Narrow AI:</strong> Superior performance to a human when performing one specific task.</li>
+                    <li><strong>General AI:</strong> Performance is similar (not superior) to a human performing a specific task.</li>
+                    <li><strong>Strong AI:</strong> Superior performance to a human across many tasks.</li>
+                </ul>
+
+                <h3>3.2. Expert Systems</h3>
+                <p><strong>Expert systems</strong> are a form of AI developed to mimic the decision-making ability of a human expert. They use knowledge and inference to solve problems.</p>
+                <h4>Basic Components of an Expert System:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Role/Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Knowledge Base</strong></td>
+                            <td>A repository of facts. It stores all knowledge about an area of expertise, typically a collection of objects and their attributes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rules Base</strong></td>
+                            <td>A set of inference rules. These follow logical thinking, often involving 'IF' statements (e.g., IF continent = "South America" ... THEN ...).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inference Engine</strong></td>
+                            <td>The main processing element. It acts like a search engine, examining the knowledge base and applying inference rules to draw conclusions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>User Interface</strong></td>
+                            <td>The method by which the system interacts with the user (e.g., dialogue boxes, prompts).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>3.3. Machine Learning (ML)</h3>
+                <p><strong>Machine learning</strong> is a sub-set of AI in which algorithms are 'trained' and learn from their past experiences and examples. This allows machines to make decisions or predictions without being specifically programmed for new data.</p>
+                <h4>Differences between AI and Machine Learning:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Artificial Intelligence (AI)</th>
+                            <th>Machine Learning (ML)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Represents simulated intelligence in machines.</td>
+                            <td>The practice of getting machines to make decisions without being programmed to do so.</td>
+                        </tr>
+                        <tr>
+                            <td>The aim is to build machines capable of thinking like humans.</td>
+                            <td>The aim is to make machines learn through data acquisition so they can solve new problems.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Examples of Machine Learning Applications:</h4>
+                <ul>
+                    <li><strong>Categorizing email as spam:</strong> Algorithms are trained using past emails and look for frequent spam words.</li>
+                    <li><strong>Recognizing user buying history (Collaboration filtering):</strong> Compares customers with similar shopping behaviour to recommend products.</li>
+                    <li><strong>Detection of fraudulent activity:</strong> Trains algorithms using real examples of purchasing behaviour to detect unusual activities.</li>
+                </ul>
+            </section>
+
+            <section id="activities">
+                <h2>IV. CONSOLIDATION ACTIVITIES</h2>
+                <p>The following activities are recommended to reinforce understanding:</p>
+                <ol>
+                    <li><strong>Automated System Analysis (Activity 6.7):</strong> Name suitable sensors for the following automated systems:
+                        <ol type="a">
+                            <li>The manufacture of a new vaccine requiring the mixing of four liquids in a specific ratio and the maintenance of a critical temperature at 35°C (+/- 1°C).</li>
+                            <li>Automatic train doors that require a safety mechanism to prevent passengers from being trapped between the two closing doors.</li>
+                        </ol>
+                    </li>
+                    <li><strong>Expert System Terminology (Activity 6.12):</strong> Identify the computer term connected to AI being described by the following phrases:
+                        <ol type="a">
+                            <li>A repository of facts made up of a collection of objects and their attributes.</li>
+                            <li>The element that acts like a search engine by applying inference rules to draw conclusions.</li>
+                            <li>Contains a set of inference rules used to determine any matches between input data and stored data.</li>
+                        </ol>
+                    </li>
+                </ol>
+            </section>
+
+            <section id="key-terms">
+                <h2>V. SUMMARY OF KEY TERMS</h2>
+                <dl>
+                    <dt>Automated System</dt>
+                    <dd>A combination of software and hardware designed and programmed to work automatically without the need for any human intervention.</dd>
+                    <dt>Robotics</dt>
+                    <dd>The branch of (computer) science that encompasses the design, construction and operation of robots.</dd>
+                    <dt>Robot</dt>
+                    <dd>A mechanical device that can carry out tasks normally done by humans.</dd>
+                    <dt>Autonomous</dt>
+                    <dd>Able to operate independently without any human input.</dd>
+                    <dt>Actuator</dt>
+                    <dd>A device, under the control of a microprocessor, which allows it to operate pumps, wheels, motors and pistons, for example.</dd>
+                    <dt>Artificial Intelligence (AI)</dt>
+                    <dd>A collection of rules and data which gives a computer system the ability to reason, learn and adapt to external stimuli.</dd>
+                    <dt>Expert System</dt>
+                    <dd>A form of AI that has been developed to mimic a human’s knowledge and expertise.</dd>
+                    <dt>Inference Engine</dt>
+                    <dd>A kind of search engine used in an expert system which examines the knowledge base for information that matches the queries.</dd>
+                    <dt>Knowledge Base</dt>
+                    <dd>A repository of facts which is a collection of objects and attributes.</dd>
+                    <dt>Machine Learning</dt>
+                    <dd>A sub-set of AI in which algorithms are trained and learn from past experiences and examples.</dd>
+                </dl>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
